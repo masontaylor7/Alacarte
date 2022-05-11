@@ -1,1 +1,21 @@
 /* TODO Add site wide styles */
+:root {
+    --yellow-color: #F9CC9D;
+}
+
+body {
+    font-family: "Fira Sans"
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.full_body {
+    /* position: relative; */
+    margin-top: 76px;
+}
