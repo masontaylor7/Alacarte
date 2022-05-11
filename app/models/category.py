@@ -1,4 +1,3 @@
-
 from .db import db
 from .recipe import Recipe
 
@@ -14,5 +13,5 @@ def to_dict(self):
     return {
         'id': self.id,
         'name': self.name,
-        'recipe': self.recipe.title
+        'recipe_title': self.recipe.title
     }
