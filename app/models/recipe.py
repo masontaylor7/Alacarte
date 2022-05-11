@@ -16,6 +16,7 @@ class Recipe(db.Model):
     user = db.relationship('User', back_populates='recipes')
     # ingredients = db.relationship('Ingredient', back_populates='recipe')
     category = db.relationship('Category', foreign_keys=[category_id], back_populates='recipes')
+    collections = db.relationship('Collection', secondary='collection_recipes', back_populates='recipes')
 
     def to_dict(self):
         return {
