@@ -23,7 +23,7 @@ const NavBar = () => {
           </li>
           <li>
             <div className='li_containers'>
-              <NavLink to='/home' exact={true} activeClassName='active'>
+              <NavLink to='/browse' exact={true} activeClassName='active'>
                 BROWSE RECIPES
               </NavLink>
               <BsChevronDown className='down_arrow_chevron' />
