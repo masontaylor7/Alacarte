@@ -5,14 +5,28 @@ from app.models import db, User
 def seed_users():
     demo = User(
         username='Demo', email='demo@aa.io', password='password')
-    marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
-    bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+    marniezmunchies = User(
+        username='marniezmunchies', email='mm@aa.io', password='password')
+    bobbiebakes = User(
+        username='bobbiebakes', email='bb@aa.io', password='password')
+    richie_breadman = User(
+        username='richie_breadman', email='rb@aa.io', password='password')
+    sue_cooks = User(
+        username='sue_cooks', email='sc@aa.io', password='password')
+    SourdoughFam = User(
+        username='SourdoughFam', email='sdf@aa.io', password='password')
+    icedT = User(
+        username='icedT', email='it@aa.io', password='password')
+    goldenstatewarriorsfan = User(
+        username='goldenstatewarriorsfan', email='gswf@aa.io', password='password')
+    egg = User(
+        username='egg', email='egg@aa.io', password='password')
+    cuphalffull = User(
+        username='cuphalffull', email='chf@aa.io', password='password')
+    hp = User(
+        username='hp', email='hp@aa.io', password='password')
 
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
+    db.session.add_all([demo, marniezmunchies, bobbiebakes, richie_breadman, sue_cooks, SourdoughFam, icedT, goldenstatewarriorsfan, egg, cuphalffull, hp])
 
     db.session.commit()
 
