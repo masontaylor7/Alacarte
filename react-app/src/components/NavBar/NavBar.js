@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from '../auth/LogoutButton';
 import './NavBar.css'
-import { BsChevronDown } from 'react-icons/bs'
+import { BsChevronDown, BsFileEarmarkPlus } from 'react-icons/bs'
 
 const NavBar = () => {
   const sessionUser = useSelector(state => state.session.user);
@@ -35,6 +35,14 @@ const NavBar = () => {
                 SAVED RECIPES
               </NavLink>
               <BsChevronDown />
+            </div>
+          </li> : null}
+          {sessionUser ? <li>
+            <div className='li_containers add_recipe'>
+              <NavLink to='/recipes/new' exact={true} activeClassName='active'>
+                ADD A RECIPE
+              </NavLink>
+              <BsFileEarmarkPlus />
             </div>
           </li> : null}
           {!sessionUser ?

@@ -6,7 +6,7 @@ const allRecipesActionCreator = (recipes) => ({
 })
 
 export const allRecipes = () => async (dispatch) => {
-    const response = await fetch('/api/recipes', {
+    const response = await fetch('/api/recipes/', {
         method: 'GET'
     })
     // console.log(response, '<<<<<<<<<<<<<<<<<<')

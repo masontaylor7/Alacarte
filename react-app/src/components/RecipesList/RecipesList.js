@@ -22,7 +22,7 @@ const RecipesList = () => {
     return (
         <div>
             {recipes.map(recipe => (
-                <div className='single_recipe'>
+                <div key={recipe.id} className='single_recipe'>
                     <img src={recipe.image_url} style={imageStyle} />
                     <div>
                         <div className='recipe_title'>{recipe.title}</div>
