@@ -14,3 +14,4 @@ def one_recipe(id):
 def all_recipes():
     recipes = Recipe.query.all()
     return jsonify([recipe.to_dict() for recipe in recipes])
+    # return {"recipes": [recipe.to_dict() for recipe in recipes]}

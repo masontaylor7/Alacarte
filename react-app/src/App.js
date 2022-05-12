@@ -10,6 +10,7 @@ import User from './components/User';
 import { authenticate } from './store/session';
 import HomePage from './components/HomePage/HomePage';
 import RecipesList from './components/RecipesList/RecipesList';
+import NewRecipe from './components/NewRecipe/NewRecipe';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -43,6 +44,9 @@ function App() {
           </Route>
           <Route path='/browse' exact={true}>
             <RecipesList />
+          </Route>
+          <Route path='/recipes/new' exact={true}>
+            <NewRecipe />
           </Route>
           <ProtectedRoute path='/users' exact={true} >
             <UsersList />
