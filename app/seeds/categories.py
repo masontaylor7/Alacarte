@@ -1,37 +1,41 @@
 from app.models import db, Category
 
 def seed_categories():
-    most_recent = Category(
-        name='Most Recent'
-    )
     breakfast = Category(
-        name='Breakfast'
+        title='Breakfast'
     )
     lunch = Category(
-        name='Lunch'
+        title='Lunch'
     )
     dinner = Category(
-        name='Dinner'
+        title='Dinner'
     )
     dessert = Category(
-        name='Dessert'
+        title='Dessert'
     )
     drinks = Category(
-        name='Drinks'
+        title='Drinks'
     )
     snacks_apps = Category(
-        name='Snacks & Appetizers'
+        title='Snacks & Appetizers'
     )
     holidays = Category(
-        name='Holiday & Seasonal'
+        title='Holiday & Seasonal'
     )
-    all_recipes = Category(
-        name='All Recipes (A-Z)'
+    vegan = Category(
+        title='Vegan'
+    )
+    vegetarian = Category(
+        title='Vegetarian'
+    )
+    other = Category(
+        title='Other'
     )
 
-    db.session.add_all([most_recent, breakfast, lunch, dinner, dessert, drinks, snacks_apps, holidays, all_recipes])
+
+    db.session.add_all([breakfast, lunch, dinner, dessert, drinks, snacks_apps, holidays, vegan, vegetarian, other])
+    
     db.session.commit()
-
 
 def undo_categories():
     db.session.execute('TRUNCATE categories RESTART IDENTITY CASCADE;')

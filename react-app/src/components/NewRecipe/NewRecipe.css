@@ -1,1 +1,13 @@
 
+.input {
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.524);
+}
+
+/* .required-input {
+    border: 1px solid red;
+} */
+
+::placeholder {
+    color: rgba(0, 0, 0, 0.414);
+}
