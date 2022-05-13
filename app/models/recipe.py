@@ -6,14 +6,14 @@ class Recipe(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    image_url = db.Column(db.String(5000), nullable=False)
+    image_url = db.Column(db.String(5000), nullable=True)
     title = db.Column(db.String(100), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     prep_time = db.Column(db.String, nullable=False)
     cook_time = db.Column(db.String, nullable=False)
     total_time = db.Column(db.String, nullable=False)
     servings = db.Column(db.String, nullable=False)
-    directions = db.Column(db.Text, nullable=True)
+    directions = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False,server_default=db.func.now())
     updated_at = db.Column(db.DateTime, nullable=False, server_default=db.func.now())
 

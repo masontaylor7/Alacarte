@@ -5,22 +5,41 @@ import { BsPlusSquare, BsDashSquare } from 'react-icons/bs'
 import { VscDiffAdded } from 'react-icons/vsc'
 
 import { allCategories } from '../../store/category';
+import { createRecipe } from '../../store/recipe';
 
 const NewRecipe = () => {
     const dispatch = useDispatch();
     const categories = Object.values(useSelector(state => state.categories))
-    console.log(categories)
+    const sessionUser = useSelector(state => state.session.user);
 
-    useEffect(() => {
-        dispatch(allCategories())
-    }, [dispatch])
+    const [errors, setErrors] = useState([]);
 
     const [inputFields, setInputFields] = useState([
         { title: '', amount: '', measurement: '' },
     ])
-    const [imageUrl, setImageUrl] = useState('')
-    const [categoryId, setCategoryId] = useState()
 
+    const [categoryId, setCategoryId] = useState()
+    const [imageUrl, setImageUrl] = useState('')
+    const [title, setTitle] = useState('')
+    const [prepTime, setPrepTime] = useState('')
+    const [cookTime, setCookTime] = useState('')
+    const [totalTime, setTotalTime] = useState('')
+    const [servingSize, setServingSize] = useState('')
+    const [directionsInp, setDirectionsInp] = useState('')
+    const [placeholder, setPlaceholder] = useState("default");
+    console.log(categoryId)
+
+    // let errs = []
+    // useEffect(() => {
+    //     if (email.length === 0) errs.push("Please provide an email address.")
+    //     if (!email.includes('@')) errs.push("Please provide a valid email.")
+    //     if (password.length === 0) errs.push("Please provide a password.")
+    //     setValidationErrors(errs)
+    // }, [email, password, setValidationErrors])
+
+    useEffect(() => {
+        dispatch(allCategories())
+    }, [dispatch])
 
     const imageStyle = {
         width: "400px",
@@ -35,7 +54,20 @@ const NewRecipe = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // console.log(inputFields, '<<<<<<<<<<<<<<<<')
+
+        const recipe = {
+            user_id: sessionUser.id,
+            image_url: imageUrl,
+            title,
+            category_id: categoryId,
+            prep_time: prepTime,
+            cook_time: cookTime,
+            total_time: totalTime,
+            servings: servingSize,
+            directions: directionsInp,
+        }
+        console.log(recipe)
+        dispatch(createRecipe(recipe))
     }
 
     const handleAddField = () => {
@@ -54,6 +86,35 @@ const NewRecipe = () => {
         }
     }
 
+    const handleImageField = (e) => {
+        setImageUrl(e.target.value)
+    }
+
+    const handleSetTitle = (e) => {
+        setTitle(e.target.value)
+    }
+
+    const handleSetPrepTime = (e) => {
+        setPrepTime(e.target.value)
+    }
+
+    const handleSetCookTime = (e) => {
+        setCookTime(e.target.value)
+    }
+
+    const handleSetTotalTime = (e) => {
+        setTotalTime(e.target.value)
+    }
+
+    const handleSetServingSize = (e) => {
+        setServingSize(e.target.value)
+    }
+
+    const handleSetDirectionsInp = (e) => {
+        setDirectionsInp(e.target.value)
+    }
+
+
     return (
         <div>
             <div>Recipe Information</div>
@@ -65,6 +126,8 @@ const NewRecipe = () => {
                         className='input title-input'
                         name='title'
                         placeholder='Alaskan Salmon w/ Herbs and Lemon Caper Sauce...'
+                        onChange={handleSetTitle}
+                        value={title}
                     />
                 </div>
                 <div>
@@ -75,11 +138,17 @@ const NewRecipe = () => {
                     className='input image-input'
                     name='image_url'
                     placeholder='Image URL'
+                    onChange={handleImageField}
+                    value={imageUrl}
+
                 />
                 <div className='category-block'>
                     <div className='field-title'>Category:</div>
-                    <select onChange={(e) => setCategoryId(e.target.value)}>
-                        {categories.map(category => (
+                    <select className='input' defaultValue={placeholder} onChange={(e) => setCategoryId(e.target.value)}>
+                        <option value="default" disabled hidden>
+                            Choose a Category
+                        </option>
+                        {categories?.map(category => (
                             <option key={category.id} value={category.id}>{category.title}</option>
                         ))}
                     </select>
@@ -91,18 +160,27 @@ const NewRecipe = () => {
                         className='input prep-time-input'
                         name='prep_time'
                         placeholder='30 mins | 2 hrs'
+                        onChange={handleSetPrepTime}
+                        value={prepTime}
+
                     />
                     <label>Cook Time:</label>
                     <input type='text'
                         className='input cook-time-input'
                         name='cook_time'
                         placeholder='30 mins | 2 hrs'
+                        onChange={handleSetCookTime}
+                        value={cookTime}
+
                     />
                     <label>Total Time:</label>
                     <input type='text'
                         className='input total-time-input'
                         name='total_time'
                         placeholder='30 mins | 2 hrs'
+                        onChange={handleSetTotalTime}
+                        value={totalTime}
+
                     />
                 </div>
                 <div className='servings-block'>
@@ -111,6 +189,9 @@ const NewRecipe = () => {
                         className='input servings_input'
                         name='servings'
                         placeholder='2 - 4 servings | 16 pancakes'
+                        onChange={handleSetServingSize}
+                        value={servingSize}
+
                     />
                 </div>
                 <div>Ingredients:</div>
@@ -142,14 +223,17 @@ const NewRecipe = () => {
                         />
                         <BsDashSquare onClick={() => handleRemoveField(index)} />
                         <BsPlusSquare onClick={handleAddField} />
-                        <div className='field-title'>Directions:</div>
-                        <input type='text'
-                            className='input directions_input'
-                            name='directions'
-                            placeholder='1. In a large bowl mix flour, eggs, and milk...'
-                        />
                     </div>
                 ))}
+                <div className='field-title'>Directions:</div>
+                <input type='text'
+                    className='input directions_input'
+                    name='directions'
+                    placeholder='1. In a large bowl mix flour, eggs, and milk...'
+                    onChange={handleSetDirectionsInp}
+                    value={directionsInp}
+
+                />
                 <label></label>
                 <button type='submit' onClick={handleSubmit}>
                     CREATE RECIPE
