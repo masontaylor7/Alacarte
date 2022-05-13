@@ -6,19 +6,22 @@ import { VscDiffAdded } from 'react-icons/vsc'
 
 import { allCategories } from '../../store/category';
 import { createRecipe } from '../../store/recipe';
+import { createIngredient, allIngredients } from '../../store/ingredient';
 
 const NewRecipe = () => {
     const dispatch = useDispatch();
     const categories = Object.values(useSelector(state => state.categories))
+    const ingredients = Object.values(useSelector(state => state.ingredients))
     const sessionUser = useSelector(state => state.session.user);
 
     const [errors, setErrors] = useState([]);
 
     const [inputFields, setInputFields] = useState([
-        { title: '', amount: '', measurement: '' },
+        { title: '', amount: '', measurement: '', },
     ])
 
     const [categoryId, setCategoryId] = useState()
+    const [recipeId, setRecipeId] = useState()
     const [imageUrl, setImageUrl] = useState('')
     const [title, setTitle] = useState('')
     const [prepTime, setPrepTime] = useState('')
@@ -41,6 +44,10 @@ const NewRecipe = () => {
         dispatch(allCategories())
     }, [dispatch])
 
+    useEffect(() => {
+        dispatch(allIngredients())
+    }, [dispatch])
+
     const imageStyle = {
         width: "400px",
         height: 'auto'
@@ -52,7 +59,7 @@ const NewRecipe = () => {
         setInputFields(ingredients)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         const recipe = {
@@ -66,13 +73,20 @@ const NewRecipe = () => {
             servings: servingSize,
             directions: directionsInp,
         }
-        console.log(recipe)
-        dispatch(createRecipe(recipe))
+
+        const created_recipe = await dispatch(createRecipe(recipe))
+        setRecipeId(created_recipe.id)
+
+
+        inputFields?.map(ingredientobj => {
+            ingredientobj["recipe_id"] = recipeId
+            dispatch(createIngredient(ingredientobj))
+        })
     }
 
     const handleAddField = () => {
         setInputFields([...inputFields, {
-            title: '', amount: '', measurement: ''
+            title: '', amount: '', measurement: '',
         }])
     }
 

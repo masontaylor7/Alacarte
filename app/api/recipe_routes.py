@@ -33,7 +33,6 @@ def new_recipe():
             total_time = form.data['total_time'],
             servings = form.data['servings'],
             directions = form.data['directions'],
-
         )
 
         form.populate_obj(recipe)
