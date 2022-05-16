@@ -34,8 +34,11 @@ class Recipe(db.Model):
             'cook_time': self.cook_time,
             'total_time': self.total_time,
             'directions': self.directions,
+            'servings': self.servings,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'ingredients': [Ingredient.to_dict() for Ingredient in self.ingredients]
+            'user': self.user.to_dict(),
+            'category': self.category.to_dict(),
+            'ingredients': [Ingredient.to_dict() for Ingredient in self.ingredients],
 
         }

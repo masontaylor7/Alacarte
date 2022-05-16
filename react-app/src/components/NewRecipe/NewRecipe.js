@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import './NewRecipe.css'
 import { BsPlusSquare, BsDashSquare } from 'react-icons/bs'
 import { VscDiffAdded } from 'react-icons/vsc'
@@ -10,6 +11,7 @@ import { createIngredient, allIngredients } from '../../store/ingredient';
 
 const NewRecipe = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const categories = Object.values(useSelector(state => state.categories))
     const ingredients = Object.values(useSelector(state => state.ingredients))
     const sessionUser = useSelector(state => state.session.user);
@@ -21,7 +23,6 @@ const NewRecipe = () => {
     ])
 
     const [categoryId, setCategoryId] = useState()
-    const [recipeId, setRecipeId] = useState()
     const [imageUrl, setImageUrl] = useState('')
     const [title, setTitle] = useState('')
     const [prepTime, setPrepTime] = useState('')
@@ -75,13 +76,13 @@ const NewRecipe = () => {
         }
 
         const created_recipe = await dispatch(createRecipe(recipe))
-        setRecipeId(created_recipe.id)
-
 
         inputFields?.map(ingredientobj => {
-            ingredientobj["recipe_id"] = recipeId
+            ingredientobj["recipe_id"] = created_recipe.id
             dispatch(createIngredient(ingredientobj))
         })
+
+        history.push(`/recipes/${created_recipe.id}`)
     }
 
     const handleAddField = () => {

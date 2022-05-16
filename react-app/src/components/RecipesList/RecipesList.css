@@ -1,3 +1,33 @@
+.recipe_list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0px 10px;
+}
+
 .single_recipe{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    border: 1px solid var(--yellow-color);
+    max-width: 300px;
+}
+
+.recipe_details {
+    margin-left: 5px;
+}
+
+.recipe_category {
+    color: var(--dark-yellow-color);
+    margin-bottom: 5px;
+}
+
+.recipe_title {
+    font-size: 1.75rem;
+}
+
+.recipe_username {
+    justify-self: flex-end;
+    align-self: flex-end;
 }
