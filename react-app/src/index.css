@@ -8,6 +8,10 @@ body {
     font-family: "Fira Sans"
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 li {
     list-style: none;
 }

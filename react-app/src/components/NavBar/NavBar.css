@@ -1,13 +1,14 @@
 .nav_bar {
     border-bottom: 1px solid var(--yellow-color);
-    position: absolute;
+    background-color: white;
+    position: fixed;
     width: 100%;
     top: 0px;
     height: 76px;
-    margin: 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 5;
 }
 
 /* .browse_drop_down {

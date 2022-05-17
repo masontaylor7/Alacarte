@@ -1,0 +1,98 @@
+.individual_recipe_page {
+    display: flex;
+    margin-top: 80px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.recipe_info_block {
+    border-bottom: 1px solid #D2EBE8;
+    margin-top: 8px;
+}
+
+.recipe_title {
+    font-size: 60px;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+.sticky_block {
+    display: flex;
+    position: sticky;
+    top: 100px;
+    overflow-y: hidden;
+    height:min-content;
+}
+
+.information_block {
+    /* border: 1px solid red; */
+    /* top: 90px; */
+    padding-left: 10px;
+    margin-left: 18px;
+    margin-right: 18px;
+    width: 500px;
+    background: linear-gradient(to bottom, #ebf8f8 0, #fefefe 100%);
+}
+
+.recipe_info_top_portion {
+    display: flex;
+    justify-content: space-between;
+}
+
+.top_button {
+    margin-right: 5px;
+    background-color: white;
+    border: 1px solid #D2EBE8;
+    padding: 5px;
+    border-radius: 10px;
+    color: var(--dark-yellow-color);
+}
+
+.individual_ingredient_info {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ingredient_title{
+   font-size: 20px;
+}
+
+.ingredient_amount{
+   font-size: 24px;
+}
+
+.ingredient_measurement{
+   font-size: 20px;
+   color: var(--dark-yellow-color);
+}
+
+.directions_block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    margin-top: 15px;
+}
+
+.directions_text {
+    line-height: 40px;
+    font-size: 30px;
+}
+
+.directions_label {
+    margin-bottom: 8px;
+    color: var(--dark-yellow-color);
+}
+
+.delete_modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 0);
+    border: 1px solid var(--dark-yellow-color);
+    background-color: white;
+}

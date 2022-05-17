@@ -28,7 +28,7 @@ const RecipesList = ({recipes}) => {
                         <img src={recipe.image_url} style={imageStyle} />
                         <div className='recipe_details'>
                             <div className='recipe_category'>{recipe.category.title}</div>
-                            <div className='recipe_title'>{recipe.title}</div>
+                            <div className='list_recipe_title'>{recipe.title}</div>
                             <div className='total_time'><AiOutlineFieldTime /> {recipe.total_time}</div>
                             <div className='recipe_servings'>Servings: {recipe.servings}</div>
                             <div className='recipe_username'>{recipe.user.username}</div>

@@ -23,8 +23,9 @@
     margin-bottom: 5px;
 }
 
-.recipe_title {
-    font-size: 1.75rem;
+.list_recipe_title {
+    font-size: 26px;
+    font-family: 'Frank Ruhl Libre', serif;
 }
 
 .recipe_username {
