@@ -5,10 +5,19 @@ from app.forms import RecipeForm
 
 recipe_routes = Blueprint('recipes', __name__)
 
+
 @recipe_routes.route('/<int:id>', methods=['GET'])
 def one_recipe(id):
     recipe = Recipe.query.get(id)
     return recipe.to_dict()
+
+@recipe_routes.route('/<int:id>', methods=['DELETE'])
+def delete_recipe(id):
+    recipe = Recipe.query.get(id)
+    db.session.delete(recipe)
+    db.session.commit()
+    return recipe.to_dict()
+    # return {'hello': 'world'}
 
 @recipe_routes.route('/', methods=['GET'])
 def all_recipes():

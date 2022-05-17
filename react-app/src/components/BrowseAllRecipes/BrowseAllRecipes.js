@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import './RecipesList.css'
+import '../RecipesList/RecipesList.css'
 import { AiOutlineFieldTime } from 'react-icons/ai'
 
 import { allRecipes } from '../../store/recipe';
 
-
-const RecipesList = ({recipes}) => {
+const BrowseAllRecipes = () => {
     const dispatch = useDispatch();
-    console.log(recipes)
-    // const recipes = Object.values(useSelector(state => state.recipes))
+    const recipes = Object.values(useSelector(state => state.recipes))
 
     useEffect(() => {
         dispatch(allRecipes())
@@ -42,4 +40,4 @@ const RecipesList = ({recipes}) => {
     );
 };
 
-export default RecipesList;
+export default BrowseAllRecipes;

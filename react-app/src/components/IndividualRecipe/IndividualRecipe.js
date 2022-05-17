@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { oneRecipe } from '../../store/recipe';
+import { useHistory, useParams } from 'react-router-dom';
+import { oneRecipe, deleteRecipe } from '../../store/recipe';
 import { BsDot } from 'react-icons/bs'
 import './IndividualRecipe.css'
 import { useTransition } from 'react-spring'
@@ -12,10 +12,10 @@ import { useTransition } from 'react-spring'
 const IndividualRecipe = () => {
     const dispatch = useDispatch();
     const { recipeId } = useParams();
+    const history = useHistory();
     const recipe = useSelector(state => state.recipes[+recipeId])
     const sessionUser = useSelector(state => state.session.user)
     const [deleteModal, setDeleteModal] = useState(false)
-    console.log(deleteModal)
 
     const imageStyle = {
         width: "500px",
@@ -26,8 +26,13 @@ const IndividualRecipe = () => {
         dispatch(oneRecipe(recipeId))
     }, [dispatch])
 
-    const handleDelete = (recipeId) => {
-        return
+    console.log(recipe, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+
+    const handleDelete = async (e) => {
+        e.preventDefault()
+        await dispatch(deleteRecipe(recipe?.id))
+        handleDeleteModalClose()
+        await history.push('/browse/all')
     }
 
     const handleEdit = (recipeId) => {
@@ -122,7 +127,7 @@ const IndividualRecipe = () => {
                         <div>Are you sure you want to delete your recipe?</div>
                         <div className='delete_modal_buttons'>
                             <button className='modal_button' type='button' onClick={handleDeleteModalClose}>No, Cancel</button>
-                            <button className='modal_button'>Yes, Remove</button>
+                            <button className='modal_button' onClick={handleDelete}>Yes, Remove</button>
                         </div>
                     </div>
                 </div>

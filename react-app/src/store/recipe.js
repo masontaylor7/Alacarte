@@ -1,6 +1,12 @@
 const ALL_RECIPES = 'recipes/ALL_POSTS'
 const CREATE_RECIPE = 'recipes/CREATE_RECIPE'
 const ONE_RECIPE = 'recipes/ONE_RECIPE'
+const DELETE_RECIPE = 'recipes/DELETE_RECIPE'
+
+const deleteRecipeActionCreator = (recipe) => ({
+    type: DELETE_RECIPE,
+    recipe
+})
 
 const oneRecipeActionCreator = (recipe) => ({
     type: ONE_RECIPE,
@@ -34,6 +40,7 @@ export const createRecipe = (recipe) => async (dispatch) => {
         body: JSON.stringify(recipe)
     })
     if (response.ok) {
+
         const newRecipe = await response.json()
         dispatch(createRecipeActionCreator(newRecipe))
         return newRecipe;
@@ -49,6 +56,22 @@ export const allRecipes = () => async (dispatch) => {
         const recipes = await response.json()
         dispatch(allRecipesActionCreator(recipes))
         return recipes;
+    }
+}
+
+export const deleteRecipe = (recipeId) => async (dispatch) => {
+    console.log(recipeId, 'recipeId --------------------------')
+    const response = await fetch(`/api/recipes/${recipeId}`, {
+        method: 'DELETE',
+    })
+    console.log(response, '----------------------------------')
+    if (response.ok) {
+        console.log('request was a okay champ')
+        const recipe = await response.json()
+        dispatch(deleteRecipeActionCreator(recipe))
+        return recipe;
+    } else {
+        console.log('response was NOT ok champ')
     }
 }
 
@@ -68,11 +91,15 @@ export default function recipeReducer(state = initialState, action) {
             return newState;
         }
         case ALL_RECIPES: {
-            newState = {}
-            console.log(action.recipes)
+            newState = { ...state }
             action.recipes.map(recipe => {
                 return newState[recipe.id] = recipe
             })
+            return newState;
+        }
+        case DELETE_RECIPE: {
+            newState = { ...state }
+            delete newState[action.recipe.id]
             return newState;
         }
         default:

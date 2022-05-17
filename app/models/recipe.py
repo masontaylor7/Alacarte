@@ -21,7 +21,7 @@ class Recipe(db.Model):
     # ingredients = db.relationship('Ingredient', back_populates='recipe')
     category = db.relationship('Category', foreign_keys=[category_id], back_populates='recipes')
     collections = db.relationship('Collection', secondary='collection_recipes', back_populates='recipes')
-    ingredients = db.relationship('Ingredient', back_populates='recipe')
+    ingredients = db.relationship('Ingredient', back_populates='recipe', cascade='delete, all')
 
     def to_dict(self):
         return {

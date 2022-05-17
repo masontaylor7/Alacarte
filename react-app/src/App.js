@@ -13,12 +13,15 @@ import RecipesList from './components/RecipesList/RecipesList';
 import NewRecipe from './components/NewRecipe/NewRecipe';
 import IndividualRecipe from './components/IndividualRecipe/IndividualRecipe';
 import { allRecipes } from './store/recipe';
+import SuccesfulDelete from './components/SuccesfulDelete/SuccesfulDelete';
+import BrowseAllRecipes from './components/BrowseAllRecipes/BrowseAllRecipes';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const sessionUser = useSelector(state => state.session.user);
   const recipes = Object.values(useSelector(state => state.recipes));
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     dispatch(allRecipes())
@@ -60,7 +63,7 @@ function App() {
           </Route>
 
           <Route path='/browse/all' exact={true}>
-            <RecipesList recipes={recipeFilter(0)}/>
+            <BrowseAllRecipes/>
           </Route>
           <Route path='/browse/breakfast' exact={true}>
             <RecipesList recipes={recipeFilter(1)}/>
@@ -92,6 +95,9 @@ function App() {
 
           <Route path='/recipes/new' exact={true}>
             <NewRecipe />
+          </Route>
+          <Route path='/recipes/succesful_delete' exact={true} >
+            <SuccesfulDelete />
           </Route>
           <ProtectedRoute path='/users' exact={true} >
             <UsersList />
