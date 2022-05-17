@@ -5,7 +5,7 @@ import { oneRecipe, deleteRecipe } from '../../store/recipe';
 import { allCategories } from '../../store/category';
 import { BsDot, BsPlusSquare, BsDashSquare } from 'react-icons/bs'
 import './IndividualRecipe.css'
-import { useTransition } from 'react-spring'
+import { specificIngredients } from '../../store/ingredient';
 
 
 
@@ -16,6 +16,7 @@ const IndividualRecipe = () => {
     const history = useHistory();
     const recipe = useSelector(state => state.recipes[+recipeId])
     const categories = Object.values(useSelector(state => state.categories))
+    const ingredients = Object.values(useSelector(state => state.ingredients))
     const sessionUser = useSelector(state => state.session.user)
     const [deleteModal, setDeleteModal] = useState(false)
     const [editActive, setEditActive] = useState(false)
@@ -25,9 +26,11 @@ const IndividualRecipe = () => {
     const [currImageUrl, setCurrImageUrl] = useState(recipe?.image_url)
 
     {/* edit fields */ }
-    const [inputFields, setInputFields] = useState([
-        { title: '', amount: '', measurement: '', },
-    ])
+    // const [inputFields, setInputFields] = useState([
+    //     { title: '', amount: '', measurement: '', },
+    // ])
+
+    const [inputFields, setInputFields] = useState(recipe ? recipe.ingredients: [])
     const [categoryId, setCategoryId] = useState()
     const [imageUrl, setImageUrl] = useState(recipe?.image_ul)
     const [title, setTitle] = useState(recipe?.title)
@@ -70,6 +73,10 @@ const IndividualRecipe = () => {
         width: "500px",
         height: 'auto'
     }
+
+    useEffect(() => {
+        dispatch(specificIngredients(recipeId))
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(allCategories())
@@ -282,14 +289,14 @@ const IndividualRecipe = () => {
                         </div>
                     )) :
 
-                            inputFields.map((inputField, index) => (
+                            ingredients.map((ingredient, index) => (
                                 <div key={index}>
                                     <label>A:</label>
                                     <input type='text'
                                         className='input amount-input'
                                         name='amount'
                                         placeholder='1 | 20 | 1/2 | (optional)'
-                                        value={inputField.amount}
+                                        value={ingredient.amount}
                                         onChange={e => handleChangeInput(index, e)}
                                     />
                                     <label>M:</label>
@@ -297,7 +304,7 @@ const IndividualRecipe = () => {
                                         className='input measurement-input'
                                         name='measurement'
                                         placeholder='cup | bunch | whole | (optional)'
-                                        value={inputField.measurement}
+                                        value={ingredient.measurement}
                                         onChange={e => handleChangeInput(index, e)}
                                     />
                                     <label>I:</label>
@@ -305,7 +312,7 @@ const IndividualRecipe = () => {
                                         className='required-input input ingredient-input'
                                         name='title'
                                         placeholder='flour | eggs | milk'
-                                        value={inputField.title}
+                                        value={ingredient.title}
                                         onChange={e => handleChangeInput(index, e)}
                                     />
                                     <BsDashSquare onClick={() => handleRemoveField(index)} />
