@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { oneRecipe } from '../../store/recipe';
 import { BsDot } from 'react-icons/bs'
 import './IndividualRecipe.css'
+import { useTransition } from 'react-spring'
+
 
 
 
@@ -13,6 +15,7 @@ const IndividualRecipe = () => {
     const recipe = useSelector(state => state.recipes[+recipeId])
     const sessionUser = useSelector(state => state.session.user)
     const [deleteModal, setDeleteModal] = useState(false)
+    console.log(deleteModal)
 
     const imageStyle = {
         width: "500px",
@@ -60,28 +63,42 @@ const IndividualRecipe = () => {
                                     <button type='button' className='remove_recipe_button top_button' onClick={handleDeleteModalOpen}>Remove Recipe</button>
                                 </div> : null}
 
-                            {deleteModal ? <div className='delete_modal' onClose={handleDeleteModalClose}>
-                                <div>Are you sure you want to delete your recipe?</div>
-                                <div className='delete_modal_buttons'>
-
-                                    <button type='button' onClick={handleDeleteModalClose}>No, Cancel</button>
-                                    <button>Yes, Remove</button>
-                                </div>
-                            </div> : null}
-
 
                         </div>
                         <div className='recipe_title'>{recipe?.title}</div>
                         <div className='recipe_user_info'>Created By: <span className='username'>
                             {recipe?.user.username}</span></div>
                     </div>
-                    <div className='prep_time'>Prep Time: {recipe?.prep_time}</div>
-                    <div className='cook_time'>Cook Time: {recipe?.cook_time}</div>
-                    <div className='total_time'>Total Time: {recipe?.total_time}</div>
-                    <div className='serving_size'>Servings: {recipe?.servings}</div>
-                    <div className='ingredients_label'>Ingredients: </div>
+
+                    <div className='full_time_block'>
+
+                        <div className='time_block'>
+                            <div className='time_label'>PREP TIME</div>
+                            <div className='time_count'>
+
+                                {recipe?.prep_time}
+                            </div>
+                        </div>
+                        <div className='time_block'>
+                            <div className='time_label'>COOK TIME</div>
+                            <div className='time_count'>
+
+                                {recipe?.cook_time}
+                            </div>
+                        </div>
+                        <div className='time_block'>
+                            <div className='time_label'>TOTAL TIME</div>
+                            <div className='time_count'>
+
+                                {recipe?.total_time}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='serving_size'>Serving {recipe?.servings}</div>
+                    <div className='ingredients_label'>Ingredients </div>
                     {recipe?.ingredients.map(ingredient => (
-                        <div className='individual_ingredient_info'>
+                        <div key={ingredient.id} className='individual_ingredient_info'>
                             <BsDot />
                             <div className='ingredient_amount'>{ingredient.amount}&nbsp;</div>
                             <div className='ingredient_measurement'>{ingredient.measurement}&nbsp;</div>
@@ -98,6 +115,18 @@ const IndividualRecipe = () => {
                 </div>
             </div>
 
+            {deleteModal ?
+                <div className='opaque_container' onClick={handleDeleteModalClose} >
+
+                    <div className='delete_modal'>
+                        <div>Are you sure you want to delete your recipe?</div>
+                        <div className='delete_modal_buttons'>
+                            <button className='modal_button' type='button' onClick={handleDeleteModalClose}>No, Cancel</button>
+                            <button className='modal_button'>Yes, Remove</button>
+                        </div>
+                    </div>
+                </div>
+                : null}
 
         </div>
     );
