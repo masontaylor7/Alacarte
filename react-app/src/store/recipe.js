@@ -3,9 +3,9 @@ const CREATE_RECIPE = 'recipes/CREATE_RECIPE'
 const ONE_RECIPE = 'recipes/ONE_RECIPE'
 const DELETE_RECIPE = 'recipes/DELETE_RECIPE'
 
-const deleteRecipeActionCreator = (recipe) => ({
+const deleteRecipeActionCreator = (recipeId) => ({
     type: DELETE_RECIPE,
-    recipe
+    recipeId
 })
 
 const oneRecipeActionCreator = (recipe) => ({
@@ -60,15 +60,13 @@ export const allRecipes = () => async (dispatch) => {
 }
 
 export const deleteRecipe = (recipeId) => async (dispatch) => {
-    console.log(recipeId, 'recipeId --------------------------')
     const response = await fetch(`/api/recipes/${recipeId}`, {
         method: 'DELETE',
     })
-    console.log(response, '----------------------------------')
     if (response.ok) {
-        console.log('request was a okay champ')
         const recipe = await response.json()
-        dispatch(deleteRecipeActionCreator(recipe))
+        console.log(recipe.message)
+        dispatch(deleteRecipeActionCreator(recipeId))
         return recipe;
     } else {
         console.log('response was NOT ok champ')
@@ -99,7 +97,7 @@ export default function recipeReducer(state = initialState, action) {
         }
         case DELETE_RECIPE: {
             newState = { ...state }
-            delete newState[action.recipe.id]
+            delete newState[action.recipeId]
             return newState;
         }
         default:

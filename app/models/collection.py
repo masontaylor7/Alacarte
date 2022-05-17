@@ -16,5 +16,6 @@ class Collection(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'image_url': self.image_url
+            'image_url': self.image_url,
+            'recipes': [Recipe.to_dict() for Recipe in self.recipes],
         }

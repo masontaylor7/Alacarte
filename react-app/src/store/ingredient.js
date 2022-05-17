@@ -1,5 +1,6 @@
 const ALL_INGREDIENTS = 'ingredients/ALL_INGREDIENTS'
 const CREATE_INGREDIENT = 'ingredients/CREATE_INGREDIENT'
+const SPECIFIC_INGREDIENTS = 'ingredients/SPECIFIC_INGREDIENTS'
 
 const createIngredientActionCreator = (ingredient) => ({
     type: CREATE_INGREDIENT,
@@ -8,6 +9,11 @@ const createIngredientActionCreator = (ingredient) => ({
 
 const allIngredientsActionCreator = (ingredients) => ({
     type: ALL_INGREDIENTS,
+    ingredients
+})
+
+const specificIngredientsActionCreator = (ingredients) => ({
+    type: SPECIFIC_INGREDIENTS,
     ingredients
 })
 
@@ -41,14 +47,33 @@ export const allIngredients = () => async (dispatch) => {
     }
 }
 
+export const specificIngredients = (recipeId) => async (dispatch) => {
+    const response = await fetch(`/api/ingredients/recipes/${recipeId}`, {
+        method: 'GET'
+    })
+    if (response.ok) {
+        const ingredients = await response.json()
+        dispatch(specificIngredientsActionCreator(ingredients))
+        return ingredients;
+    }
+
+}
+
 let initialState = {}
 export default function ingredientReducer(state = initialState, action) {
     let newState
     switch (action.type) {
+        case SPECIFIC_INGREDIENTS: {
+            newState = { ...state }
+            action.ingredients.map(ingredient => {
+                return newState[ingredient.id] = ingredient
+            })
+            return newState;
+        }
         case CREATE_INGREDIENT: {
             newState = { ...state }
             newState[action.ingredient.id] = action.ingredient
-            return newState
+            return newState;
         }
         default:
             return state;

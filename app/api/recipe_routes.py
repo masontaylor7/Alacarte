@@ -16,7 +16,8 @@ def delete_recipe(id):
     recipe = Recipe.query.get(id)
     db.session.delete(recipe)
     db.session.commit()
-    return recipe.to_dict()
+    # return {'response': recipe.to_dict() }
+    return {'message': 'success'}
     # return {'hello': 'world'}
 
 @recipe_routes.route('/', methods=['GET'])

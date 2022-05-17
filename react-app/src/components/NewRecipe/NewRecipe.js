@@ -31,7 +31,6 @@ const NewRecipe = () => {
     const [servingSize, setServingSize] = useState('')
     const [directionsInp, setDirectionsInp] = useState('')
     const [placeholder, setPlaceholder] = useState("default");
-    console.log(categoryId)
 
     // let errs = []
     // useEffect(() => {
