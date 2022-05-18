@@ -12,9 +12,15 @@ import { specificIngredients } from '../../store/ingredient';
 
 const IndividualRecipe = () => {
     const dispatch = useDispatch();
-    const { recipeId } = useParams();
     const history = useHistory();
+    const { recipeId } = useParams();
     const recipe = useSelector(state => state.recipes[+recipeId])
+
+    useEffect(() => {
+        dispatch(oneRecipe(recipeId))
+    }, [dispatch])
+
+
     const categories = Object.values(useSelector(state => state.categories))
     const ingredients = Object.values(useSelector(state => state.ingredients))
     const sessionUser = useSelector(state => state.session.user)
@@ -23,16 +29,11 @@ const IndividualRecipe = () => {
 
     {/* current fields*/ }
     const [currTitle, setCurrTitle] = useState(recipe?.title)
-    const [currImageUrl, setCurrImageUrl] = useState(recipe?.image_url)
 
-    {/* edit fields */ }
-    // const [inputFields, setInputFields] = useState([
-    //     { title: '', amount: '', measurement: '', },
-    // ])
 
     const [inputFields, setInputFields] = useState(recipe ? recipe.ingredients: [])
     const [categoryId, setCategoryId] = useState()
-    const [imageUrl, setImageUrl] = useState(recipe?.image_ul)
+    const [imageUrl, setImageUrl] = useState(recipe?.image_url)
     const [title, setTitle] = useState(recipe?.title)
     const [prepTime, setPrepTime] = useState(recipe?.prep_time)
     const [cookTime, setCookTime] = useState(recipe?.cook_time)
@@ -40,6 +41,42 @@ const IndividualRecipe = () => {
     const [servingSize, setServingSize] = useState(recipe?.servings)
     const [directionsInp, setDirectionsInp] = useState(recipe?.directions)
     const [placeholder, setPlaceholder] = useState("default");
+
+
+    useEffect(() => {
+        setInputFields(recipe?.ingredients)
+        setImageUrl(recipe?.image_url)
+        setCurrTitle(recipe?.title)
+        setPrepTime(recipe?.prep_time)
+        setCookTime(recipe?.cook_time)
+        setTotalTime(recipe?.total_time)
+        setServingSize(recipe?.servings)
+        setDirectionsInp(recipe?.directions)
+    }, [editActive])
+
+    const handleEdit = () => {
+        setEditActive(true)
+
+    }
+
+    const handleCancelEdit = () => {
+        setEditActive(false)
+        setImageUrl(recipe?.image_url)
+        setCurrTitle(recipe?.title)
+        setPrepTime(recipe?.prep_time)
+        setCookTime(recipe?.cook_time)
+        setTotalTime(recipe?.total_time)
+        setServingSize(recipe?.servings)
+        setDirectionsInp(recipe?.directions)
+    }
+
+    const handleDeleteModalClose = () => {
+        setDeleteModal(false)
+    }
+
+    const handleDeleteModalOpen = () => {
+        setDeleteModal(true)
+    }
 
     const handleImageField = (e) => {
         setImageUrl(e.target.value)
@@ -82,12 +119,6 @@ const IndividualRecipe = () => {
         dispatch(allCategories())
     }, [dispatch])
 
-    useEffect(() => {
-        dispatch(oneRecipe(recipeId))
-    }, [dispatch])
-
-    console.log(recipe, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
-
     const handleDelete = async (e) => {
         e.preventDefault()
         await dispatch(deleteRecipe(recipe?.id))
@@ -113,27 +144,13 @@ const IndividualRecipe = () => {
 
     const handleChangeInput = (index, e) => {
         const ingredients = [...inputFields]
+        console.log(ingredients)
+        // console.log(ingredients[index][e.target.name])
         ingredients[index][e.target.name] = e.target.value
+        // console.log(ingredients[index][e.target.name])
         setInputFields(ingredients)
     }
 
-    const handleEdit = () => {
-        // history.push(`/recipes/${recipe.id}/edit`)
-        setEditActive(true)
-    }
-
-    const handleCancelEdit = () => {
-        // history.push(`/recipes/${recipe.id}/edit`)
-        setEditActive(false)
-    }
-
-    const handleDeleteModalClose = () => {
-        setDeleteModal(false)
-    }
-
-    const handleDeleteModalOpen = () => {
-        setDeleteModal(true)
-    }
 
     return (
         <div className='individual_recipe_page'>
@@ -289,14 +306,14 @@ const IndividualRecipe = () => {
                         </div>
                     )) :
 
-                            ingredients.map((ingredient, index) => (
+                            inputFields?.map((ingredient, index) => (
                                 <div key={index}>
                                     <label>A:</label>
                                     <input type='text'
                                         className='input amount-input'
                                         name='amount'
                                         placeholder='1 | 20 | 1/2 | (optional)'
-                                        value={ingredient.amount}
+                                        value={ingredient?.amount}
                                         onChange={e => handleChangeInput(index, e)}
                                     />
                                     <label>M:</label>
@@ -304,7 +321,7 @@ const IndividualRecipe = () => {
                                         className='input measurement-input'
                                         name='measurement'
                                         placeholder='cup | bunch | whole | (optional)'
-                                        value={ingredient.measurement}
+                                        value={ingredient?.measurement}
                                         onChange={e => handleChangeInput(index, e)}
                                     />
                                     <label>I:</label>
@@ -312,7 +329,7 @@ const IndividualRecipe = () => {
                                         className='required-input input ingredient-input'
                                         name='title'
                                         placeholder='flour | eggs | milk'
-                                        value={ingredient.title}
+                                        value={ingredient?.title}
                                         onChange={e => handleChangeInput(index, e)}
                                     />
                                     <BsDashSquare onClick={() => handleRemoveField(index)} />
@@ -327,7 +344,16 @@ const IndividualRecipe = () => {
             <div className='directions_block'>
                 <div className='directions_text'>
                     <div className='directions_label'>Directions: </div>
-                    {recipe?.directions}
+                    {editActive ?
+                        <input type='text'
+                            className='input directions_input'
+                            name='directions'
+                            placeholder='1. In a large bowl mix flour, eggs, and milk...'
+                            onChange={handleSetDirectionsInp}
+                            value={directionsInp}
+
+                        /> :
+                        recipe?.directions}
                 </div>
             </div>
 
