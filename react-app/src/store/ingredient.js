@@ -1,6 +1,12 @@
 const ALL_INGREDIENTS = 'ingredients/ALL_INGREDIENTS'
 const CREATE_INGREDIENT = 'ingredients/CREATE_INGREDIENT'
 const SPECIFIC_INGREDIENTS = 'ingredients/SPECIFIC_INGREDIENTS'
+const DELETE_INGREDIENT = 'ingredients/DELETE_INGREDIENT'
+
+const deleteIngredientActionCreator = (ingredientId) => ({
+    type: DELETE_INGREDIENT,
+    ingredientId
+})
 
 const createIngredientActionCreator = (ingredient) => ({
     type: CREATE_INGREDIENT,
@@ -56,7 +62,17 @@ export const specificIngredients = (recipeId) => async (dispatch) => {
         dispatch(specificIngredientsActionCreator(ingredients))
         return ingredients;
     }
+}
 
+export const deleteIngredient = (ingredientId) => async (dispatch) => {
+    const response = await fetch(`/api/ingredients/${ingredientId}`, {
+        method: 'DELETE',
+    })
+    if (response.ok) {
+        const ingredient = await response.json()
+        dispatch(deleteIngredientActionCreator(ingredientId))
+        return ingredient
+    }
 }
 
 let initialState = {}
@@ -73,6 +89,11 @@ export default function ingredientReducer(state = initialState, action) {
         case CREATE_INGREDIENT: {
             newState = { ...state }
             newState[action.ingredient.id] = action.ingredient
+            return newState;
+        }
+        case DELETE_INGREDIENT: {
+            newState = { ...state }
+            delete newState[action.ingredientId]
             return newState;
         }
         default:

@@ -7,6 +7,13 @@ from app.api.auth_routes import validation_errors_to_error_messages
 
 ingredient_routes = Blueprint('ingredients', __name__)
 
+@ingredient_routes.route('/<int:id>', methods=['DELETE'])
+def delete_ingredient(id):
+    ingredient = Ingredient.query.get(id)
+    db.session.delete(ingredient)
+    db.session.commit()
+    return {'message': 'success'}
+
 @ingredient_routes.route('/recipes/<int:id>', methods=['GET'])
 def get_ingredients(id):
     ingredients = Ingredient.query.filter(Ingredient.recipe_id == id).all()
