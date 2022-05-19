@@ -30,6 +30,10 @@
     height: 75px;
 }
 
+.li-block {
+    display: block;
+}
+
 
 
 nav ul li ul {

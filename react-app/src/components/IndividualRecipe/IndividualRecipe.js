@@ -5,7 +5,7 @@ import { oneRecipe, deleteRecipe, updateRecipe } from '../../store/recipe';
 import { allCategories } from '../../store/category';
 import { BsDot, BsPlusSquare, BsDashSquare } from 'react-icons/bs'
 import './IndividualRecipe.css'
-import { deleteIngredient, specificIngredients, createIngredient } from '../../store/ingredient';
+import { deleteIngredient, specificIngredients, createIngredient, updateIngredient } from '../../store/ingredient';
 
 
 const IndividualRecipe = () => {
@@ -212,6 +212,18 @@ const IndividualRecipe = () => {
         }
 
         dispatch(updateRecipe(recipe))
+
+        inputFields?.map(ingredientobj => {
+            if (ingredientobj.id) {
+                // console.log(ingredientobj, '--------- has Id')
+                dispatch(updateIngredient(ingredientobj))
+            } else {
+                // console.log(ingredientobj, '----------doesnt have Id')
+                dispatch(createIngredient(ingredientobj))
+            }
+
+        })
+
         setRemovedIng([])
         setEditActive(false)
 
@@ -364,7 +376,7 @@ const IndividualRecipe = () => {
 
                         <div className='ingredients_label'>Ingredients </div>
 
-                        {!editActive ? recipe?.ingredients.map(ingredient => (
+                        {!editActive ? recipe?.ingredients.sort((a, b) => a.id - b.id).map(ingredient => (
                             <div key={ingredient.id} className='individual_ingredient_info'>
                                 <BsDot />
                                 <div className='ingredient_amount'>{ingredient.amount}&nbsp;</div>

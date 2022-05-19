@@ -2,6 +2,12 @@ const ALL_INGREDIENTS = 'ingredients/ALL_INGREDIENTS'
 const CREATE_INGREDIENT = 'ingredients/CREATE_INGREDIENT'
 const SPECIFIC_INGREDIENTS = 'ingredients/SPECIFIC_INGREDIENTS'
 const DELETE_INGREDIENT = 'ingredients/DELETE_INGREDIENT'
+const UPDATE_INGREDIENT = 'ingredients/UPDATE_INGREDIENT'
+
+const updateIngredientActionCreator = (ingredient) => ({
+    type: UPDATE_INGREDIENT,
+    ingredient
+})
 
 const deleteIngredientActionCreator = (ingredientId) => ({
     type: DELETE_INGREDIENT,
@@ -23,8 +29,20 @@ const specificIngredientsActionCreator = (ingredients) => ({
     ingredients
 })
 
+export const updateIngredient = (ingredient) => async (dispatch) => {
+    const response = await fetch(`/api/ingredients/${ingredient.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(ingredient)
+    })
+    if (response.ok) {
+        const ingredient = await response.json()
+        dispatch(updateIngredientActionCreator(ingredient))
+        return ingredient;
+    }
+}
+
 export const createIngredient = (ingredient) => async (dispatch) => {
-    console.log( ingredient,  '>>>>?>?>')
     const response = await fetch('/api/ingredients/new', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -87,6 +105,11 @@ export default function ingredientReducer(state = initialState, action) {
             return newState;
         }
         case CREATE_INGREDIENT: {
+            newState = { ...state }
+            newState[action.ingredient.id] = action.ingredient
+            return newState;
+        }
+        case UPDATE_INGREDIENT: {
             newState = { ...state }
             newState[action.ingredient.id] = action.ingredient
             return newState;

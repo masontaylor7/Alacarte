@@ -15,6 +15,7 @@ import IndividualRecipe from './components/IndividualRecipe/IndividualRecipe';
 import { allRecipes } from './store/recipe';
 import SuccesfulDelete from './components/SuccesfulDelete/SuccesfulDelete';
 import BrowseAllRecipes from './components/BrowseAllRecipes/BrowseAllRecipes';
+import SavedRecipes from './components/SavedRecipes/SavedRecipes';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -99,11 +100,14 @@ function App() {
           <Route path='/recipes/succesful_delete' exact={true} >
             <SuccesfulDelete />
           </Route>
-          <ProtectedRoute path='/users' exact={true} >
+          {/* <ProtectedRoute path='/users' exact={true} >
             <UsersList />
           </ProtectedRoute>
           <ProtectedRoute path='/users/:userId' exact={true} >
             <User />
+          </ProtectedRoute> */}
+          <ProtectedRoute path='/saved-recipes' exact={true} >
+            <SavedRecipes />
           </ProtectedRoute>
           <ProtectedRoute path='/recipes/:recipeId' exact={true} >
             <IndividualRecipe />

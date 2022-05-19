@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from '../auth/LogoutButton';
 import './NavBar.css'
-import { BsChevronDown, BsFileEarmarkPlus } from 'react-icons/bs'
+import { BsChevronDown, BsFileEarmarkPlus, BsCollection } from 'react-icons/bs'
+import { VscHome } from 'react-icons/vsc'
 import BrowseDropDown from '../DropDown/BrowseDropDown';
 
 import { allCategories } from '../../store/category';
@@ -23,17 +24,17 @@ const NavBar = () => {
     <div className='nav_bar'>
       <nav>
         <ul className='nav_bar_ul'>
-          <li>
+          <li className='li-block'>
             <div className='li_containers'>
               <NavLink to='/home' exact={true} activeClassName='active'>
                 HOME
               </NavLink>
-              <BsChevronDown className='down_arrow_chevron' />
+              <VscHome className='down_arrow_chevron' />
             </div>
           </li>
-          <li>
+          <li className='li-block'>
             <div className='li_containers'>
-              <NavLink to='#' exact={true} className='li_containers' activeClassName='active' onMouseEnter={() => setDropDown(true)}
+              <NavLink to={`/browse/all`} exact={true} className='li_containers' activeClassName='active' onMouseEnter={() => setDropDown(true)}
                 onMouseLeave={() => setDropDown(false)}>
                 BROWSE RECIPES
               </NavLink>
@@ -98,15 +99,15 @@ const NavBar = () => {
               }
             </div>
           </li>
-          {sessionUser ? <li>
+          {sessionUser ? <li className='li-block'>
             <div className='li_containers'>
-              <NavLink to='/users' exact={true} activeClassName='active'>
+              <NavLink to='/saved-recipes' exact={true} activeClassName='active'>
                 SAVED RECIPES
               </NavLink>
-              <BsChevronDown />
+              <BsCollection />
             </div>
           </li> : null}
-          {sessionUser ? <li>
+          {sessionUser ? <li className='li-block'>
             <div className='li_containers add_recipe'>
               <NavLink to='/recipes/new' exact={true} activeClassName='active'>
                 ADD A RECIPE
@@ -115,7 +116,7 @@ const NavBar = () => {
             </div>
           </li> : null}
           {!sessionUser ?
-            <li>
+            <li className='li-block' >
               <div className='li_containers'>
                 <NavLink to='/login' exact={true} activeClassName='active'>
                   LOGIN
@@ -125,7 +126,7 @@ const NavBar = () => {
             </li> : null
           }
           {!sessionUser ?
-            <li>
+            <li className='li-block' >
               <div className='li_containers'>
                 <NavLink to='/sign-up' exact={true} activeClassName='active'>
                   SIGN UP
@@ -135,8 +136,10 @@ const NavBar = () => {
             </li> : null
           }
           {sessionUser &&
-            <li>
-              <LogoutButton />
+            <li className='li-block' >
+              <div className='li_containers'>
+                <LogoutButton />
+              </div>
             </li>
           }
         </ul>

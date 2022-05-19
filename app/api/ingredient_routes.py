@@ -24,6 +24,16 @@ def all_ingredients():
     ingredients = Ingredient.query.all()
     return jsonify([ingredient.to_dict() for ingredient in ingredients])
 
+@ingredient_routes.route('/<int:id>', methods=['PUT'])
+def update_ingredient(id):
+    update_ingredient = request.get_json(force=True)
+    existing_ingredient = Ingredient.query.get(id)
+    existing_ingredient.amount = update_ingredient['amount']
+    existing_ingredient.measuerment = update_ingredient['measurement']
+    existing_ingredient.title = update_ingredient['title']
+    db.session.commit()
+    return jsonify(existing_ingredient.to_dict())
+
 
 @ingredient_routes.route('/new', methods=['POST'])
 def new_recipe():
