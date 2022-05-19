@@ -28,17 +28,17 @@ const NavBar = () => {
             <div className='li_containers'>
               <NavLink to='/home' exact={true} activeClassName='active'>
                 HOME
+              <VscHome className='down_arrow_chevron icon' />
               </NavLink>
-              <VscHome className='down_arrow_chevron' />
             </div>
           </li>
           <li className='li-block'>
             <div className='li_containers'>
-              <NavLink to={`/browse/all`} exact={true} className='li_containers' activeClassName='active' onMouseEnter={() => setDropDown(true)}
+              <NavLink to={`/browse/all`} exact={true} className='browser_hover_block' activeClassName='active' onMouseEnter={() => setDropDown(true)}
                 onMouseLeave={() => setDropDown(false)}>
                 BROWSE RECIPES
+              <BsChevronDown className='down_arrow_chevron icon' />
               </NavLink>
-              <BsChevronDown className='down_arrow_chevron' />
               {dropDown &&
                 <ul className='browse_drop_down' onMouseEnter={() => setDropDown(true)}
                   onMouseLeave={() => setDropDown(false)} >
@@ -93,9 +93,7 @@ const NavBar = () => {
                       Vegetarian
                     </NavLink>
                   </li>
-
                 </ul>
-
               }
             </div>
           </li>
@@ -103,16 +101,16 @@ const NavBar = () => {
             <div className='li_containers'>
               <NavLink to='/saved-recipes' exact={true} activeClassName='active'>
                 SAVED RECIPES
+              <BsCollection className='icon'/>
               </NavLink>
-              <BsCollection />
             </div>
           </li> : null}
           {sessionUser ? <li className='li-block'>
             <div className='li_containers add_recipe'>
               <NavLink to='/recipes/new' exact={true} activeClassName='active'>
                 ADD A RECIPE
+              <BsFileEarmarkPlus className='icon'/>
               </NavLink>
-              <BsFileEarmarkPlus />
             </div>
           </li> : null}
           {!sessionUser ?
@@ -121,7 +119,7 @@ const NavBar = () => {
                 <NavLink to='/login' exact={true} activeClassName='active'>
                   LOGIN
                 </NavLink>
-                <BsChevronDown />
+                <BsChevronDown className='icon'/>
               </div>
             </li> : null
           }
@@ -131,7 +129,7 @@ const NavBar = () => {
                 <NavLink to='/sign-up' exact={true} activeClassName='active'>
                   SIGN UP
                 </NavLink>
-                <BsChevronDown />
+                <BsChevronDown className='icon'/>
               </div>
             </li> : null
           }

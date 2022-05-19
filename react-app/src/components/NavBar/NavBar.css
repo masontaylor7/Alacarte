@@ -28,6 +28,7 @@
 .li_containers {
     display: flex;
     height: 75px;
+    /* border: 1px solid red; */
 }
 
 .li-block {
@@ -60,7 +61,7 @@ nav ul li:hover ul {
 }
 
 .category_select_li:hover {
-    background-color: #f3f3f3;
+    background-color: var(--yellow-color);
     padding: 8px;
 }
 
@@ -86,12 +87,20 @@ nav ul li:hover ul {
 }
 
 
-li {
-    list-style: none;
+.icon {
     color: #B5460F;
+    height: 20px;
+    width: 20px;
+    margin-left: 4px;
+}
+
+.browser_hover_block {
+    height: 50px;
 }
 
 a {
+    display: flex;
+    align-items: center;
     font-family: 'Roboto', sans-serif;
     font-size: .875rem;
     margin-right: 5px;
