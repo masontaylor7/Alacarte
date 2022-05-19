@@ -26,6 +26,21 @@ def all_recipes():
     return jsonify([recipe.to_dict() for recipe in recipes])
     # return {"recipes": [recipe.to_dict() for recipe in recipes]}
 
+@recipe_routes.route('/<int:id>', methods=['PUT'])
+def update_recipe(id):
+    update_recipe = request.get_json(force=True)
+    existing_recipe = Recipe.query.get(id)
+    existing_recipe.image_url = update_recipe['image_url']
+    existing_recipe.title = update_recipe['title']
+    existing_recipe.category_id = update_recipe['category_id']
+    existing_recipe.prep_time = update_recipe['prep_time']
+    existing_recipe.cook_time = update_recipe['cook_time']
+    existing_recipe.total_time = update_recipe['total_time']
+    existing_recipe.servings = update_recipe['servings']
+    existing_recipe.directions = update_recipe['directions']
+    db.session.commit()
+    return jsonify(existing_recipe.to_dict())
+
 @recipe_routes.route('/new', methods=['POST'])
 # @login_required
 def new_recipe():

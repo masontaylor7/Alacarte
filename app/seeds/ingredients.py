@@ -26,7 +26,7 @@ def seed_ingredients():
         recipe_id='1', amount='4', measurement='', title='limes, cut in wedges'
     )
     ing9 = Ingredient(
-        recipe_id='1', amount='4', measurement='', title='limes, cut in wedges'
+        recipe_id='1', amount='2', measurement='', title='lemons, cut in wedges'
     )
     ing10 = Ingredient(
         recipe_id='2', amount='1', measurement='(16-ounce) block', title='extra firm or firm tofu, drained'

@@ -22,7 +22,7 @@ const NewRecipe = () => {
         { title: '', amount: '', measurement: '', },
     ])
 
-    const [categoryId, setCategoryId] = useState()
+    const [categoryId, setCategoryId] = useState('')
     const [imageUrl, setImageUrl] = useState('')
     const [title, setTitle] = useState('')
     const [prepTime, setPrepTime] = useState('')

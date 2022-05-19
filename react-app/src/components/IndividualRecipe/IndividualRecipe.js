@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { oneRecipe, deleteRecipe } from '../../store/recipe';
+import { oneRecipe, deleteRecipe, updateRecipe } from '../../store/recipe';
 import { allCategories } from '../../store/category';
 import { BsDot, BsPlusSquare, BsDashSquare } from 'react-icons/bs'
 import './IndividualRecipe.css'
-import { deleteIngredient, specificIngredients } from '../../store/ingredient';
-
-
+import { deleteIngredient, specificIngredients, createIngredient } from '../../store/ingredient';
 
 
 const IndividualRecipe = () => {
@@ -15,10 +13,9 @@ const IndividualRecipe = () => {
     const history = useHistory();
     const { recipeId } = useParams();
     const recipe = useSelector(state => state.recipes[+recipeId])
+    console.log('========', recipe)
 
-    useEffect(() => {
-        dispatch(oneRecipe(recipeId))
-    }, [dispatch])
+
 
 
     const categories = Object.values(useSelector(state => state.categories))
@@ -28,27 +25,33 @@ const IndividualRecipe = () => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [editActive, setEditActive] = useState(false)
     const [deleteIngredientModal, setDeleteIngredientModal] = useState(false)
-    const [deleteIndex, setDeleteIndex] = useState(-1)
 
     {/* current fields*/ }
-    const [ingId, setIngId] = useState(0)
-    console.log(ingId)
-
-
-    const [currTitle, setCurrTitle] = useState(recipe?.title)
-    const [inputFields, setInputFields] = useState(recipe ? recipe?.ingredients : [])
-    const [categoryId, setCategoryId] = useState(recipe?.category_id)
-    const [imageUrl, setImageUrl] = useState(recipe?.image_url)
-    const [title, setTitle] = useState(recipe?.title)
-    const [prepTime, setPrepTime] = useState(recipe?.prep_time)
-    const [cookTime, setCookTime] = useState(recipe?.cook_time)
-    const [totalTime, setTotalTime] = useState(recipe?.total_time)
-    const [servingSize, setServingSize] = useState(recipe?.servings)
-    const [directionsInp, setDirectionsInp] = useState(recipe?.directions)
-    const [placeholder, setPlaceholder] = useState("default");
+    const [deleteIndex, setDeleteIndex] = useState(-1)
+    const [removedIng, setRemovedIng] = useState([])
 
 
     useEffect(() => {
+        dispatch(oneRecipe(+recipeId))
+    }, [dispatch, editActive])
+
+    const [currTitle, setCurrTitle] = useState(recipe?.title != undefined ? recipe?.title : '')
+    const [inputFields, setInputFields] = useState(recipe?.ingredients != undefined ? recipe?.ingredients : [])
+    const [categoryId, setCategoryId] = useState(recipe?.category_id || '')
+    const [imageUrl, setImageUrl] = useState(recipe?.image_url || '')
+    const [title, setTitle] = useState(recipe?.title || '')
+    const [prepTime, setPrepTime] = useState(recipe?.prep_time || '')
+    const [cookTime, setCookTime] = useState(recipe?.cook_time || '')
+    const [totalTime, setTotalTime] = useState(recipe?.total_time || '')
+    const [servingSize, setServingSize] = useState(recipe?.servings || '')
+    const [directionsInp, setDirectionsInp] = useState('')
+    const [placeholder, setPlaceholder] = useState("default");
+
+    // console.log(currTitle, inputFields, categoryId, imageUrl, title, prepTime, prepTime, cookTime, totalTime, servingSize, directionsInp, placeholder, inputFields)
+
+
+    useEffect(() => {
+        setCategoryId(recipe?.category_id)
         setInputFields(recipe?.ingredients)
         setImageUrl(recipe?.image_url)
         setCurrTitle(recipe?.title)
@@ -66,6 +69,7 @@ const IndividualRecipe = () => {
     }
 
     const handleCancelEdit = () => {
+        handleReAddIngredients()
         setEditActive(false)
         setImageUrl(recipe?.image_url)
         setCurrTitle(recipe?.title)
@@ -146,10 +150,26 @@ const IndividualRecipe = () => {
         }])
     }
 
+    const handleReAddIngredients = () => {
+        if (removedIng.length > 0) {
+
+            removedIng.map(ingredientobj => {
+                dispatch(createIngredient(ingredientobj))
+            })
+            setRemovedIng([])
+        } else {
+            return
+        }
+
+    }
+
     const handleDeleteIngredient = () => {
         const values = [...inputFields]
         const removedInp = values.splice(deleteIndex, 1)
-        console.log(removedInp[0].id)
+        const removed = [...removedIng]
+        removed.push(...removedInp)
+        setRemovedIng(removed)
+
         dispatch(deleteIngredient(removedInp[0].id))
         handleDeleteIngredientModalClose()
         setInputFields(values)
@@ -181,7 +201,6 @@ const IndividualRecipe = () => {
 
         const recipe = {
             id: recipeId,
-            user_id: sessionUser.id,
             image_url: imageUrl,
             title: currTitle,
             category_id: categoryId,
@@ -191,7 +210,10 @@ const IndividualRecipe = () => {
             servings: servingSize,
             directions: directionsInp,
         }
-        console.log(recipe)
+
+        dispatch(updateRecipe(recipe))
+        setRemovedIng([])
+        setEditActive(false)
 
     }
 
@@ -202,13 +224,13 @@ const IndividualRecipe = () => {
                 {/* <form> */}
                 <div className='sticky_block'>
                     <div className='image_block'>
-                        {!editActive && recipe?.image_url ? <img src={recipe.image_url} style={imageStyle} alt='image' /> : null}
+                        {!editActive && recipe?.image_url ? <img src={recipe?.image_url} style={imageStyle} alt='image' /> : null}
 
                         {editActive &&
                             <div>
 
                                 <div>
-                                    {imageUrl ? <img src={imageUrl} style={imageStyle} alt='image' /> : <img src={recipe.image_url} style={imageStyle} alt='image' />}
+                                    {imageUrl ? <img src={imageUrl} style={imageStyle} alt='image' /> : <img src={recipe?.image_url} style={imageStyle} alt='image' />}
                                 </div>
 
                                 <label>Finished Dish Image:</label>
@@ -427,7 +449,6 @@ const IndividualRecipe = () => {
                         </div>
                     </div>
                     : null}
-                {/* </form> */}
             </div>
         </form>
     );

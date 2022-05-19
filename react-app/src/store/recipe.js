@@ -2,6 +2,12 @@ const ALL_RECIPES = 'recipes/ALL_POSTS'
 const CREATE_RECIPE = 'recipes/CREATE_RECIPE'
 const ONE_RECIPE = 'recipes/ONE_RECIPE'
 const DELETE_RECIPE = 'recipes/DELETE_RECIPE'
+const UPDATE_RECIPE = 'recipes/UPDATE_RECIPE'
+
+const updateRecipeActionCreator = (recipe) => ({
+    type: UPDATE_RECIPE,
+    recipe
+})
 
 const deleteRecipeActionCreator = (recipeId) => ({
     type: DELETE_RECIPE,
@@ -40,10 +46,22 @@ export const createRecipe = (recipe) => async (dispatch) => {
         body: JSON.stringify(recipe)
     })
     if (response.ok) {
+        const recipe = await response.json()
+        dispatch(createRecipeActionCreator(recipe))
+        return recipe;
+    }
+}
 
-        const newRecipe = await response.json()
-        dispatch(createRecipeActionCreator(newRecipe))
-        return newRecipe;
+export const updateRecipe = (recipe) => async (dispatch) => {
+    const response = await fetch(`/api/recipes/${recipe.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recipe)
+    })
+    if (response.ok) {
+        const recipe = await response.json()
+        dispatch(updateRecipeActionCreator(recipe))
+        return recipe;
     }
 }
 
@@ -88,6 +106,11 @@ export default function recipeReducer(state = initialState, action) {
             newState[action.recipe.id] = action.recipe
             return newState;
         }
+        case UPDATE_RECIPE: {
+            newState = { ...state }
+            newState[action.recipe.id] = action.recipe
+            return newState;
+            }
         case ALL_RECIPES: {
             newState = { ...state }
             action.recipes.map(recipe => {
