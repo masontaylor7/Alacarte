@@ -6,7 +6,6 @@ class Collection(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    image_url = db.Column(db.String(5000), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     user = db.relationship('User', back_populates='collections')
@@ -16,6 +15,5 @@ class Collection(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'image_url': self.image_url,
             'recipes': [Recipe.to_dict() for Recipe in self.recipes],
         }

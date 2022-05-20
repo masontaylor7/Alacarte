@@ -4,12 +4,14 @@ import session from './session';
 import recipeReducer from './recipe';
 import categoryReducer from './category';
 import ingredientReducer from './ingredient';
+import collectionReducer from './collection';
 
 const rootReducer = combineReducers({
   session,
   recipes: recipeReducer,
   categories: categoryReducer,
   ingredients: ingredientReducer,
+  collections : collectionReducer,
 });
 
 

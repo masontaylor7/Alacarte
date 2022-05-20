@@ -24,3 +24,9 @@ a {
     /* position: relative; */
     margin-top: 76px;
 }
+
+.single_recipe {
+    display: flex;
+    flex-direction: column;
+    height: 700px;
+}

@@ -11,6 +11,7 @@ from .api.auth_routes import auth_routes
 from .api.recipe_routes import recipe_routes
 from .api.ingredient_routes import ingredient_routes
 from .api.category_routes import category_routes
+from .api.collection_routes import collection_routes
 
 
 from .seeds import seed_commands
@@ -36,6 +37,7 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(category_routes, url_prefix='/api/categories')
+app.register_blueprint(collection_routes, url_prefix='/api/collections')
 app.register_blueprint(recipe_routes, url_prefix='/api/recipes')
 app.register_blueprint(ingredient_routes, url_prefix='/api/ingredients')
 db.init_app(app)

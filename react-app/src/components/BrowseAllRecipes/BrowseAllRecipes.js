@@ -22,8 +22,8 @@ const BrowseAllRecipes = () => {
     return (
         <div className='recipe_list'>
             {recipes.map(recipe => (
-                <div key={recipe.id} className='single_recipe'>
-                    <NavLink to={`/recipes/${recipe.id}`} >
+                <div key={recipe.id}>
+                    <NavLink className='single_recipe' to={`/recipes/${recipe.id}`} >
                         <img src={recipe.image_url} style={imageStyle} />
                         <div className='recipe_details'>
                             <div className='recipe_category'>{recipe.category.title}</div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
@@ -16,13 +16,18 @@ import { allRecipes } from './store/recipe';
 import SuccesfulDelete from './components/SuccesfulDelete/SuccesfulDelete';
 import BrowseAllRecipes from './components/BrowseAllRecipes/BrowseAllRecipes';
 import SavedRecipes from './components/SavedRecipes/SavedRecipes';
+import { getCollectionRecipes } from './store/collection';
 
 function App() {
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const sessionUser = useSelector(state => state.session.user);
   const recipes = Object.values(useSelector(state => state.recipes));
-  const dispatch = useDispatch();
+  const collRecipes = Object.values(useSelector(state => state.collections))
 
+  useEffect(() => {
+    dispatch( getCollectionRecipes )
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(allRecipes())
@@ -106,8 +111,11 @@ function App() {
           <ProtectedRoute path='/users/:userId' exact={true} >
             <User />
           </ProtectedRoute> */}
-          <ProtectedRoute path='/saved-recipes' exact={true} >
+          <ProtectedRoute path='/collections' exact={true} >
             <SavedRecipes />
+          </ProtectedRoute>
+          <ProtectedRoute path='/collections/:collectionId' exact={true} >
+            <RecipesList />
           </ProtectedRoute>
           <ProtectedRoute path='/recipes/:recipeId' exact={true} >
             <IndividualRecipe />

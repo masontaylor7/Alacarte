@@ -99,7 +99,7 @@ const NavBar = () => {
           </li>
           {sessionUser ? <li className='li-block'>
             <div className='li_containers'>
-              <NavLink to='/saved-recipes' exact={true} activeClassName='active'>
+              <NavLink to='/collections' exact={true} activeClassName='active'>
                 SAVED RECIPES
               <BsCollection className='icon'/>
               </NavLink>

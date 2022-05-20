@@ -26,10 +26,11 @@
 } */
 
 .li_containers {
-    display: flex;
+    display: block;
     height: 75px;
     /* border: 1px solid red; */
 }
+
 
 .li-block {
     display: block;
@@ -57,16 +58,23 @@ nav ul li:hover ul {
 }
 
 .category_select_li {
-    padding: 8px;
+    /* padding: 8px; */
+    /* display: block; */
+    display: flex;
+    align-items: center;
 }
 
 .category_select_li:hover {
     background-color: var(--yellow-color);
-    padding: 8px;
+    /* padding: 8px; */
+}
+
+.category_select_link {
+
+    height: 25px;
 }
 
 .nav_bar_ul {
-    margin: 0px;
     display: flex;
     justify-content: space-evenly;
 }

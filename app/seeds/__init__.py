@@ -4,6 +4,8 @@ from .users import seed_users, undo_users
 from .categories import seed_categories, undo_categories
 from .ingredients import seed_ingredients, undo_ingredients
 from .recipes import seed_recipes, undo_recipes
+from .collections import seed_collections, undo_collections
+from .collection_recipes import seed_collection_recipes, undo_collection_recipes
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
@@ -17,6 +19,8 @@ def seed():
     seed_categories()
     seed_recipes()
     seed_ingredients()
+    seed_collections()
+    seed_collection_recipes()
     # Add other seed functions here
 
 
@@ -27,4 +31,6 @@ def undo():
     undo_categories()
     undo_recipes()
     undo_ingredients()
+    undo_collections()
+    undo_collection_recipes()
     # Add other undo functions here
