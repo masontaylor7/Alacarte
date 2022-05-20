@@ -19,7 +19,7 @@ const SavedRecipes = () => {
     return (
         <div className='collections_page'>
             {collections.map(collection => (
-                <NavLink to={`/collections/${collection.id}`}>
+                <NavLink key={collection.id} className='single_collection' to={`/collections/${collection.id}`}>
                     <div key={collection.id} className='single_collection'>
                         <div>{collection.title}</div>
                     </div>

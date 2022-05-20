@@ -128,6 +128,15 @@ const NewRecipe = () => {
         setDirectionsInp(e.target.value)
     }
 
+    const isImageUrl = () => {
+        if (imageUrl.includes('http') || imageUrl.includes('https')) {
+            if (imageUrl.includes('.jpg') || imageUrl.includes('.png') || imageUrl.includes('.img') || imageUrl.includes('.jpeg')) {
+                return true;
+            }
+        }
+        return false
+    }
+
 
     return (
         <div>
@@ -145,7 +154,7 @@ const NewRecipe = () => {
                     />
                 </div>
                 <div>
-                    {imageUrl ? <img src={imageUrl} style={imageStyle} alt='image' /> : <img src='https://img.buzzfeed.com/buzzfeed-static/static/2019-12/4/16/tmp/96ecd548dea3/tmp-name-2-109-1575477795-3_dblbig.jpg?resize=1200:*' style={imageStyle} alt='image' />}
+                    {imageUrl && isImageUrl() ? <img src={imageUrl} style={imageStyle} alt='image' /> : <img src='https://img.buzzfeed.com/buzzfeed-static/static/2019-12/4/16/tmp/96ecd548dea3/tmp-name-2-109-1575477795-3_dblbig.jpg?resize=1200:*' style={imageStyle} alt='image' />}
                 </div>
                 <label>Finished Dish Image:</label>
                 <input type='text'

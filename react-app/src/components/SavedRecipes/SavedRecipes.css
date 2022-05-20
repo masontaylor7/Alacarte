@@ -1,10 +1,10 @@
 
-.collections_page {
-    background-color: rebeccapurple;
-}
+/* .collections_page {
+
+} */
 
 .single_collection {
-    height: 700px;
-    width: 700px;
-    background-color: aquamarine;
+    height: 200px;
+    width: 200px;
+    border: 1px solid red;
 }

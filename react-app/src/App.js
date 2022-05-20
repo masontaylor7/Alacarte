@@ -17,17 +17,14 @@ import SuccesfulDelete from './components/SuccesfulDelete/SuccesfulDelete';
 import BrowseAllRecipes from './components/BrowseAllRecipes/BrowseAllRecipes';
 import SavedRecipes from './components/SavedRecipes/SavedRecipes';
 import { getCollectionRecipes } from './store/collection';
+import CollectionRecipesList from './components/CollectionRecipeList/CollectionRecipeList';
 
 function App() {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const sessionUser = useSelector(state => state.session.user);
   const recipes = Object.values(useSelector(state => state.recipes));
-  const collRecipes = Object.values(useSelector(state => state.collections))
 
-  useEffect(() => {
-    dispatch( getCollectionRecipes )
-  }, [dispatch])
 
   useEffect(() => {
     dispatch(allRecipes())
@@ -114,8 +111,9 @@ function App() {
           <ProtectedRoute path='/collections' exact={true} >
             <SavedRecipes />
           </ProtectedRoute>
+
           <ProtectedRoute path='/collections/:collectionId' exact={true} >
-            <RecipesList />
+            <CollectionRecipesList />
           </ProtectedRoute>
           <ProtectedRoute path='/recipes/:recipeId' exact={true} >
             <IndividualRecipe />

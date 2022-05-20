@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import './RecipesList.css'
 import { AiOutlineFieldTime } from 'react-icons/ai'
 
@@ -9,7 +9,9 @@ import { allRecipes } from '../../store/recipe';
 
 const RecipesList = ({recipes}) => {
     const dispatch = useDispatch();
-    console.log(recipes)
+    const { collectionId } = useParams()
+    console.log(collectionId)
+
     // const recipes = Object.values(useSelector(state => state.recipes))
 
     useEffect(() => {
