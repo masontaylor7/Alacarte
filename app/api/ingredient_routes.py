@@ -38,7 +38,7 @@ def update_ingredient(id):
 @ingredient_routes.route('/new', methods=['POST'])
 def new_recipe():
     form = IngredientForm()
-    print(form)
+    # print(form)
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():

@@ -7,6 +7,7 @@ const createCollectionEntryActionCreator = (entry) => ({
 
 
 export const createCollectionRecipe = (entry) => async (dispatch) => {
+    console.log('thunk entry -----', entry)
     const response = await fetch('/api/collection_recipes/new', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -15,6 +16,7 @@ export const createCollectionRecipe = (entry) => async (dispatch) => {
 
     if (response.ok) {
         const newEntry = await response.json()
+        console.log('>>>>>>>>>>>> ', newEntry, ' <<<<<<<<<<<<<')
         dispatch(createCollectionEntryActionCreator(newEntry))
         return newEntry;
     }

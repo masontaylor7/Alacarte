@@ -18,7 +18,6 @@ class Recipe(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False, server_default=db.func.now())
 
     user = db.relationship('User', back_populates='recipes')
-    # ingredients = db.relationship('Ingredient', back_populates='recipe')
     category = db.relationship('Category', foreign_keys=[category_id], back_populates='recipes')
     collections = db.relationship('Collection', secondary='collection_recipes', back_populates='recipes')
     ingredients = db.relationship('Ingredient', back_populates='recipe', cascade='delete, all')

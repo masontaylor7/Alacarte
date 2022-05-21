@@ -75,6 +75,8 @@ const NewRecipe = () => {
             directions: directionsInp,
         }
 
+        console.log('component recipe -----', recipe)
+
         const created_recipe = await dispatch(createRecipe(recipe))
 
         inputFields?.map(ingredientobj => {
@@ -86,6 +88,7 @@ const NewRecipe = () => {
             recipe_id: created_recipe.id,
             collection_id: 1
         }
+        console.log('component entry -----', entry)
 
         dispatch(createCollectionRecipe(entry))
 

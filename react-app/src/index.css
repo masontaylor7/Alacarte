@@ -30,3 +30,18 @@ a {
     flex-direction: column;
     height: 700px;
 }
+
+.button_style1{
+    /* border: 1px solid var(--dark-yellow-color); */
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid var(--yellow-color);
+    /* box-shadow: 0px 8px 10px var(--dark-yellow-color); */
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+.button_style1:active {
+    border: none;
+}

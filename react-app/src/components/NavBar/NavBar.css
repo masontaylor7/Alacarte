@@ -36,6 +36,10 @@
     display: block;
 }
 
+.active {
+    height: fit-content;
+}
+
 
 
 nav ul li ul {
@@ -58,8 +62,6 @@ nav ul li:hover ul {
 }
 
 .category_select_li {
-    /* padding: 8px; */
-    /* display: block; */
     display: flex;
     align-items: center;
 }
@@ -70,7 +72,8 @@ nav ul li:hover ul {
 }
 
 .category_select_link {
-
+    display: flex;
+    align-items: center;
     height: 25px;
 }
 
@@ -86,7 +89,10 @@ nav ul li:hover ul {
 }
 
 .drop_down_li {
-    display: block;
+    height: 30px;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
     width: 100%;
 }
 
