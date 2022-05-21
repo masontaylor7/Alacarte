@@ -8,6 +8,7 @@ import { VscDiffAdded } from 'react-icons/vsc'
 import { allCategories } from '../../store/category';
 import { createRecipe } from '../../store/recipe';
 import { createIngredient, allIngredients } from '../../store/ingredient';
+import { createCollectionRecipe } from '../../store/collection_recipe';
 
 const NewRecipe = () => {
     const dispatch = useDispatch();
@@ -80,6 +81,13 @@ const NewRecipe = () => {
             ingredientobj["recipe_id"] = created_recipe.id
             dispatch(createIngredient(ingredientobj))
         })
+
+        const entry = {
+            recipe_id: created_recipe.id,
+            collection_id: 1
+        }
+
+        dispatch(createCollectionRecipe(entry))
 
         history.push(`/recipes/${created_recipe.id}`)
     }
