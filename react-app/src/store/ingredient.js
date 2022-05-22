@@ -89,7 +89,7 @@ export const deleteIngredient = (ingredientId) => async (dispatch) => {
     if (response.ok) {
         const ingredient = await response.json()
         dispatch(deleteIngredientActionCreator(ingredientId))
-        return ingredient
+        return ingredient;
     }
 }
 

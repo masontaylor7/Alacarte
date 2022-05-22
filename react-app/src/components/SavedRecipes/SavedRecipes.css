@@ -6,9 +6,9 @@
 
 .add_icon {
     color: #B5460F;
-    height: 15px;
-    width: 15px;
-    margin-left: 4px;
+    height: 20px;
+    width: 20px;
+    margin-left: 8px;
     margin-top: -2px;
 }
 
@@ -40,6 +40,11 @@
     justify-content: center;
 }
 
+.single_container {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .single_collection {
     display: flex;
     justify-content: center;
@@ -47,4 +52,101 @@
     height: 40px;
     width: 400px;
     border: 1px solid var(--yellow-color);
+}
+
+.single_collection_icons {
+    display: none;
+}
+
+.title_div {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
+
+.edit_icon {
+    margin-right: 10px;
+}
+
+.edit_icon,
+.remove_icon {
+    color: #B5460F;
+    height: 20px;
+    width: 20px;
+}
+
+.edit_icon:hover,
+.remove_icon:hover {
+    cursor: pointer;
+}
+
+.single_collection:hover {
+    background-color: var(--yellow-color);
+    display: flex;
+    align-items: center;
+    justify-items: flex-end;
+}
+
+
+.single_container:hover .single_collection_icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    padding-right: 10px;
+    border-right: 1px solid var(--yellow-color);
+}
+
+
+.new_collection_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.opaque_container {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.182);
+    width: 100%;
+    height: 100%;
+}
+
+.add_collection_modal,
+.delete_collection_modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--dark-yellow-color);
+    background-color: white;
+    z-index: 4;
+    width: 500px;
+    height: 200px;
+}
+
+.title-input {
+    margin: 20px;
+    width: 60%;
+
+}
+
+.submit_button,
+.cancel_button,
+.delete_button {
+    background-color: white;
+    border: 1px solid #D2EBE8;
+    padding: 5px;
+    border-radius: 10px;
+    color: var(--dark-yellow-color);
+}
+
+.cancel_button,
+.delete_button {
+    margin: 10px;
 }
