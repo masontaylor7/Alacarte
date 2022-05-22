@@ -88,7 +88,6 @@ const NewRecipe = () => {
             recipe_id: created_recipe.id,
             collection_id: 1
         }
-        console.log('component entry -----', entry)
 
         dispatch(createCollectionRecipe(entry))
 

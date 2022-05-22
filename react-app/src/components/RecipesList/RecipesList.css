@@ -14,8 +14,12 @@
     max-width: 300px;
 }
 
+.add_to_collection {
+    cursor: pointer;
+}
+
 .recipe_details {
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .recipe_category {
@@ -23,13 +27,142 @@
     margin-bottom: 5px;
 }
 
+.title_block {
+    height: 130px;
+    overflow-y: auto;
+}
+
+.total_time {
+    line-height: 20px;
+}
+
 .list_recipe_title {
+    word-break: break-word;
+    max-height:fit-content;
     margin-top: 15px;
     font-size: 26px;
     font-family: 'Frank Ruhl Libre', serif;
 }
 
 .recipe_username {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.recipe_lower_block {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    bottom: 0px;
+    flex-direction: column;
+    align-items: flex-start;
     justify-self: flex-end;
-    align-self: flex-end;
+    line-height: 20px;
+}
+
+.collection_recipe_page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.collection_title_block {
+    border-bottom: 1px solid var(--yellow-color);
+    margin: 20px;
+    display: flex;
+}
+
+.collection_title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: var(--dark-yellow-color);
+}
+
+.remove_button_block {
+    display: flex;
+    position: absolute;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-left: 20px;
+    margin-top: -40px;
+}
+
+.remove_button {
+    background-color: white;
+    border: 1px solid #D2EBE8;
+    border-radius: 10px;
+    color: var(--dark-yellow-color);
+}
+
+.opaque_container {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.182);
+    width: 100%;
+    height: 100%;
+}
+
+.remove_recipe_modal,
+.add_recipe_modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--dark-yellow-color);
+    background-color: white;
+    z-index: 4;
+    width: 500px;
+    height: 200px;
+}
+
+.add_recipe_modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--dark-yellow-color);
+    background-color: white;
+    z-index: 4;
+    width: 400px;
+    height: 600px;
+}
+
+.collection_link_list {
+    width: 80%;
+    height: 550px;
+    overflow-y: scroll;
+}
+
+
+.individual_collection_block {
+    margin: 8px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+
+    border: 1px solid var(--yellow-color);
+}
+
+.individual_collection_block:hover {
+    cursor: pointer;
+    background-color: var(--yellow-color);
+}
+
+.collection_titles {
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    font-weight: 700;
+}
+
+.modal_title_add {
+    margin: 20px;
 }

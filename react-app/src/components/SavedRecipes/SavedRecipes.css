@@ -43,13 +43,20 @@
 .single_container {
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.title_nav_link {
+    display: flex;
 }
 
 .single_collection {
+
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     margin: 10px 8px;
-    height: 40px;
+    min-height: 40px;
     width: 400px;
     border: 1px solid var(--yellow-color);
 }
@@ -59,9 +66,11 @@
 }
 
 .title_div {
-    position: absolute;
     display: flex;
+    width: 80%;
+    word-break: break-word;
     justify-content: center;
+
 }
 
 .edit_icon {

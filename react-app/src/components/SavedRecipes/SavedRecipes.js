@@ -8,6 +8,7 @@ import { allCollections, createCollection, deleteCollection } from '../../store/
 import { AiOutlineFieldTime } from 'react-icons/ai'
 import { RiEditBoxLine, RiDeleteBack2Fill } from 'react-icons/ri'
 import { ImBoxAdd } from 'react-icons/im'
+import { deleteEntries } from '../../store/collection_recipe';
 
 const SavedRecipes = () => {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const SavedRecipes = () => {
     const [showAddModal, setShowAddModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedCollectionId, setSelectedCollectionId] = useState(0)
+    console.log(selectedCollectionId)
     const [title, setTitle] = useState('')
 
     useEffect(() => {
@@ -49,7 +51,9 @@ const SavedRecipes = () => {
     }
 
     const handleDeleteCollection = async () => {
+        await dispatch(deleteEntries(selectedCollectionId))
         await dispatch(deleteCollection(selectedCollectionId))
+        setSelectedCollectionId(0)
         setShowDeleteModal(false)
     }
 
@@ -65,12 +69,8 @@ const SavedRecipes = () => {
                         <div className='title_nav_link'>
 
                             <NavLink className='single_collection' to={`/collections/${collection.id}`}>
-                                <div>
-
-                                </div>
-                                <div key={collection.id} className='title_div'>
-                                    <div>{collection.title} ({collection.recipes.length})</div>
-
+                                <div className='title_div'>
+                                    {collection.title} ({collection.recipes.length} recipes)
                                 </div>
                             </NavLink>
                         </div>

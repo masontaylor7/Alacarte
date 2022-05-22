@@ -13,10 +13,7 @@ const IndividualRecipe = () => {
     const history = useHistory();
     const { recipeId } = useParams();
     const recipe = useSelector(state => state.recipes[+recipeId])
-    console.log('========', recipe)
-
-
-
+    console.log('=====', recipe)
 
     const categories = Object.values(useSelector(state => state.categories))
     const ingredients = Object.values(useSelector(state => state.ingredients))
@@ -189,10 +186,7 @@ const IndividualRecipe = () => {
 
     const handleChangeInput = (index, e) => {
         const ingredients = [...inputFields]
-        console.log(ingredients)
-        // console.log(ingredients[index][e.target.name])
         ingredients[index][e.target.name] = e.target.value
-        // console.log(ingredients[index][e.target.name])
         setInputFields(ingredients)
     }
 
@@ -214,6 +208,7 @@ const IndividualRecipe = () => {
         dispatch(updateRecipe(recipe))
 
         inputFields?.map(ingredientobj => {
+
             if (ingredientobj.id) {
                 // console.log(ingredientobj, '--------- has Id')
                 dispatch(updateIngredient(ingredientobj))
