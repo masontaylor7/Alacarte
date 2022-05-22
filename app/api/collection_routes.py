@@ -6,6 +6,14 @@ from app.api.auth_routes import validation_errors_to_error_messages
 
 collection_routes = Blueprint('collections', __name__)
 
+@collection_routes.route('/<int:id>', methods=['PUT'])
+def update_collection(id):
+    update_collection = request.get_json(force=True)
+    existing_collection = Collection.query.get(id)
+    existing_collection.title = update_collection['title']
+    db.session.commit()
+    return jsonify(existing_collection.to_dict())
+
 @collection_routes.route('/users/<int:id>', methods=['GET'])
 def get_user_collections(id):
     collections = Collection.query.filter(Collection.user_id == id).all()

@@ -27,7 +27,6 @@ def all_ingredients():
 @ingredient_routes.route('/<int:id>', methods=['PUT'])
 def update_ingredient(id):
     update_ingredient = request.get_json(force=True)
-    print(update_ingredient, '.......')
     existing_ingredient = Ingredient.query.get(id)
     existing_ingredient.amount = update_ingredient['amount']
     existing_ingredient.measurement = update_ingredient['measurement']

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import './SavedRecipes.css'
 
-import { allCollections, createCollection, deleteCollection } from '../../store/collection';
+import { allCollections, createCollection, deleteCollection, updateCollection } from '../../store/collection';
 
 import { AiOutlineFieldTime } from 'react-icons/ai'
 import { RiEditBoxLine, RiDeleteBack2Fill } from 'react-icons/ri'
@@ -18,14 +18,20 @@ const SavedRecipes = () => {
     const [showAddModal, setShowAddModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedCollectionId, setSelectedCollectionId] = useState(0)
-    console.log(selectedCollectionId)
+    const [editTitle, setEditTitle] = useState(false)
+    const [editCollectionId, setEditCollectionId] = useState(0)
     const [title, setTitle] = useState('')
+
 
     useEffect(() => {
         dispatch(allCollections(sessionUser.id))
     }, [dispatch])
 
     const handleSetTitle = (e) => {
+        setTitle(e.target.value)
+    }
+
+    const handleUpdateTitle = (e) => {
         setTitle(e.target.value)
     }
 
@@ -37,12 +43,41 @@ const SavedRecipes = () => {
             title
         }
         dispatch(createCollection(collection))
+        setTitle('')
         setShowAddModal(false)
+    }
+
+    const handleEditSubmit = async (e) => {
+        e.preventDefault()
+
+        const collection = {
+            id: editCollectionId,
+            title,
+        }
+
+        dispatch(updateCollection(collection))
+        setTitle('')
+        setEditCollectionId(0)
+        setEditTitle(false)
+
     }
 
     const handleDeleteModalOpen = (collectionId) => {
         setShowDeleteModal(true)
         setSelectedCollectionId(collectionId)
+    }
+
+    const handleEditModalOpen = (collectionId, collectionTitle) => {
+        console.log(collectionTitle, collectionId)
+        setTitle(collectionTitle)
+        setEditCollectionId(collectionId)
+        setEditTitle(true)
+    }
+
+    const handleEditModalClose = () => {
+        setEditTitle(false)
+        setTitle('')
+        setEditCollectionId(0)
     }
 
     const handleDeleteModalClose = () => {
@@ -69,6 +104,7 @@ const SavedRecipes = () => {
                         <div className='title_nav_link'>
 
                             <NavLink className='single_collection' to={`/collections/${collection.id}`}>
+
                                 <div className='title_div'>
                                     {collection.title} ({collection.recipes.length} recipes)
                                 </div>
@@ -76,7 +112,7 @@ const SavedRecipes = () => {
                         </div>
                         <div className='single_collection_icons'>
                             <RiDeleteBack2Fill id={collection.id} className='edit_icon' onClick={() => handleDeleteModalOpen(collection.id)} />
-                            <RiEditBoxLine id={collection.id} className='remove_icon' />
+                            <RiEditBoxLine id={collection.id} className='remove_icon' onClick={() => handleEditModalOpen(collection.id, collection.title)} />
                         </div>
 
                     </div>
@@ -104,10 +140,30 @@ const SavedRecipes = () => {
                 <div className='opaque_container' onClick={() => setShowDeleteModal(false)}>
                     <div className='delete_collection_modal' onClick={(e) => e.stopPropagation()}>
                         <div>Are you sure you want to delete this collection?</div>
-                        <div className='remove_button_block'>
+                        <div className='remove_button_block_two'>
                             <button type='button' className='cancel_button' onClick={handleDeleteModalClose}>Cancel</button>
                             <button type='button' className='delete_button' onClick={handleDeleteCollection}>Delete</button>
                         </div>
+                    </div>
+                </div>
+                : null}
+
+            {editTitle ?
+                <div className='opaque_container' onClick={() => setEditTitle(false)}>
+                    <div className='add_collection_modal' onClick={(e) => e.stopPropagation()}>
+                        <div>What is the new name of the collection?</div>
+                        <form className='new_collection_form'>
+                            <input type='text'
+                                className='input title-input'
+                                name='title'
+                                onChange={handleUpdateTitle}
+                                value={title}
+                            />
+                            <div className='remove_button_block_two'>
+                                <button type='button' className='cancel_button' onClick={handleEditModalClose}>Cancel</button>
+                                <button onClick={handleEditSubmit} className='submit_button'>Update Name</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 : null}

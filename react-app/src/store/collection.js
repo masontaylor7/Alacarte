@@ -2,6 +2,12 @@ const ALL_COLLECTIONS = 'collections/ALL_COLLECTIONS'
 const COLLECTION_RECIPES = 'collections/COLLECTION_RECIPES'
 const CREATE_COLLECTION = 'collections/CREATE_COLLECTION'
 const DELETE_COLLECTION = 'collections/DELETE_COLLECTION'
+const UPDATE_COLLECTION = 'collections/UPDATE_COLLECTION'
+
+const updateCollectionActionCreator = (collection) => ({
+    type: UPDATE_COLLECTION,
+    collection
+})
 
 const deleteColletionActionCreator = (collectionId) => ({
     type: DELETE_COLLECTION,
@@ -22,6 +28,19 @@ const collectionRecipesActionCreator = (collection) => ({
     type: COLLECTION_RECIPES,
     collection
 })
+
+export const updateCollection = (collection) => async (dispatch) => {
+    const response = await fetch(`/api/collections/${collection.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(collection)
+    })
+    if (response.ok) {
+        const collection = await response.json()
+        dispatch(updateCollectionActionCreator(collection))
+        return collection
+    }
+}
 
 export const createCollection = (collection) => async (dispatch) => {
     const response = await fetch('/api/collections/new', {
@@ -92,6 +111,11 @@ export default function collectionReducer(state = initialState, action) {
             return newState;
         }
         case CREATE_COLLECTION: {
+            newState = { ...state }
+            newState[action.collection.id] = action.collection
+            return newState;
+        }
+        case UPDATE_COLLECTION: {
             newState = { ...state }
             newState[action.collection.id] = action.collection
             return newState;
