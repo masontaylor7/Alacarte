@@ -91,12 +91,12 @@ const NewRecipe = () => {
                 dispatch(createIngredient(ingredientobj))
             })
 
-            const entry = {
-                recipe_id: created_recipe.id,
-                collection_id: 1
-            }
+            // const entry = {
+            //     recipe_id: created_recipe.id,
+            //     collection_id: 1
+            // }
 
-            dispatch(createCollectionRecipe(entry))
+            // dispatch(createCollectionRecipe(entry))
 
             history.push(`/recipes/${created_recipe.id}`)
 

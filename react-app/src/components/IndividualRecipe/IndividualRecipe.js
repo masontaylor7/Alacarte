@@ -429,10 +429,10 @@ const IndividualRecipe = () => {
                             </div>
 
                             : <div className='add_icon_block'> <div className='serving_size'>Servings: {recipe?.servings}</div>
-                                <div className='add_button_block'>
+                               {sessionUser ? <div className='add_button_block'>
                                     <div>Save this recipe: </div>
                                     <BiBookAdd className='icon add_to_collection_bigger' onClick={() => handleAddToCollectionOpen(recipe.id)} />
-                                </div>
+                                </div> : null}
                             </div>
 
                         }
