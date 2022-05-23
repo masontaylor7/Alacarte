@@ -68,7 +68,7 @@ const IndividualRecipe = () => {
         })
         if (!isImageUrl(imageUrl)) errors.push('"Image URL" is not a valid URL')
         setValidationErrors(errors)
-    }, [imageUrl, currTitle, prepTime, cookTime, totalTime, servingSize, directionsInp])
+    }, [imageUrl, currTitle, prepTime, cookTime, totalTime, servingSize, directionsInp, inputFields])
 
 
     useEffect(() => {
