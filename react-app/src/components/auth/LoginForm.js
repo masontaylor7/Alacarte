@@ -28,7 +28,7 @@ const LoginForm = () => {
       password: 'password'
     }
     await dispatch(login(demo.email, demo.password))
-    history.push('/home')
+    history.push('/')
   }
 
   const updateEmail = (e) => {
@@ -40,7 +40,7 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/home' />;
+    return <Redirect to='/' />;
   }
 
   return (

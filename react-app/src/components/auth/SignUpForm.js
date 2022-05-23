@@ -26,7 +26,7 @@ const SignUpForm = () => {
         return
       } else {
         setShowErrors(false)
-        history.push('/home')
+        history.push('/')
       }
     } else {
       setShowErrors(true)
@@ -51,7 +51,7 @@ const SignUpForm = () => {
       password: 'password'
     }
     await dispatch(login(demo.email, demo.password))
-    history.push('/home')
+    history.push('/')
   }
 
   const updateUsername = (e) => {
@@ -71,7 +71,7 @@ const SignUpForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/home' />;
+    return <Redirect to='/' />;
   }
 
   return (

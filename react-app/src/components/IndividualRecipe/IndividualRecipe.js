@@ -4,8 +4,11 @@ import { useHistory, useParams } from 'react-router-dom';
 import { oneRecipe, deleteRecipe, updateRecipe } from '../../store/recipe';
 import { allCategories } from '../../store/category';
 import { BsDot, BsPlusSquare, BsDashSquare } from 'react-icons/bs'
+import { BiBookAdd } from 'react-icons/bi'
 import './IndividualRecipe.css'
 import { deleteIngredient, specificIngredients, createIngredient, updateIngredient } from '../../store/ingredient';
+import { createCollectionRecipe } from '../../store/collection_recipe';
+import { allCollections } from '../../store/collection';
 
 
 const IndividualRecipe = () => {
@@ -17,6 +20,7 @@ const IndividualRecipe = () => {
 
     const categories = Object.values(useSelector(state => state.categories))
     const ingredients = Object.values(useSelector(state => state.ingredients))
+    const collections = Object.values(useSelector(state => state.collections))
     const sessionUser = useSelector(state => state.session.user)
 
     const [deleteModal, setDeleteModal] = useState(false)
@@ -29,10 +33,12 @@ const IndividualRecipe = () => {
     {/* current fields*/ }
     const [deleteIndex, setDeleteIndex] = useState(-1)
     const [removedIng, setRemovedIng] = useState([])
+    const [showAddToCollectionModal, setShowAddToCollectionModal] = useState(false)
 
 
     useEffect(() => {
         dispatch(oneRecipe(+recipeId))
+        dispatch(allCollections(sessionUser?.id))
     }, [dispatch, editActive])
 
     const [currTitle, setCurrTitle] = useState(recipe?.title != undefined ? recipe?.title : '')
@@ -60,7 +66,7 @@ const IndividualRecipe = () => {
         inputFields?.map(ingredientObj => {
             if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" <br> (there may be an unused ingredient input)')
         })
-        if(!isImageUrl(imageUrl)) errors.push('"Image URL" is not a valid URL')
+        if (!isImageUrl(imageUrl)) errors.push('"Image URL" is not a valid URL')
         setValidationErrors(errors)
     }, [imageUrl, currTitle, prepTime, cookTime, totalTime, servingSize, directionsInp])
 
@@ -93,6 +99,28 @@ const IndividualRecipe = () => {
         setTotalTime(recipe?.total_time)
         setServingSize(recipe?.servings)
         setDirectionsInp(recipe?.directions)
+    }
+
+    const handleAddToCollectionClose = () => {
+        setShowAddToCollectionModal(false)
+
+    }
+
+    const handleAddRecipe = async (collectionId) => {
+        const entry = {
+            recipe_id: recipeId,
+            collection_id: collectionId
+        }
+
+        await dispatch(createCollectionRecipe(entry))
+        setShowAddToCollectionModal(false)
+
+
+    }
+
+    const handleAddToCollectionOpen = (recipeId) => {
+        setShowAddToCollectionModal(true)
+
     }
 
     const handleDeleteIngredientModalClose = () => {
@@ -227,11 +255,11 @@ const IndividualRecipe = () => {
             dispatch(updateRecipe(recipe))
 
             inputFields?.map(ingredientobj => {
-                    if (ingredientobj.id) {
-                        dispatch(updateIngredient(ingredientobj))
-                    } else {
-                        dispatch(createIngredient(ingredientobj))
-                    }
+                if (ingredientobj.id) {
+                    dispatch(updateIngredient(ingredientobj))
+                } else {
+                    dispatch(createIngredient(ingredientobj))
+                }
 
             })
             setRemovedIng([])
@@ -287,6 +315,7 @@ const IndividualRecipe = () => {
                     <div className='information_block'>
                         <div className='recipe_info_block'>
                             <div className='recipe_info_top_portion'>
+
                                 {!editActive ? <div className='recipe_category'>{recipe?.category.title}</div> : <div className='category-block'>
                                     <select className='input' defaultValue={placeholder} onChange={(e) => setCategoryId(e.target.value)}>
                                         <option value="default" disabled hidden>
@@ -298,12 +327,13 @@ const IndividualRecipe = () => {
                                     </select>
                                 </div>}
 
-
                                 {sessionUser.id === recipe?.user_id && !editActive ?
                                     <div className='button_block'>
                                         <button type='button' className='update_recipe_button top_button' onClick={handleEdit}>Update Recipe</button>
                                         <button type='button' className='remove_recipe_button top_button' onClick={handleDeleteModalOpen}>Remove Recipe</button>
                                     </div> : null}
+
+
 
                                 {sessionUser.id === recipe?.user_id && editActive ?
                                     <div className='button_block'>
@@ -331,6 +361,8 @@ const IndividualRecipe = () => {
 
                             <div className='recipe_user_info'>Created By: <span className='username'>
                                 {recipe?.user.username}</span></div>
+
+
                         </div>
 
                         <div className='full_time_block'>
@@ -395,7 +427,15 @@ const IndividualRecipe = () => {
 
                                 />
                             </div>
-                            : <div className='serving_size'>Servings: {recipe?.servings}</div>}
+
+                            : <div className='add_icon_block'> <div className='serving_size'>Servings: {recipe?.servings}</div>
+                                <div className='add_button_block'>
+                                    <div>Save this recipe: </div>
+                                    <BiBookAdd className='icon add_to_collection_bigger' onClick={() => handleAddToCollectionOpen(recipe.id)} />
+                                </div>
+                            </div>
+
+                        }
 
 
                         <div className='ingredients_label'>Ingredients </div>
@@ -448,7 +488,7 @@ const IndividualRecipe = () => {
                     <div className='directions_text'>
                         <div className='directions_label'>Directions: </div>
                         {editActive ?
-                            <textarea  type='text'
+                            <textarea type='text'
                                 className='input directions_input'
                                 name='directions'
                                 placeholder='1. In a large bowl mix flour, eggs, and milk...'
@@ -498,6 +538,25 @@ const IndividualRecipe = () => {
                                     ))}
                                 </div>}
                                 <button className='modal_button' type='button' onClick={() => setShowErrors(false)}>Close Window</button>
+                            </div>
+                        </div>
+                    </div>
+                    : null}
+
+                {showAddToCollectionModal ?
+                    <div className='opaque_container' onClick={() => setShowAddToCollectionModal(false)}>
+                        <div className='add_recipe_modal' onClick={(e) => e.stopPropagation()}>
+                            <div className='modal_title_add'>Select a collection to save this recipe to: </div>
+                            <div className='collection_link_list'>
+
+                                {collections?.map(collection => (
+                                    <div key={collection.id} className='individual_collection_block' onClick={() => handleAddRecipe(collection.id)}>
+                                        <div className='collection_titles'>{collection.title}</div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className='remove_button_block_two'>
+                                <button type='button' className='cancel_button' onClick={handleAddToCollectionClose}>Cancel</button>
                             </div>
                         </div>
                     </div>

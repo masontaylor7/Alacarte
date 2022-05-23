@@ -54,6 +54,9 @@
     height: fit-content;
 }
 
+.browse_drop_down {
+    z-index: 5;
+}
 
 
 nav ul li ul {
@@ -67,12 +70,13 @@ nav ul li ul {
     text-align: start;
     border: 1px solid var(--yellow-color);
     background-color: white;
-    z-index: 2;
     transition: 2s;
+    z-index: 5;
 }
 
 nav ul li:hover ul {
     display: block;
+
 }
 
 .category_select_li {
@@ -108,6 +112,7 @@ nav ul li:hover ul {
     display: flex;
     align-items: center;
     width: 100%;
+
 }
 
 .li_containers:hover {
@@ -124,6 +129,7 @@ nav ul li:hover ul {
 
 .browser_hover_block {
     height: 50px;
+
 }
 
 a {

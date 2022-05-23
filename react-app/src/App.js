@@ -19,6 +19,7 @@ import SavedRecipes from './components/SavedRecipes/SavedRecipes';
 import { getCollectionRecipes } from './store/collection';
 import CollectionRecipesList from './components/CollectionRecipeList/CollectionRecipeList';
 import SplashPage from './components/SplashPage/SplashPage';
+import ErrorPage from './components/404Page/404Page';
 
 function App() {
   const dispatch = useDispatch();
@@ -56,13 +57,9 @@ function App() {
       <NavBar />
       <div className='full_body'>
         <Switch>
-          {sessionUser ?
-            <Route path='/home' exact={true}>
-            <HomePage />
+          <Route path='/' exact={true}>
+            <SplashPage />
           </Route>
-          : <Route path='/' exact={true}>
-              <SplashPage />
-            </Route>}
           <Route path='/login' exact={true}>
             <LoginForm />
           </Route>
@@ -71,34 +68,34 @@ function App() {
           </Route>
 
           <Route path='/browse/all' exact={true}>
-            <BrowseAllRecipes/>
+            <BrowseAllRecipes />
           </Route>
           <Route path='/browse/breakfast' exact={true}>
-            <RecipesList recipes={recipeFilter(1)}/>
+            <RecipesList recipes={recipeFilter(1)} />
           </Route>
           <Route path='/browse/lunch' exact={true}>
-            <RecipesList recipes={recipeFilter(2)}/>
+            <RecipesList recipes={recipeFilter(2)} />
           </Route>
           <Route path='/browse/dinner' exact={true}>
-            <RecipesList recipes={recipeFilter(3)}/>
+            <RecipesList recipes={recipeFilter(3)} />
           </Route>
           <Route path='/browse/dessert' exact={true}>
-            <RecipesList recipes={recipeFilter(4)}/>
+            <RecipesList recipes={recipeFilter(4)} />
           </Route>
           <Route path='/browse/drinks' exact={true}>
-            <RecipesList recipes={recipeFilter(5)}/>
+            <RecipesList recipes={recipeFilter(5)} />
           </Route>
           <Route path='/browse/snacks&apps' exact={true}>
-            <RecipesList recipes={recipeFilter(6)}/>
+            <RecipesList recipes={recipeFilter(6)} />
           </Route>
           <Route path='/browse/holiday&seasonal' exact={true}>
-            <RecipesList recipes={recipeFilter(7)}/>
+            <RecipesList recipes={recipeFilter(7)} />
           </Route>
           <Route path='/browse/vegan' exact={true}>
-            <RecipesList recipes={recipeFilter(8)}/>
+            <RecipesList recipes={recipeFilter(8)} />
           </Route>
           <Route path='/browse/vegetarian' exact={true}>
-            <RecipesList recipes={recipeFilter(9)}/>
+            <RecipesList recipes={recipeFilter(9)} />
           </Route>
 
           <Route path='/recipes/new' exact={true}>
@@ -126,6 +123,9 @@ function App() {
           <ProtectedRoute path='/' exact={true} >
             <SplashPage />
           </ProtectedRoute>
+          <Route path='/*'>
+            <ErrorPage />
+          </Route>
         </Switch>
       </div>
     </BrowserRouter>
