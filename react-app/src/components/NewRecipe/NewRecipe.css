@@ -1,13 +1,46 @@
+.recipe_form_block {
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+.field_block {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    width: fit-content;
+}
+
+.ingredients_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new_recipe_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .input {
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.524);
 }
 
-/* .required-input {
-    border: 1px solid red;
-} */
 
 ::placeholder {
     color: rgba(0, 0, 0, 0.414);
+}
+
+.opaque_container {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.182);
+    width: 100%;
+    height: 100%;
 }

@@ -45,3 +45,13 @@ a {
 .button_style1:active {
     border: none;
 }
+
+.image_div_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    /* Preserve aspet ratio */
+    min-width: 100%;
+    min-height: 100%;
+}

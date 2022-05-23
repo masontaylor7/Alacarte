@@ -18,6 +18,7 @@ import BrowseAllRecipes from './components/BrowseAllRecipes/BrowseAllRecipes';
 import SavedRecipes from './components/SavedRecipes/SavedRecipes';
 import { getCollectionRecipes } from './store/collection';
 import CollectionRecipesList from './components/CollectionRecipeList/CollectionRecipeList';
+import SplashPage from './components/SplashPage/SplashPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +56,9 @@ function App() {
       <NavBar />
       <div className='full_body'>
         <Switch>
+          <Route path='/' exact={true}>
+            <SplashPage />
+          </Route>
           <Route path='/home' exact={true}>
             <HomePage />
           </Route>
@@ -119,7 +123,7 @@ function App() {
             <IndividualRecipe />
           </ProtectedRoute>
           <ProtectedRoute path='/' exact={true} >
-            <h1>My Home Page</h1>
+            <SplashPage />
           </ProtectedRoute>
         </Switch>
       </div>

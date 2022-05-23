@@ -6,6 +6,8 @@ import LogoutButton from '../auth/LogoutButton';
 import './NavBar.css'
 import { BsChevronDown, BsFileEarmarkPlus, BsCollection } from 'react-icons/bs'
 import { VscHome } from 'react-icons/vsc'
+import { BiLogIn } from 'react-icons/bi'
+import { IoMdPersonAdd } from 'react-icons/io'
 import BrowseDropDown from '../DropDown/BrowseDropDown';
 
 import { allCategories } from '../../store/category';
@@ -119,7 +121,7 @@ const NavBar = () => {
                 <NavLink to='/login' exact={true} activeClassName='active'>
                   LOGIN
                 </NavLink>
-                <BsChevronDown className='icon'/>
+                <BiLogIn className='icon'/>
               </div>
             </li> : null
           }
@@ -129,7 +131,7 @@ const NavBar = () => {
                 <NavLink to='/sign-up' exact={true} activeClassName='active'>
                   SIGN UP
                 </NavLink>
-                <BsChevronDown className='icon'/>
+                <IoMdPersonAdd className='icon'/>
               </div>
             </li> : null
           }

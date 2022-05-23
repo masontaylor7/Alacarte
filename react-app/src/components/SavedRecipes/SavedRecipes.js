@@ -50,7 +50,7 @@ const SavedRecipes = () => {
             title
         }
 
-        if (newCollectionErrors.length === 0) {
+        if (newCollectionErrors.length === 0 && title.length > 0) {
             dispatch(createCollection(collection))
             setTitle('')
             setShowAddModal(false)
@@ -69,10 +69,15 @@ const SavedRecipes = () => {
             title,
         }
 
-        dispatch(updateCollection(collection))
-        setTitle('')
-        setEditCollectionId(0)
-        setEditTitle(false)
+        if (newCollectionErrors.length === 0) {
+            dispatch(updateCollection(collection))
+            setTitle('')
+            setEditCollectionId(0)
+            setEditTitle(false)
+        } else {
+            setShowErrors(true)
+        }
+
 
     }
 
@@ -82,7 +87,6 @@ const SavedRecipes = () => {
     }
 
     const handleEditModalOpen = (collectionId, collectionTitle) => {
-        console.log(collectionTitle, collectionId)
         setTitle(collectionTitle)
         setEditCollectionId(collectionId)
         setEditTitle(true)
@@ -138,7 +142,7 @@ const SavedRecipes = () => {
                 <div className='opaque_container' onClick={() => setShowAddModal(false)}>
                     <div className='add_collection_modal' onClick={(e) => e.stopPropagation()}>
                         <div>Give your new collection a name!</div>
-                            {showErrors && newCollectionErrors.length > 0 ?
+                            {newCollectionErrors.length > 0 ?
                                 newCollectionErrors.map((error, ind) => (
                                     <div key={ind} className='error_message'>{error}</div>
                                 ))
@@ -172,6 +176,11 @@ const SavedRecipes = () => {
                 <div className='opaque_container' onClick={handleEditModalClose}>
                     <div className='add_collection_modal' onClick={(e) => e.stopPropagation()}>
                         <div>What is the new name of the collection?</div>
+                        {showErrors && newCollectionErrors.length > 0 ?
+                            newCollectionErrors.map((error, ind) => (
+                                <div key={ind} className='error_message'>- {error}</div>
+                            ))
+                            : null}
                         <form className='new_collection_form'>
                             <input type='text'
                                 className='input title-input'
