@@ -64,7 +64,7 @@ const IndividualRecipe = () => {
         if (totalTime?.length === 0) errors.push('"Total Time" field cannot be empty')
         if (servingSize?.length === 0) errors.push('"Servings" field cannot be empty')
         inputFields?.map(ingredientObj => {
-            if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" <br> (there may be an unused ingredient input)')
+            if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" (there may be an unused ingredient input)')
         })
         if (!isImageUrl(imageUrl)) errors.push('"Image URL" is not a valid URL')
         setValidationErrors(errors)
