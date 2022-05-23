@@ -43,7 +43,7 @@ const NewRecipe = () => {
         if (totalTime?.length === 0) errors.push('"Total Time" field cannot be empty')
         if (servingSize?.length === 0) errors.push('"Servings" field cannot be empty')
         inputFields?.map(ingredientObj => {
-            if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" <br> (there may be an unused ingredient input)')
+            if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" (there may be an unused ingredient input)')
         })
         if (!isImageUrl(imageUrl)) errors.push('"Image URL" must be an authentic URL')
         setValidationErrors(errors)
@@ -164,6 +164,9 @@ const NewRecipe = () => {
     return (
         <div>
             <div className='recipe_form_block'>
+                <div className='image_div_background'>
+                    <img src='https://img.freepik.com/free-photo/fresh-colourful-ingredients-mexican-cuisine_23-2148254294.jpg?w=2000' />
+                </div>
 
                 <form className='new_recipe_form'>
 
@@ -183,7 +186,7 @@ const NewRecipe = () => {
                     <input type='text'
                         className='input image-input'
                         name='image_url'
-                        placeholder='Image URL'
+                        placeholder='Valid Image URL'
                         onChange={handleImageField}
                         value={imageUrl}
 
@@ -199,35 +202,43 @@ const NewRecipe = () => {
                             ))}
                         </select>
                     </div>
-                    <div className='cook-time-block field_block'>
-                        <div className='field-title'>Time:</div>
-                        <label>Prep Time:</label>
-                        <input type='text'
-                            className='input prep-time-input'
-                            name='prep_time'
-                            placeholder='30 mins | 2 hrs'
-                            onChange={handleSetPrepTime}
-                            value={prepTime}
+                    <div className='cook-time-block'>
+                        <div className='ingredient_details_block'>
 
-                        />
-                        <label>Cook Time:</label>
-                        <input type='text'
-                            className='input cook-time-input'
-                            name='cook_time'
-                            placeholder='30 mins | 2 hrs'
-                            onChange={handleSetCookTime}
-                            value={cookTime}
+                            <label>Prep Time:</label>
+                            <input type='text'
+                                className='input prep-time-input'
+                                name='prep_time'
+                                placeholder='30 mins | 2 hrs | 5 Days'
+                                onChange={handleSetPrepTime}
+                                value={prepTime}
 
-                        />
-                        <label>Total Time:</label>
-                        <input type='text'
-                            className='input total-time-input'
-                            name='total_time'
-                            placeholder='30 mins | 2 hrs'
-                            onChange={handleSetTotalTime}
-                            value={totalTime}
+                            />
+                        </div>
+                        <div className='ingredient_details_block'>
 
-                        />
+                            <label>Cook Time:</label>
+                            <input type='text'
+                                className='input cook-time-input'
+                                name='cook_time'
+                                placeholder='30 mins | 2 hrs | 5 Days'
+                                onChange={handleSetCookTime}
+                                value={cookTime}
+
+                            />
+                        </div>
+                        <div className='ingredient_details_block'>
+
+                            <label>Total Time:</label>
+                            <input type='text'
+                                className='input total-time-input'
+                                name='total_time'
+                                placeholder='30 mins | 2 hrs'
+                                onChange={handleSetTotalTime}
+                                value={totalTime}
+
+                            />
+                        </div>
                     </div>
                     <div className='servings-block field_block'>
                         <div className='field-title'>Servings:</div>
@@ -242,44 +253,55 @@ const NewRecipe = () => {
                     </div>
                     <div className='field_block'>
 
-                        <div>Ingredients:</div>
+                        <div>Ingredients: (add and remove input fields with the + and - buttons)</div>
                         <div className='ingredients_block'>
                             {inputFields.map((inputField, index) => (
-                                <div key={index}>
-                                    <label>Amount:</label>
-                                    <input type='text'
-                                        className='input amount-input'
-                                        name='amount'
-                                        placeholder='1 | 20 | 1/2 | (optional)'
-                                        value={inputField.amount}
-                                        onChange={e => handleChangeInput(index, e)}
-                                    />
-                                    <label>Measurement:</label>
-                                    <input type='text'
-                                        className='input measurement-input'
-                                        name='measurement'
-                                        placeholder='cup | bunch | whole | (optional)'
-                                        value={inputField.measurement}
-                                        onChange={e => handleChangeInput(index, e)}
-                                    />
-                                    <label>Ingredient:</label>
-                                    <input type='text'
-                                        className='required-input input ingredient-input'
-                                        name='title'
-                                        placeholder='flour | eggs | milk'
-                                        value={inputField.title}
-                                        onChange={e => handleChangeInput(index, e)}
-                                    />
-                                    <BsDashSquare onClick={() => handleRemoveField(index)} />
-                                    <BsPlusSquare onClick={handleAddField} />
+                                <div key={index} className='i_c'>
+                                    <div className='ingredient_details_block'>
+
+                                        <label>Amount:</label>
+                                        <input type='text'
+                                            className='input amount-input'
+                                            name='amount'
+                                            placeholder='1 | 20 | 1/2 | (optional)'
+                                            value={inputField.amount}
+                                            onChange={e => handleChangeInput(index, e)}
+                                        />
+                                    </div>
+                                    <div className='ingredient_details_block'>
+
+                                        <label>Measurement:</label>
+                                        <input type='text'
+                                            className='input measurement-input'
+                                            name='measurement'
+                                            placeholder='cup | whole | (optional)'
+                                            value={inputField.measurement}
+                                            onChange={e => handleChangeInput(index, e)}
+                                        />
+                                    </div>
+                                    <div className='ingredient_details_block'>
+                                        <label>Ingredient:</label>
+                                        <input type='text'
+                                            className='required-input input ingredient-input'
+                                            name='title'
+                                            placeholder='flour | eggs | milk'
+                                            value={inputField.title}
+                                            onChange={e => handleChangeInput(index, e)}
+                                        />
+                                    </div>
+                                    <div className='ingredient_buttons'>
+                                        <BsPlusSquare className='submit_button' onClick={handleAddField} />
+                                        <BsDashSquare className='submit_button' onClick={() => handleRemoveField(index)} />
+                                    </div>
+
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div className='field-title field_block'>
+                    <div className='field_block'>
 
                         <div>Directions:</div>
-                        <input type='text'
+                        <textarea type='text'
                             className='input directions_input'
                             name='directions'
                             placeholder='1. In a large bowl mix flour, eggs, and milk...'
@@ -289,9 +311,8 @@ const NewRecipe = () => {
                         />
                     </div>
                     <label></label>
-                    <button type='submit' onClick={handleSubmit}>
+                    <button type='submit' className='button_style1' onClick={handleSubmit}>
                         CREATE RECIPE
-                        <VscDiffAdded />
                     </button>
                 </form>
 
@@ -300,7 +321,7 @@ const NewRecipe = () => {
                 showErrors ?
                     <div className='opaque_container' onClick={() => setShowErrors(false)} >
 
-                        <div className='delete_modal'>
+                        <div className='error_modal'>
                             <div>You cannot update this recipe until these fields are filled in properly:</div>
                             <div className='error_block'>
                                 {showErrors && <div>
@@ -308,7 +329,10 @@ const NewRecipe = () => {
                                         <div key={ind}>- {error}</div>
                                     ))}
                                 </div>}
-                                <button className='modal_button' type='button' onClick={() => setShowErrors(false)}>Close Window</button>
+                                <div className='button_block'>
+
+                                    <button className='modal_button' type='button' onClick={() => setShowErrors(false)}>Close Window</button>
+                                </div>
                             </div>
                         </div>
                     </div>

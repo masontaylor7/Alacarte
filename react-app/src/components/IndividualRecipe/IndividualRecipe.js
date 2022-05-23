@@ -60,8 +60,9 @@ const IndividualRecipe = () => {
         inputFields?.map(ingredientObj => {
             if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" <br> (there may be an unused ingredient input)')
         })
+        if(!isImageUrl(imageUrl)) errors.push('"Image URL" is not a valid URL')
         setValidationErrors(errors)
-    }, [currTitle, prepTime, cookTime, totalTime, servingSize, directionsInp])
+    }, [imageUrl, currTitle, prepTime, cookTime, totalTime, servingSize, directionsInp])
 
 
     useEffect(() => {
@@ -243,6 +244,15 @@ const IndividualRecipe = () => {
 
     }
 
+    const isImageUrl = () => {
+        if (imageUrl?.includes('http') || imageUrl?.includes('https')) {
+            if (imageUrl?.includes('.jpg') || imageUrl?.includes('.png') || imageUrl?.includes('.img') || imageUrl?.includes('.jpeg')) {
+                return true;
+            }
+        }
+        return false
+    }
+
 
     return (
         <form className='update_recipe_form'>
@@ -256,14 +266,14 @@ const IndividualRecipe = () => {
                             <div>
 
                                 <div>
-                                    {imageUrl ? <img src={imageUrl} style={imageStyle} alt='image' /> : <img src={recipe?.image_url} style={imageStyle} alt='image' />}
+                                    {imageUrl && isImageUrl() ? <img src={imageUrl} style={imageStyle} alt='image' /> : <img src={recipe?.image_url} style={imageStyle} alt='image' />}
                                 </div>
 
                                 <label>Finished Dish Image:</label>
                                 <input type='text'
                                     className='input image-input'
                                     name='image_url'
-                                    placeholder='Image URL'
+                                    placeholder='Valid Image URL'
                                     onChange={handleImageField}
                                     value={imageUrl}
 
@@ -305,7 +315,6 @@ const IndividualRecipe = () => {
                             </div>
                             {editActive ?
                                 <div className='title_block'>
-                                    <div className='recipe_title'>{recipe?.title}</div>
                                     <div>
                                         <label>Name of your dish:</label>
                                         <input type='text'
@@ -316,6 +325,7 @@ const IndividualRecipe = () => {
                                             value={currTitle}
                                         />
                                     </div>
+                                    <div className='recipe_title'>{recipe?.title}</div>
                                 </div> : <div className='recipe_title'>{recipe?.title}</div>
                             }
 
@@ -400,7 +410,7 @@ const IndividualRecipe = () => {
                         )) :
 
                             inputFields?.map((ingredient, index) => (
-                                <div key={index}>
+                                <div key={index} className='ingredient_row'>
                                     <label>A:</label>
                                     <input type='text'
                                         className='input amount-input'
@@ -413,7 +423,7 @@ const IndividualRecipe = () => {
                                     <input type='text'
                                         className='input measurement-input'
                                         name='measurement'
-                                        placeholder='cup | bunch | whole | (optional)'
+                                        placeholder='cup | tbsp |(optional)'
                                         value={ingredient?.measurement}
                                         onChange={e => handleChangeInput(index, e)}
                                     />
@@ -425,8 +435,8 @@ const IndividualRecipe = () => {
                                         value={ingredient?.title}
                                         onChange={e => handleChangeInput(index, e)}
                                     />
-                                    <BsDashSquare onClick={() => handleRemoveField(index)} />
-                                    <BsPlusSquare onClick={handleAddField} />
+                                    <BsDashSquare className='icon square' onClick={() => handleRemoveField(index)} />
+                                    <BsPlusSquare className='icon square' onClick={handleAddField} />
                                 </div>
                             ))
 
@@ -438,7 +448,7 @@ const IndividualRecipe = () => {
                     <div className='directions_text'>
                         <div className='directions_label'>Directions: </div>
                         {editActive ?
-                            <input type='text'
+                            <textarea  type='text'
                                 className='input directions_input'
                                 name='directions'
                                 placeholder='1. In a large bowl mix flour, eggs, and milk...'
@@ -479,7 +489,7 @@ const IndividualRecipe = () => {
                 {showErrors ?
                     <div className='opaque_container' onClick={() => setShowErrors(false)} >
 
-                        <div className='delete_modal'>
+                        <div className='error_modal'>
                             <div>You cannot update this recipe until these fields are filled in properly:</div>
                             <div className='error_block'>
                                 {showErrors && <div>

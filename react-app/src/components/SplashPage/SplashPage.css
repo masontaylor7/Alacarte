@@ -15,3 +15,50 @@
     min-width: 100%;
     min-height: 100%;
 }
+
+.ala_text {
+    /* font-size: 20px; */
+    font-weight: 400;
+}
+
+.carte_text {
+    /* font-size: 20px; */
+    font-weight: 600;
+}
+
+.bigger {
+    font-size: 30px;
+}
+
+.intro_block {
+    font-weight: 600;
+    line-height: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--dark-yellow-color);
+    background-color: white;
+    z-index: 4;
+    width: 500px;
+    height: 250px;
+}
+
+.link_block {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.link_icon {
+    margin: 20px;
+}
+
+.link_icon:hover {
+    cursor: pointer;
+}

@@ -1,6 +1,13 @@
-.recipe_list {
+.recipes_block {
     display: flex;
     justify-content: center;
+    width: 100%;
+}
+
+.recipe_list {
+    width: 85.5%;
+    display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
     margin: 0px 10px;
 }
@@ -8,10 +15,16 @@
 .single_recipe{
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     align-items: flex-start;
     margin: 10px;
     border: 1px solid var(--yellow-color);
+    background-color: white;
     max-width: fit-content;
+}
+
+.image_div_background {
+    opacity: 0.8;
 }
 
 .add_to_collection {

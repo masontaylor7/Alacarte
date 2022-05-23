@@ -12,6 +12,19 @@
     z-index: 3;
 }
 
+.logo {
+    font-size: 30px;
+}
+
+.ala_text {
+    font-family: 'Smooch', cursive;
+}
+
+.carte_text {
+    color: var(--dark-yellow-color);
+}
+
+
 /* .browse_drop_down {
     display: none;
     top: 60px;

@@ -1,13 +1,17 @@
+.update_recipe_form {
+    margin-top: 100px;
+
+}
+
 .individual_recipe_page {
     display: flex;
-    margin-top: 80px;
     margin-bottom: 15px;
     justify-content: center;
 }
 
 .recipe_info_block {
     border-bottom: 1px solid #D2EBE8;
-    margin-top: 8px;
+    margin-top: 15px;
 }
 
 .recipe_title {
@@ -16,9 +20,8 @@
     font-family: 'Frank Ruhl Libre', serif;
     font-weight: 200;
     word-wrap: break-word;
-    overflow-y: auto;
     min-height: 50%;
-    max-height: 300px;
+    max-height: 350px;
 }
 
 
@@ -37,7 +40,7 @@
     padding-left: 10px;
     margin-left: 18px;
     margin-right: 18px;
-    width: 500px;
+    width: 550px;
     background: linear-gradient(to bottom, #ebf8f8 0, #fefefe 100%);
 }
 
@@ -60,6 +63,28 @@
     display: flex;
     justify-content: space-evenly;
     border-bottom: 1px solid #D2EBE8;
+}
+
+.prep-time-input,
+.cook-time-input,
+.total-time-input,
+.amount-input,
+.measurement-input,
+.ingredient-input {
+    width: 120px;
+}
+
+.square {
+    width: 15px;
+}
+
+.square:hover {
+    cursor: pointer;
+}
+
+.ingredient_row {
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .time_block {

@@ -164,3 +164,20 @@
     color: red;
     font-size: 12px;
 }
+
+.middle_of_page {
+    display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        padding: 10px;
+        transform: translate(-50%, -50%);
+        border: 1px solid var(--yellow-color);
+        background-color: white;
+        overflow-y: auto;
+        height: 80%;
+        width: 700px;
+}

@@ -53,48 +53,54 @@ const RecipesList = ({ recipes }) => {
     }
 
     return (
-        <div className='recipe_list'>
-            {recipes?.map(recipe => (
-                <div key={recipe?.id} className='div_hover'>
-                    <NavLink className='single_recipe' to={`/recipes/${recipe?.id}`} >
-                        <img src={recipe?.image_url} style={imageStyle} />
-                        <div className='recipe_details'>
-                            <div className='recipe_category'>{recipe?.category?.title}</div>
-                            <div className='title_block'>
-                                <div className='list_recipe_title'>{recipe?.title}</div>
-                            </div>
+        <div className='recipes_block'>
+            <div className='image_div_background'>
+                <img src='https://img.freepik.com/free-photo/fresh-colourful-ingredients-mexican-cuisine_23-2148254294.jpg?w=2000' />
+            </div>
 
-                            <div className='total_time'><AiOutlineFieldTime /> {recipe?.total_time}
-                                <div className='recipe_servings'>Servings: {recipe?.servings}</div>
-                                <div className='recipe_username'>Creator: {recipe?.user?.username}</div>
-                            </div>
-                        </div>
-
-                    </NavLink>
-                    <div className='remove_button_block'>
-                        <BiBookAdd className='icon add_to_collection' onClick={() => handleAddToCollectionOpen(recipe.id)} />
-                    </div>
-                </div>
-            ))}
-            {showAddToCollectionModal ?
-                <div className='opaque_container' onClick={() => setShowAddToCollectionModal(false)}>
-                    <div className='add_recipe_modal' onClick={(e) => e.stopPropagation()}>
-                        <div className='modal_title_add'>Select a collection to save this recipe to: </div>
-                        <div className='collection_link_list'>
-
-                            {collections?.map(collection => (
-                                <div key={collection.id} className='individual_collection_block' onClick={() => handleAddRecipe(collection.id)}>
-                                    <div className='collection_titles'>{collection.title}</div>
+            <div className='recipe_list'>
+                {recipes?.map(recipe => (
+                    <div key={recipe?.id} className='div_hover'>
+                        <NavLink className='single_recipe' to={`/recipes/${recipe?.id}`} >
+                            <img src={recipe?.image_url} style={imageStyle} />
+                            <div className='recipe_details'>
+                                <div className='recipe_category'>{recipe?.category?.title}</div>
+                                <div className='title_block'>
+                                    <div className='list_recipe_title'>{recipe?.title}</div>
                                 </div>
-                            ))}
-                        </div>
-                        <div className='remove_button_block_two'>
-                            <button type='button' className='cancel_button' onClick={handleAddToCollectionClose}>Cancel</button>
+
+                                <div className='total_time'><AiOutlineFieldTime /> {recipe?.total_time}
+                                    <div className='recipe_servings'>Servings: {recipe?.servings}</div>
+                                    <div className='recipe_username'>Creator: {recipe?.user?.username}</div>
+                                </div>
+                            </div>
+
+                        </NavLink>
+                        <div className='remove_button_block'>
+                            <BiBookAdd className='icon add_to_collection' onClick={() => handleAddToCollectionOpen(recipe.id)} />
                         </div>
                     </div>
-                </div>
-                : null}
+                ))}
+                {showAddToCollectionModal ?
+                    <div className='opaque_container' onClick={() => setShowAddToCollectionModal(false)}>
+                        <div className='add_recipe_modal' onClick={(e) => e.stopPropagation()}>
+                            <div className='modal_title_add'>Select a collection to save this recipe to: </div>
+                            <div className='collection_link_list'>
 
+                                {collections?.map(collection => (
+                                    <div key={collection.id} className='individual_collection_block' onClick={() => handleAddRecipe(collection.id)}>
+                                        <div className='collection_titles'>{collection.title}</div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className='remove_button_block_two'>
+                                <button type='button' className='cancel_button' onClick={handleAddToCollectionClose}>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    : null}
+
+            </div>
         </div>
     );
 };

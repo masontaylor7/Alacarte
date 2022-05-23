@@ -48,6 +48,9 @@ const CollectionRecipesList = () => {
 
     return (
         <div className='collection_recipe_page'>
+            <div className='image_div_background'>
+                <img src='https://img.freepik.com/free-photo/fresh-colourful-ingredients-mexican-cuisine_23-2148254294.jpg?w=2000' />
+            </div>
             <div className='collection_title_block'>Viewing the
                 <div className='collection_title'>&nbsp;{select?.title.toUpperCase()}&nbsp;</div>
                 collection

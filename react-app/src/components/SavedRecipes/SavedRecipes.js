@@ -113,40 +113,45 @@ const SavedRecipes = () => {
 
     return (
         <div className='collections_page'>
-            <div className='button_block'>
-                <button type='button' className='button_style1 add_collection_button' onClick={() => setShowAddModal(true)}>Create New Collection<ImBoxAdd className='add_icon' /></button>
+            <div className='image_div_background'>
+                <img src='https://img.freepik.com/free-photo/fresh-colourful-ingredients-mexican-cuisine_23-2148254294.jpg?w=2000' />
             </div>
+            <div className='middle_of_page'>
+                <div className='button_block'>
+                    <button type='button' className='button_style1 add_collection_button' onClick={() => setShowAddModal(true)}>Create New Collection<ImBoxAdd className='add_icon' /></button>
+                </div>
 
-            <div className='collections_block'>
-                {collections.map(collection => (
-                    <div key={collection.id} className='single_container'>
-                        <div className='title_nav_link'>
+                <div className='collections_block'>
+                    {collections.map(collection => (
+                        <div key={collection.id} className='single_container'>
+                            <div className='title_nav_link'>
 
-                            <NavLink className='single_collection' to={`/collections/${collection.id}`}>
+                                <NavLink className='single_collection' to={`/collections/${collection.id}`}>
 
-                                <div className='title_div'>
-                                    {collection.title} ({collection.recipes.length} recipes)
-                                </div>
-                            </NavLink>
+                                    <div className='title_div'>
+                                        {collection.title} ({collection.recipes.length} recipes)
+                                    </div>
+                                </NavLink>
+                            </div>
+                            <div className='single_collection_icons'>
+                                <RiDeleteBack2Fill id={collection.id} className='edit_icon' onClick={() => handleDeleteModalOpen(collection.id)} />
+                                <RiEditBoxLine id={collection.id} className='remove_icon' onClick={() => handleEditModalOpen(collection.id, collection.title)} />
+                            </div>
+
                         </div>
-                        <div className='single_collection_icons'>
-                            <RiDeleteBack2Fill id={collection.id} className='edit_icon' onClick={() => handleDeleteModalOpen(collection.id)} />
-                            <RiEditBoxLine id={collection.id} className='remove_icon' onClick={() => handleEditModalOpen(collection.id, collection.title)} />
-                        </div>
-
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
             {showAddModal ?
                 <div className='opaque_container' onClick={() => setShowAddModal(false)}>
                     <div className='add_collection_modal' onClick={(e) => e.stopPropagation()}>
                         <div>Give your new collection a name!</div>
-                            {newCollectionErrors.length > 0 ?
-                                newCollectionErrors.map((error, ind) => (
-                                    <div key={ind} className='error_message'>{error}</div>
-                                ))
-                                : null}
+                        {newCollectionErrors.length > 0 ?
+                            newCollectionErrors.map((error, ind) => (
+                                <div key={ind} className='error_message'>{error}</div>
+                            ))
+                            : null}
                         <form className='new_collection_form'>
                             <input type='text'
                                 className='input title-input'
@@ -155,7 +160,7 @@ const SavedRecipes = () => {
                                 value={title}
                             />
                             <button onClick={handleSubmit} className='submit_button'>Create Collection</button>
-                            </form>
+                        </form>
                     </div>
                 </div>
                 : null}

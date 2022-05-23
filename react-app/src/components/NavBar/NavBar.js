@@ -25,15 +25,23 @@ const NavBar = () => {
   return (
     <div className='nav_bar'>
       <nav>
+        <div>
+
+        </div>
         <ul className='nav_bar_ul'>
-          <li className='li-block'>
+          <div className='li_containers'>
+            <NavLink to='/' exact={true} activeClassName='active'>
+              <div className='logo ala_text'>Ala</div><div className='logo carte_text'>Carte</div>
+            </NavLink>
+          </div>
+          {/* <li className='li-block'>
             <div className='li_containers'>
               <NavLink to='/home' exact={true} activeClassName='active'>
                 HOME
               <VscHome className='down_arrow_chevron icon' />
               </NavLink>
             </div>
-          </li>
+          </li> */}
           {sessionUser ? <li className='li-block'>
             <div className='li_containers'>
                <NavLink to={`/browse/all`} exact={true} className='browser_hover_block' activeClassName='active' onMouseEnter={() => setDropDown(true)}

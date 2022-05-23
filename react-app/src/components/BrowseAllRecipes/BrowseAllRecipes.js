@@ -54,29 +54,36 @@ const BrowseAllRecipes = () => {
     }
 
     return (
-        <div className='recipe_list'>
-            {recipes?.map(recipe => (
-                <div key={recipe?.id} className='div_hover'>
-                    <NavLink className='single_recipe' to={`/recipes/${recipe?.id}`} >
-                        <img src={recipe?.image_url} style={imageStyle} />
-                        <div className='recipe_details'>
-                            <div className='recipe_category'>{recipe?.category?.title}</div>
-                            <div className='title_block'>
-                                <div className='list_recipe_title'>{recipe?.title}</div>
+        <div className='collection_recipe_page'>
+
+            <div className='image_div_background'>
+                <img src='https://img.freepik.com/free-photo/fresh-colourful-ingredients-mexican-cuisine_23-2148254294.jpg?w=2000' />
+            </div>
+            <div className='recipe_list'>
+
+                {recipes?.map(recipe => (
+                    <div key={recipe?.id} className='div_hover'>
+                        <NavLink className='single_recipe' to={`/recipes/${recipe?.id}`} >
+                            <img src={recipe?.image_url} style={imageStyle} />
+                            <div className='recipe_details'>
+                                <div className='recipe_category'>{recipe?.category?.title}</div>
+                                <div className='title_block'>
+                                    <div className='list_recipe_title'>{recipe?.title}</div>
+                                </div>
+
+                                <div className='total_time'><AiOutlineFieldTime /> {recipe?.total_time}
+                                    <div className='recipe_servings'>Servings: {recipe?.servings}</div>
+                                    <div className='recipe_username'>Creator: {recipe?.user?.username}</div>
+                                </div>
                             </div>
 
-                            <div className='total_time'><AiOutlineFieldTime /> {recipe?.total_time}
-                                <div className='recipe_servings'>Servings: {recipe?.servings}</div>
-                                <div className='recipe_username'>Creator: {recipe?.user?.username}</div>
-                            </div>
+                        </NavLink>
+                        <div className='remove_button_block'>
+                            <BiBookAdd className='icon add_to_collection' onClick={() => handleAddToCollectionOpen(recipe.id)} />
                         </div>
-
-                    </NavLink>
-                    <div className='remove_button_block'>
-                        <BiBookAdd className='icon add_to_collection' onClick={() => handleAddToCollectionOpen(recipe.id)} />
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
             {showAddToCollectionModal ?
                 <div className='opaque_container' onClick={() => setShowAddToCollectionModal(false)}>
                     <div className='add_recipe_modal' onClick={(e) => e.stopPropagation()}>
