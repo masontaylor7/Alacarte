@@ -22,7 +22,7 @@ Redux handles the state for the application, including thunks that make fetches 
 
 ### Python/Python3
 
-AlaCarte was built using the most recent backend language I had learned at the time, making it a great experiment. Its ability to pair with Flask made the query process incredibly smooth and manageable.
+AlaCarte was built using the most recent backend language I had learned at the time, making it a rewarding experiment and challenge. Its ability to pair with Flask made the query process incredibly smooth and manageable.
 
 ### Flask
 
