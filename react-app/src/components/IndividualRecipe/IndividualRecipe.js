@@ -304,7 +304,7 @@ const IndividualRecipe = () => {
 
                             </div>
                             {editActive ?
-                                <div>
+                                <div className='title_block'>
                                     <div className='recipe_title'>{recipe?.title}</div>
                                     <div>
                                         <label>Name of your dish:</label>

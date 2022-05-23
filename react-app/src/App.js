@@ -56,9 +56,13 @@ function App() {
       <NavBar />
       <div className='full_body'>
         <Switch>
-          <Route path='/' exact={true}>
-            <SplashPage />
+          {sessionUser ?
+            <Route path='/home' exact={true}>
+            <HomePage />
           </Route>
+          : <Route path='/' exact={true}>
+              <SplashPage />
+            </Route>}
           <Route path='/home' exact={true}>
             <HomePage />
           </Route>

@@ -15,7 +15,13 @@
     padding: 10px;
     font-family: 'Frank Ruhl Libre', serif;
     font-weight: 200;
+    word-wrap: break-word;
+    overflow-y: auto;
+    min-height: 50%;
+    max-height: 300px;
 }
+
+
 
 .sticky_block {
     display: flex;
