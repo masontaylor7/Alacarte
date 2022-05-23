@@ -11,7 +11,7 @@
     align-items: flex-start;
     margin: 10px;
     border: 1px solid var(--yellow-color);
-    max-width: 300px;
+    max-width: fit-content;
 }
 
 .add_to_collection {

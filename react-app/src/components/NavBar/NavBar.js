@@ -32,12 +32,12 @@ const NavBar = () => {
               </NavLink>
             </div>
           </li>
-          <li className='li-block'>
+          {sessionUser ? <li className='li-block'>
             <div className='li_containers'>
-              <NavLink to={`/browse/all`} exact={true} className='browser_hover_block' activeClassName='active' onMouseEnter={() => setDropDown(true)}
+               <NavLink to={`/browse/all`} exact={true} className='browser_hover_block' activeClassName='active' onMouseEnter={() => setDropDown(true)}
                 onMouseLeave={() => setDropDown(false)}>
                 BROWSE RECIPES
-              <BsChevronDown className='down_arrow_chevron icon' />
+                <BsChevronDown className='down_arrow_chevron icon' />
               </NavLink>
               {dropDown &&
                 <ul className='browse_drop_down' onMouseEnter={() => setDropDown(true)}
@@ -96,7 +96,7 @@ const NavBar = () => {
                 </ul>
               }
             </div>
-          </li>
+          </li> : null}
           {sessionUser ? <li className='li-block'>
             <div className='li_containers'>
               <NavLink to='/collections' exact={true} activeClassName='active'>

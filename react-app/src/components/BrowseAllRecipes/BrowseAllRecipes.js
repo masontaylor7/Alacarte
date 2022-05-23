@@ -22,12 +22,12 @@ const BrowseAllRecipes = () => {
 
     useEffect(() => {
         dispatch(allRecipes())
-        dispatch(allCollections(sessionUser.id))
+        dispatch(allCollections(sessionUser?.id))
     }, [dispatch])
 
     const imageStyle = {
-        width: "300px",
-        height: 'auto'
+        width: "auto",
+        height: '450px'
     }
 
     const handleAddToCollectionOpen = (recipeId) => {

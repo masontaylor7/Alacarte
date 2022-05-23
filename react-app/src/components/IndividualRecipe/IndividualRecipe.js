@@ -22,6 +22,9 @@ const IndividualRecipe = () => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [editActive, setEditActive] = useState(false)
     const [deleteIngredientModal, setDeleteIngredientModal] = useState(false)
+    const [showErrors, setShowErrors] = useState(false)
+    const [validationErrors, setValidationErrors] = useState([]);
+    console.log(validationErrors)
 
     {/* current fields*/ }
     const [deleteIndex, setDeleteIndex] = useState(-1)
@@ -45,6 +48,20 @@ const IndividualRecipe = () => {
     const [placeholder, setPlaceholder] = useState("default");
 
     // console.log(currTitle, inputFields, categoryId, imageUrl, title, prepTime, prepTime, cookTime, totalTime, servingSize, directionsInp, placeholder, inputFields)
+
+    useEffect(() => {
+        const errors = []
+        if (currTitle?.length === 0) errors.push('"Name" field cannot be empty')
+        if (directionsInp?.length === 0) errors.push('"Directions" field cannot be empty')
+        if (prepTime?.length === 0) errors.push('"Prep Time" field cannot be empty')
+        if (cookTime?.length === 0) errors.push('"Cook Time" field cannot be empty')
+        if (totalTime?.length === 0) errors.push('"Total Time" field cannot be empty')
+        if (servingSize?.length === 0) errors.push('"Servings" field cannot be empty')
+        inputFields?.map(ingredientObj => {
+            if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" <br> (there may be an unused ingredient input)')
+        })
+        setValidationErrors(errors)
+    }, [currTitle, prepTime, cookTime, totalTime, servingSize, directionsInp])
 
 
     useEffect(() => {
@@ -205,22 +222,24 @@ const IndividualRecipe = () => {
             directions: directionsInp,
         }
 
-        dispatch(updateRecipe(recipe))
+        if (validationErrors.length === 0) {
+            dispatch(updateRecipe(recipe))
 
-        inputFields?.map(ingredientobj => {
+            inputFields?.map(ingredientobj => {
+                    if (ingredientobj.id) {
+                        dispatch(updateIngredient(ingredientobj))
+                    } else {
+                        dispatch(createIngredient(ingredientobj))
+                    }
 
-            if (ingredientobj.id) {
-                // console.log(ingredientobj, '--------- has Id')
-                dispatch(updateIngredient(ingredientobj))
-            } else {
-                // console.log(ingredientobj, '----------doesnt have Id')
-                dispatch(createIngredient(ingredientobj))
-            }
+            })
+            setRemovedIng([])
+            setEditActive(false)
 
-        })
+        } else {
+            setShowErrors(true)
+        }
 
-        setRemovedIng([])
-        setEditActive(false)
 
     }
 
@@ -452,6 +471,23 @@ const IndividualRecipe = () => {
                             <div className='delete_modal_buttons'>
                                 <button className='modal_button' type='button' onClick={handleDeleteIngredientModalClose}>No, Cancel</button>
                                 <button className='modal_button' onClick={handleDeleteIngredient}>Yes, Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    : null}
+
+                {showErrors ?
+                    <div className='opaque_container' onClick={() => setShowErrors(false)} >
+
+                        <div className='delete_modal'>
+                            <div>You cannot update this recipe until these fields are filled in properly:</div>
+                            <div className='error_block'>
+                                {showErrors && <div>
+                                    {validationErrors.map((error, ind) => (
+                                        <div key={ind}>- {error}</div>
+                                    ))}
+                                </div>}
+                                <button className='modal_button' type='button' onClick={() => setShowErrors(false)}>Close Window</button>
                             </div>
                         </div>
                     </div>

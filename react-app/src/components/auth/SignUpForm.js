@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect, useHistory } from 'react-router-dom';
 import { login, signUp } from '../../store/session';
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
+  const [showErrors, setShowErrors] = useState(false)
+  const [validationErrors, setValidationErrors] = useState([]);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,13 +17,30 @@ const SignUpForm = () => {
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    if (password === repeatPassword) {
+    if (validationErrors.length === 0) {
       const data = await dispatch(signUp(username, email, password));
       if (data) {
-        setErrors(data)
+        console.log(data)
+        setValidationErrors(data)
+        return
+      } else {
+        setShowErrors(false)
+        history.push('/home')
       }
+    } else {
+      setShowErrors(true)
     }
   };
+
+  useEffect(() => {
+    const errs = []
+    if (username.length === 0) errs.push("Please provide a username.")
+    if (email.length === 0) errs.push("Please provide an email address.")
+    if (!email.includes('@')) errs.push("Please provide a valid email.")
+    if (password.length === 0) errs.push("Please provide a password.")
+    if (password !== repeatPassword) errs.push("Passwords do not match.")
+    setValidationErrors(errs)
+  }, [username, email, password, repeatPassword])
 
   const handleDemo = async (e) => {
     e.preventDefault()
@@ -51,15 +70,17 @@ const SignUpForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/' />;
+    return <Redirect to='/home' />;
   }
 
   return (
     <form onSubmit={onSignUp}>
       <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
+        {showErrors && <div>
+          {validationErrors.map((error, ind) => (
+            <div key={ind}>- {error}</div>
+          ))}
+        </div>}
       </div>
       <div>
         <label>User Name</label>

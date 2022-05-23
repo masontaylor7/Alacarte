@@ -14,6 +14,8 @@ const SavedRecipes = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const collections = Object.values(useSelector(state => state.collections))
+    const [newCollectionErrors, setNewCollectionErrors] = useState([])
+    const [showErrors, setShowErrors] = useState(false)
 
     const [showAddModal, setShowAddModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -22,6 +24,11 @@ const SavedRecipes = () => {
     const [editCollectionId, setEditCollectionId] = useState(0)
     const [title, setTitle] = useState('')
 
+    useEffect(() => {
+        const errors = []
+        if (title.length === 0) errors.push('A name is required')
+        setNewCollectionErrors(errors)
+    }, [title])
 
     useEffect(() => {
         dispatch(allCollections(sessionUser.id))
@@ -42,9 +49,16 @@ const SavedRecipes = () => {
             user_id: sessionUser.id,
             title
         }
-        dispatch(createCollection(collection))
-        setTitle('')
-        setShowAddModal(false)
+
+        if (newCollectionErrors.length === 0) {
+            dispatch(createCollection(collection))
+            setTitle('')
+            setShowAddModal(false)
+        } else {
+            setShowErrors(true)
+
+        }
+
     }
 
     const handleEditSubmit = async (e) => {
@@ -77,6 +91,7 @@ const SavedRecipes = () => {
     const handleEditModalClose = () => {
         setEditTitle(false)
         setTitle('')
+        setNewCollectionErrors([])
         setEditCollectionId(0)
     }
 
@@ -123,6 +138,11 @@ const SavedRecipes = () => {
                 <div className='opaque_container' onClick={() => setShowAddModal(false)}>
                     <div className='add_collection_modal' onClick={(e) => e.stopPropagation()}>
                         <div>Give your new collection a name!</div>
+                            {showErrors && newCollectionErrors.length > 0 ?
+                                newCollectionErrors.map((error, ind) => (
+                                    <div key={ind} className='error_message'>{error}</div>
+                                ))
+                                : null}
                         <form className='new_collection_form'>
                             <input type='text'
                                 className='input title-input'
@@ -131,7 +151,7 @@ const SavedRecipes = () => {
                                 value={title}
                             />
                             <button onClick={handleSubmit} className='submit_button'>Create Collection</button>
-                        </form>
+                            </form>
                     </div>
                 </div>
                 : null}
@@ -149,7 +169,7 @@ const SavedRecipes = () => {
                 : null}
 
             {editTitle ?
-                <div className='opaque_container' onClick={() => setEditTitle(false)}>
+                <div className='opaque_container' onClick={handleEditModalClose}>
                     <div className='add_collection_modal' onClick={(e) => e.stopPropagation()}>
                         <div>What is the new name of the collection?</div>
                         <form className='new_collection_form'>

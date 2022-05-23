@@ -159,3 +159,8 @@
 .delete_button {
     margin: 10px;
 }
+
+.error_message {
+    color: red;
+    font-size: 12px;
+}
