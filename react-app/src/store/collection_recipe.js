@@ -64,7 +64,7 @@ export default function collectionRecipeReducer(state = initialState, action) {
         case DELETE_ENTRIES: {
             newState = { ...state }
             action.entries.map(entry => {
-                delete newState[entry.id]
+                return delete newState[entry.id]
             })
             return newState;
         }

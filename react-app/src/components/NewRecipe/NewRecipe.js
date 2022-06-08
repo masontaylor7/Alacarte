@@ -47,7 +47,7 @@ const NewRecipe = () => {
         })
         if (!isImageUrl(imageUrl)) errors.push('"Image URL" must be an authentic URL')
         setValidationErrors(errors)
-    }, [imageUrl, title, prepTime, cookTime, totalTime, servingSize, directionsInp])
+    }, [imageUrl, title, prepTime, cookTime, totalTime, servingSize, directionsInp, inputFields])
 
     useEffect(() => {
         dispatch(allCategories())
