@@ -42,8 +42,8 @@ export const oneRecipe = (recipeId) => async (dispatch) => {
 export const createRecipe = (recipe) => async (dispatch) => {
     const response = await fetch('/api/recipes/new', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(recipe)
+        // headers: { 'Content-Type': 'application/json' },
+        body: recipe
     })
     if (response.ok) {
         const recipe = await response.json()
