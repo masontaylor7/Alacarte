@@ -51,7 +51,7 @@ export const createCollectionRecipe = (entry) => async (dispatch) => {
 
     if (response.ok) {
         const newEntry = await response.json()
-        console.log('>>>>>>>>>>>> ', newEntry, ' <<<<<<<<<<<<<')
+        // console.log('>>>>>>>>>>>> ', newEntry, ' <<<<<<<<<<<<<')
         dispatch(createCollectionEntryActionCreator(newEntry))
         return newEntry;
     }

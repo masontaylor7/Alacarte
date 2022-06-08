@@ -6,7 +6,7 @@ import { AiOutlineFieldTime } from 'react-icons/ai'
 import { BiBookAdd } from 'react-icons/bi'
 
 import { allRecipes } from '../../store/recipe';
-import { allCollections } from '../../store/collection';
+import { allCollections, createCollection } from '../../store/collection';
 import { createCollectionRecipe } from '../../store/collection_recipe';
 
 const BrowseAllRecipes = () => {
@@ -17,6 +17,10 @@ const BrowseAllRecipes = () => {
     const sessionUser = useSelector(state => state.session.user);
     const [showAddToCollectionModal, setShowAddToCollectionModal] = useState(false)
     const [recipeId, setRecipeId] = useState(0)
+    const [showAddModal, setShowAddModal] = useState(false)
+    const [newCollectionErrors, setNewCollectionErrors] = useState([])
+    const [title, setTitle] = useState('')
+    const [showErrors, setShowErrors] = useState(false)
 
     // const recipes = Object.values(useSelector(state => state.recipes))
 
@@ -24,6 +28,12 @@ const BrowseAllRecipes = () => {
         dispatch(allRecipes())
         dispatch(allCollections(sessionUser?.id))
     }, [dispatch])
+
+    useEffect(() => {
+        const errors = []
+        if (title.length === 0) errors.push('A name is required')
+        setNewCollectionErrors(errors)
+    }, [title])
 
     const imageStyle = {
         width: "auto",
@@ -41,6 +51,10 @@ const BrowseAllRecipes = () => {
 
     }
 
+    const handleSetTitle = (e) => {
+        setTitle(e.target.value)
+    }
+
     const handleAddRecipe = async (collectionId) => {
         const entry = {
             recipe_id: recipeId,
@@ -50,6 +64,25 @@ const BrowseAllRecipes = () => {
         await dispatch(createCollectionRecipe(entry))
         setShowAddToCollectionModal(false)
         setRecipeId(0)
+
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const collection = {
+            user_id: sessionUser.id,
+            title
+        }
+
+        if (newCollectionErrors.length === 0 && title.length > 0) {
+            dispatch(createCollection(collection))
+            setTitle('')
+            setShowAddModal(false)
+        } else {
+            setShowErrors(true)
+
+        }
 
     }
 
@@ -84,12 +117,15 @@ const BrowseAllRecipes = () => {
                     </div>
                 ))}
             </div>
+
             {showAddToCollectionModal ?
                 <div className='opaque_container' onClick={() => setShowAddToCollectionModal(false)}>
                     <div className='add_recipe_modal' onClick={(e) => e.stopPropagation()}>
                         <div className='modal_title_add'>Select a collection to save this recipe to: </div>
                         <div className='collection_link_list'>
-
+                            <div className='individual_collection_block_new' onClick={() => setShowAddModal(true)}>
+                                <div className='collection_titles'>Create New Collection</div>
+                            </div>
                             {collections?.map(collection => (
                                 <div key={collection.id} className='individual_collection_block' onClick={() => handleAddRecipe(collection.id)}>
                                     <div className='collection_titles'>{collection.title}</div>
@@ -99,6 +135,28 @@ const BrowseAllRecipes = () => {
                         <div className='remove_button_block_two'>
                             <button type='button' className='cancel_button' onClick={handleAddToCollectionClose}>Cancel</button>
                         </div>
+                    </div>
+                </div>
+                : null}
+
+            {showAddModal ?
+                <div className='opaque_container' onClick={() => setShowAddModal(false)}>
+                    <div className='add_collection_modal' onClick={(e) => e.stopPropagation()}>
+                        <div>Give your new collection a name!</div>
+                        {newCollectionErrors.length > 0 ?
+                            newCollectionErrors.map((error, ind) => (
+                                <div key={ind} className='error_message'>{error}</div>
+                            ))
+                            : null}
+                        <form className='new_collection_form'>
+                            <input type='text'
+                                className='input title-input'
+                                name='title'
+                                onChange={handleSetTitle}
+                                value={title}
+                            />
+                            <button onClick={handleSubmit} className='submit_button'>Create Collection</button>
+                        </form>
                     </div>
                 </div>
                 : null}
