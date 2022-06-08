@@ -73,7 +73,8 @@
     line-height: 20px;
 }
 
-.collection_recipe_page{
+.collection_recipe_page,
+.browse_recipes_button_block {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,11 +101,16 @@
     margin-top: -40px;
 }
 
-.remove_button {
+.remove_button,
+.browse_button {
     background-color: white;
     border: 1px solid #D2EBE8;
     border-radius: 10px;
     color: var(--dark-yellow-color);
+}
+
+.browse_button {
+    margin: 15px;
 }
 
 .opaque_container {

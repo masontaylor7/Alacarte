@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useHistory, useParams } from 'react-router-dom'
 import '../RecipesList/RecipesList.css'
 import { AiOutlineFieldTime } from 'react-icons/ai'
 
@@ -11,6 +11,7 @@ import { deleteOneEntry } from '../../store/collection_recipe';
 
 const CollectionRecipesList = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { collectionId } = useParams()
     const collection = Object.values(useSelector(state => state.collections))
     const select = collection[0]
@@ -37,6 +38,10 @@ const CollectionRecipesList = () => {
 
     }
 
+    const handleBrowseReroute = () => {
+        history.push('/browse/all')
+    }
+
     useEffect(() => {
         dispatch(getCollectionRecipes(collectionId))
     }, [dispatch])
@@ -55,31 +60,39 @@ const CollectionRecipesList = () => {
                 <div className='collection_title'>&nbsp;{select?.title.toUpperCase()}&nbsp;</div>
                 collection
             </div>
-            <div className='recipe_list'>
-                {select?.recipes?.map(recipe => (
-                    <div key={recipe?.id} className='div_hover'>
-                        <NavLink className='single_recipe' to={`/recipes/${recipe?.id}`} >
-                            <img src={recipe?.image_url} style={imageStyle} />
-                            <div className='recipe_details'>
-                                <div className='recipe_category'>{recipe?.category?.title}</div>
-                                <div className='title_block'>
-                                    <div className='list_recipe_title'>{recipe?.title}</div>
+            {select?.recipes?.length ?
+                <div className='recipe_list'>
+                    {select?.recipes?.map(recipe => (
+                        <div key={recipe?.id} className='div_hover'>
+                            <NavLink className='single_recipe' to={`/recipes/${recipe?.id}`} >
+                                <img src={recipe?.image_url} style={imageStyle} />
+                                <div className='recipe_details'>
+                                    <div className='recipe_category'>{recipe?.category?.title}</div>
+                                    <div className='title_block'>
+                                        <div className='list_recipe_title'>{recipe?.title}</div>
+                                    </div>
+
+                                    <div className='total_time'><AiOutlineFieldTime /> {recipe?.total_time}
+                                        <div className='recipe_servings'>Servings: {recipe?.servings}</div>
+                                        <div className='recipe_username'>Creator: {recipe?.user?.username}</div>
+                                    </div>
                                 </div>
 
-                                <div className='total_time'><AiOutlineFieldTime /> {recipe?.total_time}
-                                    <div className='recipe_servings'>Servings: {recipe?.servings}</div>
-                                    <div className='recipe_username'>Creator: {recipe?.user?.username}</div>
-                                </div>
+                            </NavLink>
+                            <div className='remove_button_block'>
+                                <button type='button' className='remove_button' onClick={() => handleRemoveRecipeModalOpen(recipe?.id)}>Remove From Collection</button>
                             </div>
-
-                        </NavLink>
-                        <div className='remove_button_block'>
-                            <button type='button' className='remove_button' onClick={() => handleRemoveRecipeModalOpen(recipe?.id)}>Remove From Collection</button>
+                        </div>
+                    ))}
+                </div>
+                : <div>
+                    <div className='no_recipes_saved_block' onClick={(e) => e.stopPropagation()}>
+                        <div>There are no recipes stored in this collection yet. Browse recipes to start saving your favorites here!</div>
+                        <div className='browse_recipes_button_block'>
+                            <button type='button' className='browse_button' onClick={handleBrowseReroute}>Browse All Recipes</button>
                         </div>
                     </div>
-                ))}
-
-            </div>
+                </div>}
 
             {showRemoveModal ?
                 <div className='opaque_container' onClick={() => setShowRemoveModal(false)}>
