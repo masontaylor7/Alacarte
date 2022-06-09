@@ -20,6 +20,7 @@ const NewRecipe = () => {
     const [showErrors, setShowErrors] = useState(false)
     const [validationErrors, setValidationErrors] = useState([]);
     const [photoPreview, setPhotoPreview] = useState('#')
+    console.log('photoPreview: ------', photoPreview)
 
     const [inputFields, setInputFields] = useState([
         { title: '', amount: '', measurement: '', },
@@ -198,7 +199,7 @@ const NewRecipe = () => {
                     />
 
                     <div className='field_block'>
-                        {photoPreview ? <img src={photoPreview} style={imageStyle} alt='preview' /> : <img src='https://img.buzzfeed.com/buzzfeed-static/static/2019-12/4/16/tmp/96ecd548dea3/tmp-name-2-109-1575477795-3_dblbig.jpg?resize=1200:*' style={imageStyle} alt='preview' />}
+                        {photoPreview !== '#' ? <img src={photoPreview} style={imageStyle} alt='preview' /> : <img src='https://img.buzzfeed.com/buzzfeed-static/static/2019-12/4/16/tmp/96ecd548dea3/tmp-name-2-109-1575477795-3_dblbig.jpg?resize=1200:*' style={imageStyle} alt='preview' />}
                     </div>
                     <label>Finished Dish Image:</label>
                     <input type='file'
@@ -207,7 +208,7 @@ const NewRecipe = () => {
                         placeholder='Valid Image URL'
                         accept="image/*"
                         onChange={updateImage}
-                        value={image}
+                        // value={image}
 
                     />
                     <div className='category-block field_block'>
