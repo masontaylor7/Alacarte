@@ -8,7 +8,7 @@ import { BiBookAdd } from 'react-icons/bi'
 import './IndividualRecipe.css'
 import { deleteIngredient, specificIngredients, createIngredient, updateIngredient } from '../../store/ingredient';
 import { createCollectionRecipe } from '../../store/collection_recipe';
-import { allCollections } from '../../store/collection';
+import { allCollections, createCollection } from '../../store/collection';
 
 
 const IndividualRecipe = () => {
@@ -26,6 +26,15 @@ const IndividualRecipe = () => {
     const [deleteIngredientModal, setDeleteIngredientModal] = useState(false)
     const [showErrors, setShowErrors] = useState(false)
     const [validationErrors, setValidationErrors] = useState([]);
+    const [showAddModal, setShowAddModal] = useState(false)
+    const [newCollectionErrors, setNewCollectionErrors] = useState([])
+    const [collTitle, setCollTitle] = useState('')
+
+    useEffect(() => {
+        const errors = []
+        if (collTitle.length === 0) errors.push('A name is required')
+        setNewCollectionErrors(errors)
+    }, [collTitle])
     // console.log(validationErrors)
 
     {/* current fields*/ }
@@ -147,6 +156,10 @@ const IndividualRecipe = () => {
         setTitle(e.target.value)
     }
 
+    const handleSetCollTitle = (e) => {
+        setCollTitle(e.target.value)
+    }
+
     const handleSetPrepTime = (e) => {
         setPrepTime(e.target.value)
     }
@@ -185,6 +198,23 @@ const IndividualRecipe = () => {
         await dispatch(deleteRecipe(recipe?.id))
         handleDeleteModalClose()
         await history.push('/browse/all')
+    }
+
+    const handleCreateCollection = async (e) => {
+        e.preventDefault()
+
+        const collection = {
+            user_id: sessionUser.id,
+            title: collTitle
+        }
+
+        if (newCollectionErrors.length === 0 && collTitle.length > 0) {
+            dispatch(createCollection(collection))
+            setCollTitle('')
+            setShowAddModal(false)
+        } else {
+            setNewCollectionErrors(true)
+        }
     }
 
     const handleAddField = () => {
@@ -302,287 +332,315 @@ const IndividualRecipe = () => {
 
 
     return (
-        <form className='update_recipe_form'>
-            <div className='individual_recipe_page'>
-                {/* <form> */}
-                <div className='sticky_block'>
-                    <div className='image_block'>
-                        {!editActive && recipe?.image_url ? <img src={recipe?.image_url} style={imageStyle} alt='image' /> : null}
+        <div>
 
-                        {editActive &&
-                            <div>
 
+            <form className='update_recipe_form'>
+                <div className='individual_recipe_page'>
+                    {/* <form> */}
+                    <div className='sticky_block'>
+                        <div className='image_block'>
+                            {!editActive && recipe?.image_url ? <img src={recipe?.image_url} style={imageStyle} alt='image' /> : null}
+
+                            {editActive &&
                                 <div>
-                                    {photoPreview !== '#' ? <img src={photoPreview} style={imageStyle} alt='preview' />: <img src={recipe?.image_url} style={imageStyle} alt='image' />}
-                                </div>
 
-                                <label>Finished Dish Image:</label>
-                                <input type='file'
-                                    className='input image-input'
-                                    name='image_url'
-                                    placeholder='Valid Image URL'
-                                    accept="image/*"
-                                    onChange={updateImage}
+                                    <div>
+                                        {photoPreview !== '#' ? <img src={photoPreview} style={imageStyle} alt='preview' /> : <img src={recipe?.image_url} style={imageStyle} alt='image' />}
+                                    </div>
+
+                                    <label>Finished Dish Image:</label>
+                                    <input type='file'
+                                        className='input image-input'
+                                        name='image_url'
+                                        placeholder='Valid Image URL'
+                                        accept="image/*"
+                                        onChange={updateImage}
                                     // value={imageUrl}
 
-                                />
+                                    />
+
+                                </div>
+                            }
+                        </div>
+
+
+                        <div className='information_block'>
+                            <div className='recipe_info_block'>
+                                <div className='recipe_info_top_portion'>
+
+                                    {!editActive ? <div className='recipe_category'>{recipe?.category.title}</div> : <div className='category-block'>
+                                        <select className='input' defaultValue={placeholder} onChange={(e) => setCategoryId(e.target.value)}>
+                                            <option value="default" disabled hidden>
+                                                {recipe?.category.title}
+                                            </option>
+                                            {categories?.map(category => (
+                                                <option key={category.id} value={category.id}>{category.title}</option>
+                                            ))}
+                                        </select>
+                                    </div>}
+
+                                    {sessionUser.id === recipe?.user_id && !editActive ?
+                                        <div className='button_block'>
+                                            <button type='button' className='update_recipe_button top_button' onClick={handleEdit}>Update Recipe</button>
+                                            <button type='button' className='remove_recipe_button top_button' onClick={handleDeleteModalOpen}>Remove Recipe</button>
+                                        </div> : null}
+
+
+
+                                    {sessionUser.id === recipe?.user_id && editActive ?
+                                        <div className='button_block'>
+                                            <button type='button' className='remove_recipe_button top_button' onClick={handleCancelEdit}>Cancel Update</button>
+                                            <button type='submit' className='update_recipe_button top_button' onClick={handleSubmit}>Submit Update</button>
+                                        </div> : null}
+
+
+                                </div>
+                                {editActive ?
+                                    <div className='title_block'>
+                                        <div>
+                                            <label>Name of your dish:</label>
+                                            <input type='text'
+                                                className='input title-input'
+                                                name='title'
+                                                // placeholder={recipe?.title}
+                                                onChange={(e) => setCurrTitle(e.target.value)}
+                                                value={currTitle}
+                                            />
+                                        </div>
+                                        <div className='recipe_title'>{recipe?.title}</div>
+                                    </div> : <div className='recipe_title'>{recipe?.title}</div>
+                                }
+
+                                <div className='recipe_user_info'>Created By: <span className='username'>
+                                    {recipe?.user.username}</span></div>
+
 
                             </div>
-                        }
-                    </div>
 
+                            <div className='full_time_block'>
 
-                    <div className='information_block'>
-                        <div className='recipe_info_block'>
-                            <div className='recipe_info_top_portion'>
-
-                                {!editActive ? <div className='recipe_category'>{recipe?.category.title}</div> : <div className='category-block'>
-                                    <select className='input' defaultValue={placeholder} onChange={(e) => setCategoryId(e.target.value)}>
-                                        <option value="default" disabled hidden>
-                                            {recipe?.category.title}
-                                        </option>
-                                        {categories?.map(category => (
-                                            <option key={category.id} value={category.id}>{category.title}</option>
-                                        ))}
-                                    </select>
-                                </div>}
-
-                                {sessionUser.id === recipe?.user_id && !editActive ?
-                                    <div className='button_block'>
-                                        <button type='button' className='update_recipe_button top_button' onClick={handleEdit}>Update Recipe</button>
-                                        <button type='button' className='remove_recipe_button top_button' onClick={handleDeleteModalOpen}>Remove Recipe</button>
-                                    </div> : null}
-
-
-
-                                {sessionUser.id === recipe?.user_id && editActive ?
-                                    <div className='button_block'>
-                                        <button type='button' className='remove_recipe_button top_button' onClick={handleCancelEdit}>Cancel Update</button>
-                                        <button type='submit' className='update_recipe_button top_button' onClick={handleSubmit}>Submit Update</button>
-                                    </div> : null}
-
-
-                            </div>
-                            {editActive ?
-                                <div className='title_block'>
-                                    <div>
-                                        <label>Name of your dish:</label>
+                                <div className='time_block'>
+                                    <div className='time_label'>PREP TIME</div>
+                                    {editActive ?
                                         <input type='text'
-                                            className='input title-input'
-                                            name='title'
-                                            // placeholder={recipe?.title}
-                                            onChange={(e) => setCurrTitle(e.target.value)}
-                                            value={currTitle}
+                                            className='input prep-time-input'
+                                            name='prep_time'
+                                            // placeholder='30 mins | 2 hrs'
+                                            onChange={handleSetPrepTime}
+                                            value={prepTime}
+
                                         />
-                                    </div>
-                                    <div className='recipe_title'>{recipe?.title}</div>
-                                </div> : <div className='recipe_title'>{recipe?.title}</div>
+                                        : <div className='time_count'>
+                                            {recipe?.prep_time}
+                                        </div>}
+                                </div>
+
+                                <div className='time_block'>
+                                    <div className='time_label'>COOK TIME</div>
+                                    {editActive ?
+                                        <input type='text'
+                                            className='input cook-time-input'
+                                            name='cook_time'
+                                            // placeholder='30 mins | 2 hrs'
+                                            onChange={handleSetCookTime}
+                                            value={cookTime}
+
+                                        />
+                                        : <div className='time_count'>
+                                            {recipe?.cook_time}
+                                        </div>}
+                                </div>
+
+                                <div className='time_block'>
+                                    <div className='time_label'>TOTAL TIME</div>
+                                    {editActive ?
+                                        <input type='text'
+                                            className='input total-time-input'
+                                            name='total_time'
+                                            // placeholder='30 mins | 2 hrs'
+                                            onChange={handleSetTotalTime}
+                                            value={totalTime}
+
+                                        />
+                                        : <div className='time_count'>
+                                            {recipe?.total_time}
+                                        </div>}
+                                </div>
+                            </div>
+
+                            {editActive ?
+                                <div className='field-title'>Servings:
+                                    <input type='text'
+                                        className='input servings_input'
+                                        name='servings'
+                                        // placeholder='2 - 4 servings | 16 pancakes'
+                                        onChange={handleSetServingSize}
+                                        value={servingSize}
+
+                                    />
+                                </div>
+
+                                : <div className='add_icon_block'> <div className='serving_size'>Servings: {recipe?.servings}</div>
+                                    {sessionUser ? <div className='add_button_block'>
+                                        <div>Save this recipe: </div>
+                                        <BiBookAdd className='icon add_to_collection_bigger' onClick={() => handleAddToCollectionOpen(recipe.id)} />
+                                    </div> : null}
+                                </div>
+
                             }
 
-                            <div className='recipe_user_info'>Created By: <span className='username'>
-                                {recipe?.user.username}</span></div>
 
+                            <div className='ingredients_label'>Ingredients </div>
 
-                        </div>
-
-                        <div className='full_time_block'>
-
-                            <div className='time_block'>
-                                <div className='time_label'>PREP TIME</div>
-                                {editActive ?
-                                    <input type='text'
-                                        className='input prep-time-input'
-                                        name='prep_time'
-                                        // placeholder='30 mins | 2 hrs'
-                                        onChange={handleSetPrepTime}
-                                        value={prepTime}
-
-                                    />
-                                    : <div className='time_count'>
-                                        {recipe?.prep_time}
-                                    </div>}
-                            </div>
-
-                            <div className='time_block'>
-                                <div className='time_label'>COOK TIME</div>
-                                {editActive ?
-                                    <input type='text'
-                                        className='input cook-time-input'
-                                        name='cook_time'
-                                        // placeholder='30 mins | 2 hrs'
-                                        onChange={handleSetCookTime}
-                                        value={cookTime}
-
-                                    />
-                                    : <div className='time_count'>
-                                        {recipe?.cook_time}
-                                    </div>}
-                            </div>
-
-                            <div className='time_block'>
-                                <div className='time_label'>TOTAL TIME</div>
-                                {editActive ?
-                                    <input type='text'
-                                        className='input total-time-input'
-                                        name='total_time'
-                                        // placeholder='30 mins | 2 hrs'
-                                        onChange={handleSetTotalTime}
-                                        value={totalTime}
-
-                                    />
-                                    : <div className='time_count'>
-                                        {recipe?.total_time}
-                                    </div>}
-                            </div>
-                        </div>
-
-                        {editActive ?
-                            <div className='field-title'>Servings:
-                                <input type='text'
-                                    className='input servings_input'
-                                    name='servings'
-                                    // placeholder='2 - 4 servings | 16 pancakes'
-                                    onChange={handleSetServingSize}
-                                    value={servingSize}
-
-                                />
-                            </div>
-
-                            : <div className='add_icon_block'> <div className='serving_size'>Servings: {recipe?.servings}</div>
-                               {sessionUser ? <div className='add_button_block'>
-                                    <div>Save this recipe: </div>
-                                    <BiBookAdd className='icon add_to_collection_bigger' onClick={() => handleAddToCollectionOpen(recipe.id)} />
-                                </div> : null}
-                            </div>
-
-                        }
-
-
-                        <div className='ingredients_label'>Ingredients </div>
-
-                        {!editActive ? recipe?.ingredients.sort((a, b) => a.id - b.id).map(ingredient => (
-                            <div key={ingredient.id} className='individual_ingredient_info'>
-                                <BsDot />
-                                <div className='ingredient_amount'>{ingredient.amount}&nbsp;</div>
-                                <div className='ingredient_measurement'>{ingredient.measurement}&nbsp;</div>
-                                <div className='ingredient_title'>{ingredient.title}</div>
-                            </div>
-                        )) :
-
-                            inputFields?.map((ingredient, index) => (
-                                <div key={index} className='ingredient_row'>
-                                    <label>A:</label>
-                                    <input type='text'
-                                        className='input amount-input'
-                                        name='amount'
-                                        placeholder='1 | 20 | 1/2 | (optional)'
-                                        value={ingredient?.amount}
-                                        onChange={e => handleChangeInput(index, e)}
-                                    />
-                                    <label>M:</label>
-                                    <input type='text'
-                                        className='input measurement-input'
-                                        name='measurement'
-                                        placeholder='cup | tbsp |(optional)'
-                                        value={ingredient?.measurement}
-                                        onChange={e => handleChangeInput(index, e)}
-                                    />
-                                    <label>I:</label>
-                                    <input type='text'
-                                        className='required-input input ingredient-input'
-                                        name='title'
-                                        placeholder='flour | eggs | milk'
-                                        value={ingredient?.title}
-                                        onChange={e => handleChangeInput(index, e)}
-                                    />
-                                    <BsDashSquare className='icon square' onClick={() => handleRemoveField(index)} />
-                                    <BsPlusSquare className='icon square' onClick={handleAddField} />
+                            {!editActive ? recipe?.ingredients.sort((a, b) => a.id - b.id).map(ingredient => (
+                                <div key={ingredient.id} className='individual_ingredient_info'>
+                                    <BsDot />
+                                    <div className='ingredient_amount'>{ingredient.amount}&nbsp;</div>
+                                    <div className='ingredient_measurement'>{ingredient.measurement}&nbsp;</div>
+                                    <div className='ingredient_title'>{ingredient.title}</div>
                                 </div>
-                            ))
+                            )) :
 
-                        }
-                    </div>
-                </div>
-
-                <div className='directions_block'>
-                    <div className='directions_text'>
-                        <div className='directions_label'>Directions: </div>
-                        {editActive ?
-                            <textarea type='text'
-                                className='input directions_input'
-                                name='directions'
-                                placeholder='1. In a large bowl mix flour, eggs, and milk...'
-                                onChange={handleSetDirectionsInp}
-                                value={directionsInp}
-
-                            /> :
-                            recipe?.directions}
-                    </div>
-                </div>
-
-                {deleteModal ?
-                    <div className='opaque_container' onClick={handleDeleteModalClose} >
-
-                        <div className='delete_modal'>
-                            <div>Are you sure you want to delete your recipe?</div>
-                            <div className='delete_modal_buttons'>
-                                <button className='modal_button' type='button' onClick={handleDeleteModalClose}>No, Cancel</button>
-                                <button className='modal_button' onClick={handleDelete}>Yes, Remove</button>
-                            </div>
-                        </div>
-                    </div>
-                    : null}
-
-                {deleteIngredientModal ?
-                    <div className='opaque_container' onClick={handleDeleteIngredientModalClose} >
-
-                        <div className='delete_modal'>
-                            <div>Are you sure you want to remove this ingredient?</div>
-                            <div className='delete_modal_buttons'>
-                                <button className='modal_button' type='button' onClick={handleDeleteIngredientModalClose}>No, Cancel</button>
-                                <button className='modal_button' onClick={handleDeleteIngredient}>Yes, Remove</button>
-                            </div>
-                        </div>
-                    </div>
-                    : null}
-
-                {showErrors ?
-                    <div className='opaque_container' onClick={() => setShowErrors(false)} >
-
-                        <div className='error_modal'>
-                            <div>You cannot update this recipe until these fields are filled in properly:</div>
-                            <div className='error_block'>
-                                {showErrors && <div>
-                                    {validationErrors.map((error, ind) => (
-                                        <div key={ind}>- {error}</div>
-                                    ))}
-                                </div>}
-                                <button className='modal_button' type='button' onClick={() => setShowErrors(false)}>Close Window</button>
-                            </div>
-                        </div>
-                    </div>
-                    : null}
-
-                {showAddToCollectionModal ?
-                    <div className='opaque_container' onClick={() => setShowAddToCollectionModal(false)}>
-                        <div className='add_recipe_modal' onClick={(e) => e.stopPropagation()}>
-                            <div className='modal_title_add'>Select a collection to save this recipe to: </div>
-                            <div className='collection_link_list'>
-
-                                {collections?.map(collection => (
-                                    <div key={collection.id} className='individual_collection_block' onClick={() => handleAddRecipe(collection.id)}>
-                                        <div className='collection_titles'>{collection.title}</div>
+                                inputFields?.map((ingredient, index) => (
+                                    <div key={index} className='ingredient_row'>
+                                        <label>A:</label>
+                                        <input type='text'
+                                            className='input amount-input'
+                                            name='amount'
+                                            placeholder='1 | 20 | 1/2 | (optional)'
+                                            value={ingredient?.amount}
+                                            onChange={e => handleChangeInput(index, e)}
+                                        />
+                                        <label>M:</label>
+                                        <input type='text'
+                                            className='input measurement-input'
+                                            name='measurement'
+                                            placeholder='cup | tbsp |(optional)'
+                                            value={ingredient?.measurement}
+                                            onChange={e => handleChangeInput(index, e)}
+                                        />
+                                        <label>I:</label>
+                                        <input type='text'
+                                            className='required-input input ingredient-input'
+                                            name='title'
+                                            placeholder='flour | eggs | milk'
+                                            value={ingredient?.title}
+                                            onChange={e => handleChangeInput(index, e)}
+                                        />
+                                        <BsDashSquare className='icon square' onClick={() => handleRemoveField(index)} />
+                                        <BsPlusSquare className='icon square' onClick={handleAddField} />
                                     </div>
-                                ))}
-                            </div>
-                            <div className='remove_button_block_two'>
-                                <button type='button' className='cancel_button' onClick={handleAddToCollectionClose}>Cancel</button>
-                            </div>
+                                ))
+
+                            }
                         </div>
                     </div>
-                    : null}
-            </div>
-        </form>
+
+                    <div className='directions_block'>
+                        <div className='directions_text'>
+                            <div className='directions_label'>Directions: </div>
+                            {editActive ?
+                                <textarea type='text'
+                                    className='input directions_input'
+                                    name='directions'
+                                    placeholder='1. In a large bowl mix flour, eggs, and milk...'
+                                    onChange={handleSetDirectionsInp}
+                                    value={directionsInp}
+
+                                /> :
+                                recipe?.directions}
+                        </div>
+                    </div>
+
+                    {deleteModal ?
+                        <div className='opaque_container' onClick={handleDeleteModalClose} >
+
+                            <div className='delete_modal'>
+                                <div>Are you sure you want to delete your recipe?</div>
+                                <div className='delete_modal_buttons'>
+                                    <button className='modal_button' type='button' onClick={handleDeleteModalClose}>No, Cancel</button>
+                                    <button className='modal_button' onClick={handleDelete}>Yes, Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        : null}
+
+                    {deleteIngredientModal ?
+                        <div className='opaque_container' onClick={handleDeleteIngredientModalClose} >
+
+                            <div className='delete_modal'>
+                                <div>Are you sure you want to remove this ingredient?</div>
+                                <div className='delete_modal_buttons'>
+                                    <button className='modal_button' type='button' onClick={handleDeleteIngredientModalClose}>No, Cancel</button>
+                                    <button className='modal_button' onClick={handleDeleteIngredient}>Yes, Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        : null}
+
+                    {showErrors ?
+                        <div className='opaque_container' onClick={() => setShowErrors(false)} >
+
+                            <div className='error_modal'>
+                                <div>You cannot update this recipe until these fields are filled in properly:</div>
+                                <div className='error_block'>
+                                    {showErrors && <div>
+                                        {validationErrors.map((error, ind) => (
+                                            <div key={ind}>- {error}</div>
+                                        ))}
+                                    </div>}
+                                    <button className='modal_button' type='button' onClick={() => setShowErrors(false)}>Close Window</button>
+                                </div>
+                            </div>
+                        </div>
+                        : null}
+
+                    {showAddToCollectionModal ?
+                        <div className='opaque_container' onClick={() => setShowAddToCollectionModal(false)}>
+                            <div className='add_recipe_modal' onClick={(e) => e.stopPropagation()}>
+                                <div className='modal_title_add'>Select a collection to save this recipe to: </div>
+                                <div className='collection_link_list'>
+                                    <div className='individual_collection_block_new' onClick={() => setShowAddModal(true)}>
+                                        <div className='collection_titles'>Create New Collection</div>
+                                    </div>
+                                    {collections?.map(collection => (
+                                        <div key={collection.id} className='individual_collection_block' onClick={() => handleAddRecipe(collection.id)}>
+                                            <div className='collection_titles'>{collection.title}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className='remove_button_block_two'>
+                                    <button type='button' className='cancel_button' onClick={handleAddToCollectionClose}>Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        : null}
+
+                    {showAddModal ?
+                        <div className='opaque_container' onClick={() => setShowAddModal(false)}>
+                            <div className='add_collection_modal' onClick={(e) => e.stopPropagation()}>
+                                <div>Give your new collection a name!</div>
+                                {newCollectionErrors.length > 0 ?
+                                    newCollectionErrors.map((error, ind) => (
+                                        <div key={ind} className='error_message'>{error}</div>
+                                    ))
+                                    : null}
+                                <form className='new_collection_form'>
+                                    <input type='text'
+                                        className='input title-input'
+                                        name='title'
+                                        onChange={handleSetCollTitle}
+                                        value={collTitle}
+                                    />
+                                    <button onClick={handleCreateCollection} className='submit_button'>Create Collection</button>
+                                </form>
+                            </div>
+                        </div>
+                        : null}
+                </div>
+            </form>
+        </div>
     );
 };
 

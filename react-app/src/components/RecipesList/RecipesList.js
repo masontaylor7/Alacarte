@@ -35,7 +35,7 @@ const RecipesList = ({ recipes }) => {
 
     const imageStyle = {
         width: "300px",
-        height: 'auto'
+        height: '450px'
     }
 
     const handleSetTitle = (e) => {
@@ -117,7 +117,7 @@ const RecipesList = ({ recipes }) => {
 
 
             </div>
-            
+
             {showAddToCollectionModal ?
                 <div className='opaque_container' onClick={() => setShowAddToCollectionModal(false)}>
                     <div className='add_recipe_modal' onClick={(e) => e.stopPropagation()}>

@@ -36,7 +36,7 @@ const BrowseAllRecipes = () => {
     }, [title])
 
     const imageStyle = {
-        width: "auto",
+        width: "300px",
         height: '450px'
     }
 
