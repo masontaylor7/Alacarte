@@ -40,7 +40,6 @@ export const oneRecipe = (recipeId) => async (dispatch) => {
 }
 
 export const createRecipe = (recipe) => async (dispatch) => {
-    console.log('thunk-----', recipe)
     const response = await fetch('/api/recipes/new', {
         method: 'POST',
         // headers: { 'Content-Type': 'application/json' },
@@ -53,11 +52,12 @@ export const createRecipe = (recipe) => async (dispatch) => {
     }
 }
 
-export const updateRecipe = (recipe) => async (dispatch) => {
-    const response = await fetch(`/api/recipes/${recipe.id}`, {
+export const updateRecipe = (recipeId, recipe) => async (dispatch) => {
+    // console.log(recipeId, recipe)
+    const response = await fetch(`/api/recipes/${recipeId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(recipe)
+        // headers: { 'Content-Type': 'application/json' },
+        body: recipe
     })
     if (response.ok) {
         const recipe = await response.json()

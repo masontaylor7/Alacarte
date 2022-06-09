@@ -16,10 +16,8 @@ const IndividualRecipe = () => {
     const history = useHistory();
     const { recipeId } = useParams();
     const recipe = useSelector(state => state.recipes[+recipeId])
-    console.log('=====', recipe)
 
     const categories = Object.values(useSelector(state => state.categories))
-    const ingredients = Object.values(useSelector(state => state.ingredients))
     const collections = Object.values(useSelector(state => state.collections))
     const sessionUser = useSelector(state => state.session.user)
 
@@ -28,7 +26,7 @@ const IndividualRecipe = () => {
     const [deleteIngredientModal, setDeleteIngredientModal] = useState(false)
     const [showErrors, setShowErrors] = useState(false)
     const [validationErrors, setValidationErrors] = useState([]);
-    console.log(validationErrors)
+    // console.log(validationErrors)
 
     {/* current fields*/ }
     const [deleteIndex, setDeleteIndex] = useState(-1)
@@ -41,10 +39,10 @@ const IndividualRecipe = () => {
         dispatch(allCollections(sessionUser?.id))
     }, [dispatch, editActive])
 
-    const [currTitle, setCurrTitle] = useState(recipe?.title != undefined ? recipe?.title : '')
-    const [inputFields, setInputFields] = useState(recipe?.ingredients != undefined ? recipe?.ingredients : [])
+    const [currTitle, setCurrTitle] = useState(recipe?.title || '')
+    const [inputFields, setInputFields] = useState(recipe?.ingredients || [])
     const [categoryId, setCategoryId] = useState(recipe?.category_id || '')
-    const [imageUrl, setImageUrl] = useState(recipe?.image_url || '')
+    const [image, setImage] = useState(recipe?.image_url || '')
     const [title, setTitle] = useState(recipe?.title || '')
     const [prepTime, setPrepTime] = useState(recipe?.prep_time || '')
     const [cookTime, setCookTime] = useState(recipe?.cook_time || '')
@@ -52,6 +50,7 @@ const IndividualRecipe = () => {
     const [servingSize, setServingSize] = useState(recipe?.servings || '')
     const [directionsInp, setDirectionsInp] = useState('')
     const [placeholder, setPlaceholder] = useState("default");
+    const [photoPreview, setPhotoPreview] = useState('#')
 
     // console.log(currTitle, inputFields, categoryId, imageUrl, title, prepTime, prepTime, cookTime, totalTime, servingSize, directionsInp, placeholder, inputFields)
 
@@ -66,15 +65,15 @@ const IndividualRecipe = () => {
         inputFields?.map(ingredientObj => {
             if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" (there may be an unused ingredient input)')
         })
-        if (!isImageUrl(imageUrl)) errors.push('"Image URL" is not a valid URL')
+        // if (!isImageUrl(imageUrl)) errors.push('"Image URL" is not a valid URL')
         setValidationErrors(errors)
-    }, [imageUrl, currTitle, prepTime, cookTime, totalTime, servingSize, directionsInp, inputFields])
+    }, [image, currTitle, prepTime, cookTime, totalTime, servingSize, directionsInp, inputFields])
 
 
     useEffect(() => {
         setCategoryId(recipe?.category_id)
         setInputFields(recipe?.ingredients)
-        setImageUrl(recipe?.image_url)
+        setImage(recipe?.image_url)
         setCurrTitle(recipe?.title)
         setPrepTime(recipe?.prep_time)
         setCookTime(recipe?.cook_time)
@@ -92,7 +91,8 @@ const IndividualRecipe = () => {
     const handleCancelEdit = () => {
         handleReAddIngredients()
         setEditActive(false)
-        setImageUrl(recipe?.image_url)
+        setImage(recipe?.image_url)
+        setPhotoPreview(recipe?.image_url)
         setCurrTitle(recipe?.title)
         setPrepTime(recipe?.prep_time)
         setCookTime(recipe?.cook_time)
@@ -140,7 +140,7 @@ const IndividualRecipe = () => {
     }
 
     const handleImageField = (e) => {
-        setImageUrl(e.target.value)
+        setImage(e.target.value)
     }
 
     const handleSetTitle = (e) => {
@@ -236,23 +236,42 @@ const IndividualRecipe = () => {
         setInputFields(ingredients)
     }
 
+    const updateImage = (e) => {
+        const file = e.target.files[0]
+        setImage(file)
+        if (file) {
+            setPhotoPreview(URL.createObjectURL(file))
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const recipe = {
-            id: recipeId,
-            image_url: imageUrl,
-            title: currTitle,
-            category_id: categoryId,
-            prep_time: prepTime,
-            cook_time: cookTime,
-            total_time: totalTime,
-            servings: servingSize,
-            directions: directionsInp,
-        }
+        const formData = new FormData();
+        formData.append('title', currTitle)
+        formData.append("image", image);
+        // formData.append("user_id", sessionUser.id);
+        formData.append("category_id", categoryId);
+        formData.append("prep_time", prepTime);
+        formData.append("cook_time", cookTime);
+        formData.append("total_time", totalTime);
+        formData.append("servings", servingSize);
+        formData.append("directions", directionsInp);
+
+        // const recipe = {
+        //     id: recipeId,
+        //     image_url: imageUrl,
+        //     title: currTitle,
+        //     category_id: categoryId,
+        //     prep_time: prepTime,
+        //     cook_time: cookTime,
+        //     total_time: totalTime,
+        //     servings: servingSize,
+        //     directions: directionsInp,
+        // }
 
         if (validationErrors.length === 0) {
-            dispatch(updateRecipe(recipe))
+            dispatch(updateRecipe(+recipeId, formData))
 
             inputFields?.map(ingredientobj => {
                 if (ingredientobj.id) {
@@ -272,14 +291,14 @@ const IndividualRecipe = () => {
 
     }
 
-    const isImageUrl = () => {
-        if (imageUrl?.includes('http') || imageUrl?.includes('https')) {
-            if (imageUrl?.includes('.jpg') || imageUrl?.includes('.png') || imageUrl?.includes('.img') || imageUrl?.includes('.jpeg')) {
-                return true;
-            }
-        }
-        return false
-    }
+    // const isImageUrl = () => {
+    //     if (imageUrl?.includes('http') || imageUrl?.includes('https')) {
+    //         if (imageUrl?.includes('.jpg') || imageUrl?.includes('.png') || imageUrl?.includes('.img') || imageUrl?.includes('.jpeg')) {
+    //             return true;
+    //         }
+    //     }
+    //     return false
+    // }
 
 
     return (
@@ -294,16 +313,17 @@ const IndividualRecipe = () => {
                             <div>
 
                                 <div>
-                                    {imageUrl && isImageUrl() ? <img src={imageUrl} style={imageStyle} alt='image' /> : <img src={recipe?.image_url} style={imageStyle} alt='image' />}
+                                    {photoPreview !== '#' ? <img src={photoPreview} style={imageStyle} alt='preview' />: <img src={recipe?.image_url} style={imageStyle} alt='image' />}
                                 </div>
 
                                 <label>Finished Dish Image:</label>
-                                <input type='text'
+                                <input type='file'
                                     className='input image-input'
                                     name='image_url'
                                     placeholder='Valid Image URL'
-                                    onChange={handleImageField}
-                                    value={imageUrl}
+                                    accept="image/*"
+                                    onChange={updateImage}
+                                    // value={imageUrl}
 
                                 />
 

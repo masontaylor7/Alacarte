@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Recipe, db
-from app.forms import RecipeForm
+from app.forms import RecipeForm, EditRecipeForm
 from app.awsS3 import (upload_file_to_s3, allowed_file, get_unique_filename)
 
 recipe_routes = Blueprint('recipes', __name__)
@@ -29,18 +29,48 @@ def all_recipes():
 
 @recipe_routes.route('/<int:id>', methods=['PUT'])
 def update_recipe(id):
-    update_recipe = request.get_json(force=True)
     existing_recipe = Recipe.query.get(id)
-    existing_recipe.image_url = update_recipe['image_url']
-    existing_recipe.title = update_recipe['title']
-    existing_recipe.category_id = update_recipe['category_id']
-    existing_recipe.prep_time = update_recipe['prep_time']
-    existing_recipe.cook_time = update_recipe['cook_time']
-    existing_recipe.total_time = update_recipe['total_time']
-    existing_recipe.servings = update_recipe['servings']
-    existing_recipe.directions = update_recipe['directions']
-    db.session.commit()
-    return jsonify(existing_recipe.to_dict())
+    form = EditRecipeForm()
+    print('--------------', form.data)
+    form['csrf_token'].data = request.cookies['csrf_token']
+    url = ''
+
+    if "image" in request.files:
+        # return {"errors": "image required"}, 400
+
+        image = request.files["image"]
+
+        if not allowed_file(image.filename):
+            return {"errors": "file type not permitted"}, 400
+
+        image.filename = get_unique_filename(image.filename)
+
+        upload = upload_file_to_s3(image)
+
+        if "url" not in upload:
+            # if the dictionary doesn't have a url key
+            # it means that there was an error when we tried to upload
+            # so we send back that error message
+            return upload, 400
+
+        url = upload["url"]
+
+    if form.validate_on_submit():
+        print('>>>>>>>>>>>>>>>>>> inside the form validate')
+        existing_recipe.title = form.data['title']
+        existing_recipe.category_id = form.data['category_id']
+        existing_recipe.prep_time = form.data['prep_time']
+        existing_recipe.cook_time = form.data['cook_time']
+        existing_recipe.total_time = form.data['total_time']
+        existing_recipe.servings = form.data['servings']
+        existing_recipe.directions = form.data['directions']
+        if url != '':
+            existing_recipe.image_url = url
+        print('<<<<<<<<<<<<<<<<<< existing recipe', existing_recipe)
+        # db.session.add(existing_recipe)
+        db.session.commit()
+        return jsonify(existing_recipe.to_dict())
+        # return {'message': 'success'}
 
 @recipe_routes.route('/new', methods=['POST'])
 # @login_required

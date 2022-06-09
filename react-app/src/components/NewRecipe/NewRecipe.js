@@ -104,7 +104,7 @@ const NewRecipe = () => {
 
         if (validationErrors.length === 0) {
             const created_recipe = await dispatch(createRecipe(formData))
-            console.log(created_recipe)
+            // console.log(created_recipe)
 
             inputFields?.map(ingredientobj => {
                 ingredientobj["recipe_id"] = created_recipe.id
