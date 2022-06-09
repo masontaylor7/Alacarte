@@ -5,7 +5,7 @@ from app.models import Recipe
 
 class RecipeForm(FlaskForm):
     user_id = IntegerField('user id', validators=[DataRequired()])
-    image_url = StringField('image url')
+    image = StringField('image')
     title = StringField('title', validators=[DataRequired()])
     category_id = IntegerField('category_id', validators=[DataRequired()])
     prep_time = StringField('prep_time', validators=[DataRequired()])

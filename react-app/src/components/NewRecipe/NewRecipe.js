@@ -20,7 +20,6 @@ const NewRecipe = () => {
     const [showErrors, setShowErrors] = useState(false)
     const [validationErrors, setValidationErrors] = useState([]);
     const [photoPreview, setPhotoPreview] = useState('#')
-    console.log('photoPreview: ------', photoPreview)
 
     const [inputFields, setInputFields] = useState([
         { title: '', amount: '', measurement: '', },
@@ -81,6 +80,7 @@ const NewRecipe = () => {
         e.preventDefault()
 
         const formData = new FormData();
+        formData.append('title', title)
         formData.append("image", image);
         formData.append("user_id", sessionUser.id);
         formData.append("category_id", categoryId);
@@ -104,6 +104,7 @@ const NewRecipe = () => {
 
         if (validationErrors.length === 0) {
             const created_recipe = await dispatch(createRecipe(formData))
+            console.log(created_recipe)
 
             inputFields?.map(ingredientobj => {
                 ingredientobj["recipe_id"] = created_recipe.id
