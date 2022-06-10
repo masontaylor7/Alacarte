@@ -398,7 +398,7 @@ const IndividualRecipe = () => {
                                 </div>
                                 {editActive ?
                                     <div className='title_block'>
-                                        <div>
+                                        <div className='title_block_inner'>
                                             <label>Name of your dish:</label>
                                             <input type='text'
                                                 className='input title-input'

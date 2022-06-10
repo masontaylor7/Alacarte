@@ -13,7 +13,6 @@ import RecipesList from './components/RecipesList/RecipesList';
 import NewRecipe from './components/NewRecipe/NewRecipe';
 import IndividualRecipe from './components/IndividualRecipe/IndividualRecipe';
 import { allRecipes } from './store/recipe';
-import SuccesfulDelete from './components/SuccesfulDelete/SuccesfulDelete';
 import BrowseAllRecipes from './components/BrowseAllRecipes/BrowseAllRecipes';
 import SavedRecipes from './components/SavedRecipes/SavedRecipes';
 import { getCollectionRecipes } from './store/collection';
@@ -67,43 +66,40 @@ function App() {
             <SignUpForm />
           </Route>
 
-          <Route path='/browse/all' exact={true}>
+          <ProtectedRoute path='/browse/all' exact={true}>
             <BrowseAllRecipes />
-          </Route>
-          <Route path='/browse/breakfast' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/browse/breakfast' exact={true}>
             <RecipesList recipes={recipeFilter(1)} />
-          </Route>
-          <Route path='/browse/lunch' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/browse/lunch' exact={true}>
             <RecipesList recipes={recipeFilter(2)} />
-          </Route>
-          <Route path='/browse/dinner' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/browse/dinner' exact={true}>
             <RecipesList recipes={recipeFilter(3)} />
-          </Route>
-          <Route path='/browse/dessert' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/browse/dessert' exact={true}>
             <RecipesList recipes={recipeFilter(4)} />
-          </Route>
-          <Route path='/browse/drinks' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/browse/drinks' exact={true}>
             <RecipesList recipes={recipeFilter(5)} />
-          </Route>
-          <Route path='/browse/snacks&apps' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/browse/snacks&apps' exact={true}>
             <RecipesList recipes={recipeFilter(6)} />
-          </Route>
-          <Route path='/browse/holiday&seasonal' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/browse/holiday&seasonal' exact={true}>
             <RecipesList recipes={recipeFilter(7)} />
-          </Route>
-          <Route path='/browse/vegan' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/browse/vegan' exact={true}>
             <RecipesList recipes={recipeFilter(8)} />
-          </Route>
-          <Route path='/browse/vegetarian' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/browse/vegetarian' exact={true}>
             <RecipesList recipes={recipeFilter(9)} />
-          </Route>
+          </ProtectedRoute>
 
-          <Route path='/recipes/new' exact={true}>
+          <ProtectedRoute path='/recipes/new' exact={true}>
             <NewRecipe />
-          </Route>
-          <Route path='/recipes/succesful_delete' exact={true} >
-            <SuccesfulDelete />
-          </Route>
+          </ProtectedRoute>
           {/* <ProtectedRoute path='/users' exact={true} >
             <UsersList />
           </ProtectedRoute>
@@ -119,9 +115,6 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute path='/recipes/:recipeId' exact={true} >
             <IndividualRecipe />
-          </ProtectedRoute>
-          <ProtectedRoute path='/' exact={true} >
-            <SplashPage />
           </ProtectedRoute>
           <Route path='/*'>
             <ErrorPage />

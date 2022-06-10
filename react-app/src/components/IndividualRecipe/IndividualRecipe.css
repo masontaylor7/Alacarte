@@ -113,6 +113,11 @@
 .add_to_collection_bigger {
     width: 30px;
     height: 30px;
+    transition: color 0.2s ease-in-out;
+}
+
+.add_to_collection_bigger:hover {
+    color: rgb(45, 253, 183);
 }
 
 .ingredients_label {

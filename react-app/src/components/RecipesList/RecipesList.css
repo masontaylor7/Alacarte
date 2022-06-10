@@ -21,6 +21,16 @@
     border: 1px solid var(--yellow-color);
     background-color: white;
     max-width: fit-content;
+    /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); */
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.single_recipe:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.recipe_img {
+    object-fit: cover;
 }
 
 .image_div_background {
@@ -29,6 +39,15 @@
 
 .add_to_collection {
     cursor: pointer;
+    transition: color 0.15s ease-in-out;
+}
+
+.add_to_collection:hover {
+    color: rgb(45, 253, 183);
+}
+
+.add_to_collection:hover .single_recipe{
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .recipe_details {

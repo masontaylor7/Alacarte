@@ -37,7 +37,7 @@ const BrowseAllRecipes = () => {
 
     const imageStyle = {
         width: "300px",
-        height: '450px'
+        height: '450px',
     }
 
     const handleAddToCollectionOpen = (recipeId) => {
@@ -97,7 +97,7 @@ const BrowseAllRecipes = () => {
                 {recipes?.map(recipe => (
                     <div key={recipe?.id} className='div_hover'>
                         <NavLink className='single_recipe' to={`/recipes/${recipe?.id}`} >
-                            <img src={recipe?.image_url} style={imageStyle} />
+                            <img className='recipe_img' src={recipe?.image_url} style={imageStyle} />
                             <div className='recipe_details'>
                                 <div className='recipe_category'>{recipe?.category?.title}</div>
                                 <div className='title_block'>

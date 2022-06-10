@@ -56,7 +56,6 @@ def update_recipe(id):
         url = upload["url"]
 
     if form.validate_on_submit():
-        print('>>>>>>>>>>>>>>>>>> inside the form validate')
         existing_recipe.title = form.data['title']
         existing_recipe.category_id = form.data['category_id']
         existing_recipe.prep_time = form.data['prep_time']
@@ -66,11 +65,9 @@ def update_recipe(id):
         existing_recipe.directions = form.data['directions']
         if url != '':
             existing_recipe.image_url = url
-        print('<<<<<<<<<<<<<<<<<< existing recipe', existing_recipe)
-        # db.session.add(existing_recipe)
         db.session.commit()
         return jsonify(existing_recipe.to_dict())
-        # return {'message': 'success'}
+
 
 @recipe_routes.route('/new', methods=['POST'])
 # @login_required

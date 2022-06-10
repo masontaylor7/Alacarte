@@ -70,7 +70,6 @@ nav ul li ul {
     text-align: start;
     border: 1px solid var(--yellow-color);
     background-color: white;
-    transition: 2s;
     z-index: 5;
 }
 
@@ -82,10 +81,12 @@ nav ul li:hover ul {
 .category_select_li {
     display: flex;
     align-items: center;
+    transition: background-color 0.1s ease-in-out;
 }
 
 .category_select_li:hover {
     background-color: var(--yellow-color);
+    color: white;
     /* padding: 8px; */
 }
 
@@ -142,3 +143,4 @@ a {
     font-weight: 700;
     color: #222222;
 }
+

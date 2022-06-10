@@ -22,11 +22,9 @@ def seed_collections():
     col7 = Collection(
         title='Cocktails', user_id='1'
     )
-    col8 = Collection(
-        title='Mocktails', user_id='1'
-    )
 
-    db.session.add_all([col1, col2, col3, col4, col5, col6, col7, col8])
+
+    db.session.add_all([col1, col2, col3, col4, col5, col6, col7])
     db.session.commit()
 
 def undo_collections():
