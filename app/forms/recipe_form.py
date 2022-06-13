@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, TextAreaField
+from wtforms import StringField, IntegerField, TextAreaField, FileField
 from wtforms.validators import DataRequired, ValidationError
 from app.models import Recipe
 
 class RecipeForm(FlaskForm):
     user_id = IntegerField('user id', validators=[DataRequired()])
-    image = StringField('image')
+    image = StringField('image', validators=[DataRequired()])
     title = StringField('title', validators=[DataRequired()])
     category_id = IntegerField('category_id', validators=[DataRequired()])
     prep_time = StringField('prep_time', validators=[DataRequired()])

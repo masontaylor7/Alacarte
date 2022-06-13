@@ -38,6 +38,7 @@ const NewRecipe = () => {
     useEffect(() => {
         const errors = []
         if (title?.length === 0) errors.push('"Name" field cannot be empty')
+        if (image?.length === 0) errors.push('"Image" field cannot be empty')
         if (directionsInp?.length === 0) errors.push('"Directions" field cannot be empty')
         if (prepTime?.length === 0) errors.push('"Prep Time" field cannot be empty')
         if (cookTime?.length === 0) errors.push('"Cook Time" field cannot be empty')
@@ -47,7 +48,7 @@ const NewRecipe = () => {
             if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" (there may be an unused ingredient input)')
         })
         setValidationErrors(errors)
-    }, [title, prepTime, cookTime, totalTime, servingSize, directionsInp, inputFields])
+    }, [title, image, prepTime, cookTime, totalTime, servingSize, directionsInp, inputFields])
 
     useEffect(() => {
         dispatch(allCategories())
@@ -204,14 +205,15 @@ const NewRecipe = () => {
                     </div>
                     <label>Finished Dish Image:</label>
                     <input type='file'
+                        id='img'
                         className='input image-input'
                         name='image_url'
                         placeholder='Valid Image URL'
                         accept="image/*"
                         onChange={updateImage}
-                        // value={image}
-
                     />
+                    <label for='img' className='image-type-label'>image file must be pdf/png/jpg/jpeg/gif</label>
+                    {/* {"pdf", "png", "jpg", "jpeg", "gif"} */}
                     <div className='category-block field_block'>
                         <div className='field-title'>Category:</div>
                         <select className='input' defaultValue={placeholder} onChange={(e) => setCategoryId(e.target.value)}>

@@ -42,6 +42,10 @@ a {
     font-weight: 600;
 }
 
+.button_style1:hover {
+    border-bottom: 1px solid var(--dark-yellow-color);
+}
+
 
 .button_style1:active {
     border: none;

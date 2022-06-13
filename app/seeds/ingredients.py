@@ -478,9 +478,168 @@ def seed_ingredients():
     ing159 = Ingredient(
         recipe_id='17', amount='1/4', measurement='cup', title='extra virgin olive oil (for dressing)'
     )
+    ing160 = Ingredient(
+        recipe_id='18', amount='1/3 ', measurement='cup', title='apple cider vinegar (for pickled onions)'
+    )
+    ing161 = Ingredient(
+        recipe_id='18', amount='1', measurement='tablespoon', title='sugar (for pickled onions)'
+    )
+    ing162 = Ingredient(
+        recipe_id='18', amount='1', measurement='teaspoon', title='kosher salt (for pickled onions)'
+    )
+    ing163 = Ingredient(
+        recipe_id='18', amount='1/2', measurement='medium', title='red onion, thinly sliced (for pickled onions)'
+    )
+    ing164 = Ingredient(
+        recipe_id='18', amount='1 1/4', measurement='pounds', title='firm white fish (halibut, cod, or grouper)'
+    )
+    ing165 = Ingredient(
+        recipe_id='18', amount='1 1/4', measurement='teaspoons', title='kosher salt'
+    )
+    ing166 = Ingredient(
+        recipe_id='18', amount='1/4', measurement=' teaspoon', title='ground black pepper'
+    )
+    ing167 = Ingredient(
+        recipe_id='18', amount='1', measurement='cup', title='panko style breadcrumbs'
+    )
+    ing168 = Ingredient(
+        recipe_id='18', amount='1', measurement='tablespoon', title='garlic powder'
+    )
+    ing169 = Ingredient(
+        recipe_id='18', amount='1', measurement='tablespoon', title='ground cumin'
+    )
+    ing170 = Ingredient(
+        recipe_id='18', amount='2', measurement='large', title='eggs'
+    )
+    ing171 = Ingredient(
+        recipe_id='18', amount='1/4', measurement='cup', title='all-purpose flour'
+    )
+    ing172 = Ingredient(
+        recipe_id='18', amount='', measurement='', title='non-stick cooking spray'
+    )
+    ing173 = Ingredient(
+        recipe_id='18', amount='1', measurement='large', title='ripe avocado, peeled and pitted (for avocado mayo)'
+    )
+    ing174 = Ingredient(
+        recipe_id='18', amount='1', measurement='tablespoon', title='lime juice (for avocado mayo)'
+    )
+    ing175 = Ingredient(
+        recipe_id='18', amount='2', measurement='tablespoons', title='mayonnaise (for avocado mayo)'
+    )
+    ing176 = Ingredient(
+        recipe_id='18', amount='4', measurement='soft', title='sandwich buns, such as brioche'
+    )
+    ing177 = Ingredient(
+        recipe_id='18', amount='2', measurement='cups', title='romaine hearts, shredded'
+    )
+    ing178 = Ingredient(
+        recipe_id='18', amount='2-3', measurement='tablespoons', title='pickled jalapenos'
+    )
+    ing179 = Ingredient(
+        recipe_id='19', amount='', measurement='', title='butter, for the pan'
+    )
+    ing180 = Ingredient(
+        recipe_id='19', amount='5-6', measurement='firm', title='plums (about 1 pound)'
+    )
+    ing181 = Ingredient(
+        recipe_id='19', amount='3/4', measurement='cup', title='walnut halves'
+    )
+    ing182 = Ingredient(
+        recipe_id='19', amount='1/2', measurement='cup (1 stick)', title='unsalted butter, cut into slices'
+    )
+    ing183 = Ingredient(
+        recipe_id='19', amount='3/4', measurement='cup', title='sugar'
+    )
+    ing184 = Ingredient(
+        recipe_id='19', amount='2', measurement='large', title='eggs'
+    )
+    ing185 = Ingredient(
+        recipe_id='19', amount='', measurement='', title='zest of 1 lemon'
+    )
+    ing186 = Ingredient(
+        recipe_id='19', amount='1', measurement='teaspoon', title='pure vanilla extract'
+    )
+    ing187 = Ingredient(
+        recipe_id='19', amount='1 1/4', measurement='cups', title='all-purpose flour'
+    )
+    ing188 = Ingredient(
+        recipe_id='19', amount='3/4', measurement='teaspoon', title='baking powder'
+    )
+    ing189 = Ingredient(
+        recipe_id='19', amount='1/8', measurement='teaspoon', title='salt'
+    )
+    ing190 = Ingredient(
+        recipe_id='19', amount='2', measurement='tablespoons', title='turbinado sugar or sugar in the raw'
+    )
+    ing191 = Ingredient(
+        recipe_id='19', amount='2', measurement='tablespoons', title='honey (optional)'
+    )
+    ing192 = Ingredient(
+        recipe_id='20', amount='2', measurement='tablespoons', title='extra virgin olive oil, divided'
+    )
+    ing193 = Ingredient(
+        recipe_id='20', amount='4', measurement='cups', title='thinly sliced onions, sliced crosswise'
+    )
+    ing194 = Ingredient(
+        recipe_id='20', amount='6', measurement='medium', title='yukon gold potatoes, peeled and sliced 1/8 inch thick'
+    )
+    ing195 = Ingredient(
+        recipe_id='20', amount='3/4', measurement='cup', title='grated gruyere cheese, divided'
+    )
+    ing196 = Ingredient(
+        recipe_id='20', amount='1/2', measurement='cup', title='grated parmesan cheese'
+    )
+    ing197 = Ingredient(
+        recipe_id='20', amount='1', measurement='teaspoon', title='kosher salt'
+    )
+    ing198 = Ingredient(
+        recipe_id='20', amount='1/2', measurement='teaspoon', title='white pepper (or black pepper if that is what you have)'
+    )
+    ing199 = Ingredient(
+        recipe_id='20', amount='1', measurement='teaspoon', title='butter for greasing the baking dish'
+    )
+    ing200 = Ingredient(
+        recipe_id='20', amount='1/3', measurement='cup', title='stock (chicken, beef, or vegetable)'
+    )
+    ing201 = Ingredient(
+        recipe_id='20', amount='1', measurement='teaspoon', title='finely minced rosemary'
+    )
+    ing202 = Ingredient(
+        recipe_id='21', amount='2', measurement='cups (263g)', title='all-purpose flour (packed and leveled in measuring cup)'
+    )
+    ing203 = Ingredient(
+        recipe_id='21', amount='1 1/2', measurement=' teaspoons', title='baking powder'
+    )
+    ing204 = Ingredient(
+        recipe_id='21', amount='1/2', measurement='teaspoon', title='baking soda'
+    )
+    ing205 = Ingredient(
+        recipe_id='21', amount='1/2', measurement='teaspoon', title='salt'
+    )
+    ing206 = Ingredient(
+        recipe_id='21', amount='3/4', measurement='cup', title='orange juice (no pulp)'
+    )
+    ing207 = Ingredient(
+        recipe_id='21', amount='3/4', measurement='cup (151g)', title='sugar'
+    )
+    ing208 = Ingredient(
+        recipe_id='21', amount='4', measurement='tablespoons (58g)', title='butter, melted'
+    )
+    ing209 = Ingredient(
+        recipe_id='21', amount='1', measurement='large', title='egg, beaten'
+    )
+    ing210 = Ingredient(
+        recipe_id='21', amount='1', measurement='tablespoon', title='finely grated orange zest'
+    )
+    ing211 = Ingredient(
+        recipe_id='21', amount='1', measurement='cup (120g)', title='chopped fresh cranberries'
+    )
+    ing212 = Ingredient(
+        recipe_id='21', amount='3/4', measurement='cup (93g)', title='coarsely chopped walnuts'
+    )
 
 
-    db.session.add_all([ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, ing13, ing14, ing15, ing16, ing17, ing18, ing19, ing20, ing21, ing22, ing23, ing24, ing25, ing26, ing27, ing28, ing29, ing30, ing31, ing32, ing33, ing34, ing35, ing36, ing37, ing38, ing39, ing40, ing41, ing42, ing43, ing44, ing45, ing46, ing47, ing48, ing49, ing50, ing51, ing52, ing53, ing54, ing55, ing56, ing57, ing58, ing59, ing60, ing61, ing62, ing63, ing64, ing65, ing66, ing67, ing68, ing69, ing70, ing71, ing72, ing73, ing74, ing75, ing76, ing77, ing78, ing79, ing80, ing81, ing82, ing83, ing84, ing85, ing86, ing87, ing88, ing89, ing90, ing91, ing92, ing93, ing94, ing95, ing96, ing97, ing98, ing99, ing100, ing101, ing102, ing103, ing104, ing105, ing106, ing107, ing108, ing109, ing110, ing111, ing112, ing113, ing114, ing115, ing116, ing117, ing118, ing119, ing120, ing121, ing122, ing123, ing124, ing125, ing126, ing127, ing128, ing129, ing130, ing131, ing132, ing133, ing134, ing135, ing136, ing137, ing138, ing139, ing140, ing141, ing142, ing143, ing144, ing145, ing146, ing147, ing148, ing149, ing150, ing151, ing152, ing153, ing154, ing155, ing156, ing157, ing158, ing159])
+    db.session.add_all([ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, ing13, ing14, ing15, ing16, ing17, ing18, ing19, ing20, ing21, ing22, ing23, ing24, ing25, ing26, ing27, ing28, ing29, ing30, ing31, ing32, ing33, ing34, ing35, ing36, ing37, ing38, ing39, ing40, ing41, ing42, ing43, ing44, ing45, ing46, ing47, ing48, ing49, ing50, ing51, ing52, ing53, ing54, ing55, ing56, ing57, ing58, ing59, ing60, ing61, ing62, ing63, ing64, ing65, ing66, ing67, ing68, ing69, ing70, ing71, ing72, ing73, ing74, ing75, ing76, ing77, ing78, ing79, ing80, ing81, ing82, ing83, ing84, ing85, ing86, ing87, ing88, ing89, ing90, ing91, ing92, ing93, ing94, ing95, ing96, ing97, ing98, ing99, ing100, ing101, ing102, ing103, ing104, ing105, ing106, ing107, ing108, ing109, ing110, ing111, ing112, ing113, ing114, ing115, ing116, ing117, ing118, ing119, ing120, ing121, ing122, ing123, ing124, ing125, ing126, ing127, ing128, ing129, ing130, ing131, ing132, ing133, ing134, ing135, ing136, ing137, ing138, ing139, ing140, ing141, ing142, ing143, ing144, ing145, ing146, ing147, ing148, ing149, ing150, ing151, ing152, ing153, ing154, ing155, ing156, ing157, ing158, ing159, ing160, ing161, ing162, ing163, ing164, ing165, ing166, ing167, ing168, ing169, ing170, ing171, ing172, ing173, ing174, ing175, ing176, ing177, ing178, ing179, ing180, ing181, ing182, ing183, ing184, ing185, ing186, ing187, ing188, ing189, ing190, ing191, ing192, ing193, ing194, ing195, ing196, ing197, ing198, ing199, ing200, ing201, ing202, ing203, ing204, ing205, ing206, ing207, ing208, ing209, ing210, ing211, ing212])
 
     db.session.commit()
 

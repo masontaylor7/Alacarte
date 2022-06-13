@@ -73,10 +73,14 @@
 
 
 .input {
-
     border-radius: 5px;
     margin: 2px;
     border: 1px solid rgba(0, 0, 0, 0.524);
+}
+
+.image-type-label {
+    font-size: 15px;
+    color: var(--dark-yellow-color);
 }
 
 
