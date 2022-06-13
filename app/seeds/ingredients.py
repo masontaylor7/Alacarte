@@ -637,9 +637,45 @@ def seed_ingredients():
     ing212 = Ingredient(
         recipe_id='21', amount='3/4', measurement='cup (93g)', title='coarsely chopped walnuts'
     )
+    ing213 = Ingredient(
+        recipe_id='22', amount='4', measurement='heaping tablespoons', title='tahini'
+    )
+    ing214 = Ingredient(
+        recipe_id='22', amount='3', measurement='tablespoons', title='fresh lemon juice'
+    )
+    ing215 = Ingredient(
+        recipe_id='22', amount='2', measurement='', title='garlic cloves, finely minced'
+    )
+    ing216 = Ingredient(
+        recipe_id='22', amount='5-7', measurement='tablespoons', title='ice cold water'
+    )
+    ing217 = Ingredient(
+        recipe_id='22', amount='1', measurement='teaspoon', title='sea salt'
+    )
+    ing218 = Ingredient(
+        recipe_id='22', amount='1/2', measurement='teaspoon', title='freshly ground black pepper'
+    )
+    ing219 = Ingredient(
+        recipe_id='22', amount='5', measurement='tablespoons', title='raw pine nuts'
+    )
+    ing220 = Ingredient(
+        recipe_id='22', amount='14', measurement=' ounces', title='brocollini'
+    )
+    ing221 = Ingredient(
+        recipe_id='22', amount='1', measurement='tablespoon', title='olive oil'
+    )
+    ing222 = Ingredient(
+        recipe_id='22', amount='1', measurement='cup', title='fresh pomegranate arils, from 1 large ripe pomegranate'
+    )
+    ing223 = Ingredient(
+        recipe_id='22', amount='', measurement='', title='A good handful of flat leaf parsley, chopped'
+    )
+    ing224 = Ingredient(
+        recipe_id='22', amount='', measurement='', title='Aleppo pepper flakes, for garnish (optional)'
+    )
 
 
-    db.session.add_all([ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, ing13, ing14, ing15, ing16, ing17, ing18, ing19, ing20, ing21, ing22, ing23, ing24, ing25, ing26, ing27, ing28, ing29, ing30, ing31, ing32, ing33, ing34, ing35, ing36, ing37, ing38, ing39, ing40, ing41, ing42, ing43, ing44, ing45, ing46, ing47, ing48, ing49, ing50, ing51, ing52, ing53, ing54, ing55, ing56, ing57, ing58, ing59, ing60, ing61, ing62, ing63, ing64, ing65, ing66, ing67, ing68, ing69, ing70, ing71, ing72, ing73, ing74, ing75, ing76, ing77, ing78, ing79, ing80, ing81, ing82, ing83, ing84, ing85, ing86, ing87, ing88, ing89, ing90, ing91, ing92, ing93, ing94, ing95, ing96, ing97, ing98, ing99, ing100, ing101, ing102, ing103, ing104, ing105, ing106, ing107, ing108, ing109, ing110, ing111, ing112, ing113, ing114, ing115, ing116, ing117, ing118, ing119, ing120, ing121, ing122, ing123, ing124, ing125, ing126, ing127, ing128, ing129, ing130, ing131, ing132, ing133, ing134, ing135, ing136, ing137, ing138, ing139, ing140, ing141, ing142, ing143, ing144, ing145, ing146, ing147, ing148, ing149, ing150, ing151, ing152, ing153, ing154, ing155, ing156, ing157, ing158, ing159, ing160, ing161, ing162, ing163, ing164, ing165, ing166, ing167, ing168, ing169, ing170, ing171, ing172, ing173, ing174, ing175, ing176, ing177, ing178, ing179, ing180, ing181, ing182, ing183, ing184, ing185, ing186, ing187, ing188, ing189, ing190, ing191, ing192, ing193, ing194, ing195, ing196, ing197, ing198, ing199, ing200, ing201, ing202, ing203, ing204, ing205, ing206, ing207, ing208, ing209, ing210, ing211, ing212])
+    db.session.add_all([ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, ing13, ing14, ing15, ing16, ing17, ing18, ing19, ing20, ing21, ing22, ing23, ing24, ing25, ing26, ing27, ing28, ing29, ing30, ing31, ing32, ing33, ing34, ing35, ing36, ing37, ing38, ing39, ing40, ing41, ing42, ing43, ing44, ing45, ing46, ing47, ing48, ing49, ing50, ing51, ing52, ing53, ing54, ing55, ing56, ing57, ing58, ing59, ing60, ing61, ing62, ing63, ing64, ing65, ing66, ing67, ing68, ing69, ing70, ing71, ing72, ing73, ing74, ing75, ing76, ing77, ing78, ing79, ing80, ing81, ing82, ing83, ing84, ing85, ing86, ing87, ing88, ing89, ing90, ing91, ing92, ing93, ing94, ing95, ing96, ing97, ing98, ing99, ing100, ing101, ing102, ing103, ing104, ing105, ing106, ing107, ing108, ing109, ing110, ing111, ing112, ing113, ing114, ing115, ing116, ing117, ing118, ing119, ing120, ing121, ing122, ing123, ing124, ing125, ing126, ing127, ing128, ing129, ing130, ing131, ing132, ing133, ing134, ing135, ing136, ing137, ing138, ing139, ing140, ing141, ing142, ing143, ing144, ing145, ing146, ing147, ing148, ing149, ing150, ing151, ing152, ing153, ing154, ing155, ing156, ing157, ing158, ing159, ing160, ing161, ing162, ing163, ing164, ing165, ing166, ing167, ing168, ing169, ing170, ing171, ing172, ing173, ing174, ing175, ing176, ing177, ing178, ing179, ing180, ing181, ing182, ing183, ing184, ing185, ing186, ing187, ing188, ing189, ing190, ing191, ing192, ing193, ing194, ing195, ing196, ing197, ing198, ing199, ing200, ing201, ing202, ing203, ing204, ing205, ing206, ing207, ing208, ing209, ing210, ing211, ing212, ing213, ing214, ing215, ing216, ing217, ing218, ing219, ing220, ing221, ing222, ing223, ing224])
 
     db.session.commit()
 
