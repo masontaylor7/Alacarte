@@ -85,6 +85,7 @@
 .ingredient_row {
     display: flex;
     justify-content: space-evenly;
+    word-wrap: normal;
 }
 
 .time_block {
@@ -134,7 +135,6 @@
 
 .ingredient_amount{
    font-size: 24px;
-
 }
 
 .ingredient_measurement{

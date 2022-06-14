@@ -107,25 +107,22 @@ const NewRecipe = () => {
             const created_recipe = await dispatch(createRecipe(formData))
             // console.log(created_recipe)
 
-            inputFields?.map(ingredientobj => {
-                ingredientobj["recipe_id"] = created_recipe.id
-                dispatch(createIngredient(ingredientobj))
-            })
-
-            // const entry = {
-            //     recipe_id: created_recipe.id,
-            //     collection_id: 1
-            // }
-
-            // dispatch(createCollectionRecipe(entry))
-
-            history.push(`/recipes/${created_recipe.id}`)
-
+            if (created_recipe.errors) {
+                // setVideoLoading(false)
+                setValidationErrors([ ...validationErrors, created_recipe.errors]);
+                setShowErrors(true)
+            } else if (created_recipe) {
+                if (!created_recipe.errors) {
+                    inputFields?.map(ingredientobj => {
+                        ingredientobj["recipe_id"] = created_recipe.id
+                        dispatch(createIngredient(ingredientobj))
+                    })
+                    history.push(`/recipes/${created_recipe.id}`)
+                }
+            }
         } else {
             setShowErrors(true)
         }
-
-
     }
 
     const handleAddField = () => {
@@ -212,7 +209,7 @@ const NewRecipe = () => {
                         accept="image/*"
                         onChange={updateImage}
                     />
-                    <label for='img' className='image-type-label'>image file must be pdf/png/jpg/jpeg/gif</label>
+                    <label className='image-type-label'>image file must be pdf/png/jpg/jpeg/gif</label>
                     {/* {"pdf", "png", "jpg", "jpeg", "gif"} */}
                     <div className='category-block field_block'>
                         <div className='field-title'>Category:</div>

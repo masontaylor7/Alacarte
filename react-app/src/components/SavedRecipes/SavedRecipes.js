@@ -27,6 +27,7 @@ const SavedRecipes = () => {
     useEffect(() => {
         const errors = []
         if (title.length === 0) errors.push('A name is required')
+        if (title?.length > 100) errors.push('"Name" field must be less then 100 character')
         setNewCollectionErrors(errors)
     }, [title])
 
@@ -79,6 +80,11 @@ const SavedRecipes = () => {
         }
 
 
+    }
+
+    const handleAddModalClose = () => {
+        setTitle('')
+        setShowAddModal(false)
     }
 
     const handleDeleteModalOpen = (collectionId) => {
@@ -144,7 +150,7 @@ const SavedRecipes = () => {
             </div>
 
             {showAddModal ?
-                <div className='opaque_container' onClick={() => setShowAddModal(false)}>
+                <div className='opaque_container' onClick={handleAddModalClose}>
                     <div className='add_collection_modal' onClick={(e) => e.stopPropagation()}>
                         <div>Give your new collection a name!</div>
                         {newCollectionErrors.length > 0 ?

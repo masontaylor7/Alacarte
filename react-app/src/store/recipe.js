@@ -45,11 +45,23 @@ export const createRecipe = (recipe) => async (dispatch) => {
         // headers: { 'Content-Type': 'application/json' },
         body: recipe
     })
+    // if (response.ok) {
+    //     const recipe = await response.json()
+    //     dispatch(createRecipeActionCreator(recipe))
+    //     return recipe;
+    // }
     if (response.ok) {
         const recipe = await response.json()
-        dispatch(createRecipeActionCreator(recipe))
-        return recipe;
+        if (recipe.errors) {
+            return recipe
+        } else if (!recipe.errors) {
+            dispatch(createRecipeActionCreator(recipe))
+            return recipe;
+        }
+    } else {
+        return { 'errors': ['Please verify your image file type is of type: pdf/png/jpg/jpeg/gif'] }
     }
+
 }
 
 export const updateRecipe = (recipeId, recipe) => async (dispatch) => {
