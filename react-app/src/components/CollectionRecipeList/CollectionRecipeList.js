@@ -48,7 +48,7 @@ const CollectionRecipesList = () => {
 
     const imageStyle = {
         width: "300px",
-        height: 'auto'
+        height: '450px'
     }
 
     return (
@@ -65,7 +65,7 @@ const CollectionRecipesList = () => {
                     {select?.recipes?.map(recipe => (
                         <div key={recipe?.id} className='div_hover'>
                             <NavLink className='single_recipe' to={`/recipes/${recipe?.id}`} >
-                                <img src={recipe?.image_url} style={imageStyle} />
+                                <img src={recipe?.image_url} className='recipe_img' style={imageStyle} />
                                 <div className='recipe_details'>
                                     <div className='recipe_category'>{recipe?.category?.title}</div>
                                     <div className='title_block'>

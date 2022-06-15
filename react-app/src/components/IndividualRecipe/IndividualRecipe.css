@@ -4,6 +4,7 @@
 }
 
 .individual_recipe_page {
+    top: 0;
     display: flex;
     margin-bottom: 15px;
     justify-content: center;
@@ -11,7 +12,7 @@
 
 .recipe_info_block {
     border-bottom: 1px solid #D2EBE8;
-    margin-top: 15px;
+    /* margin-top: 15px; */
 }
 
 .recipe_title {
@@ -22,6 +23,10 @@
     word-wrap: break-word;
     min-height: 50%;
     max-height: 350px;
+}
+
+.recipe_img {
+    object-fit: cover;
 }
 
 
@@ -161,6 +166,7 @@
 
 .opaque_container {
     position: fixed;
+    top: 77px;
     background-color: rgba(0, 0, 0, 0.182);
     width: 100%;
     height: 100%;

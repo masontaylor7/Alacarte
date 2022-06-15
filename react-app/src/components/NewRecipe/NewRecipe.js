@@ -25,7 +25,7 @@ const NewRecipe = () => {
         { title: '', amount: '', measurement: '', },
     ])
 
-    const [categoryId, setCategoryId] = useState('')
+    const [categoryId, setCategoryId] = useState(0)
     const [image, setImage] = useState('')
     const [title, setTitle] = useState('')
     const [prepTime, setPrepTime] = useState('')
@@ -44,11 +44,12 @@ const NewRecipe = () => {
         if (cookTime?.length === 0) errors.push('"Cook Time" field cannot be empty')
         if (totalTime?.length === 0) errors.push('"Total Time" field cannot be empty')
         if (servingSize?.length === 0) errors.push('"Servings" field cannot be empty')
+        if (categoryId === 0) errors.push('Please select a "Category" for your recipe')
         inputFields?.map(ingredientObj => {
             if (ingredientObj.title.length === 0) errors.push('An ingredient field has an empty input for "Ingredient Name" (there may be an unused ingredient input)')
         })
         setValidationErrors(errors)
-    }, [title, image, prepTime, cookTime, totalTime, servingSize, directionsInp, inputFields])
+    }, [title, image, prepTime, cookTime, totalTime, servingSize, directionsInp, inputFields, categoryId])
 
     useEffect(() => {
         dispatch(allCategories())

@@ -340,13 +340,13 @@ const IndividualRecipe = () => {
                     {/* <form> */}
                     <div className='sticky_block'>
                         <div className='image_block'>
-                            {!editActive && recipe?.image_url ? <img src={recipe?.image_url} style={imageStyle} alt='image' /> : null}
+                            {!editActive && recipe?.image_url ? <img src={recipe?.image_url} className='recipe_img' style={imageStyle} alt='image' /> : null}
 
                             {editActive &&
                                 <div>
 
                                     <div>
-                                        {photoPreview !== '#' ? <img src={photoPreview} style={imageStyle} alt='preview' /> : <img src={recipe?.image_url} style={imageStyle} alt='image' />}
+                                        {photoPreview !== '#' ? <img src={photoPreview} style={imageStyle} alt='preview' /> : <img src={recipe?.image_url} className='recipe_img' style={imageStyle} alt='image' />}
                                     </div>
 
                                     <label>Finished Dish Image:</label>

@@ -10,6 +10,7 @@
     flex-direction: column;
     justify-content: center;
     z-index: 3;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.088);
 }
 
 .logo {
@@ -69,8 +70,9 @@ nav ul li ul {
     list-style: none;
     text-align: start;
     border: 1px solid var(--yellow-color);
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     z-index: 5;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.165);
 }
 
 nav ul li:hover ul {
@@ -143,4 +145,3 @@ a {
     font-weight: 700;
     color: #222222;
 }
-
