@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch, useParams } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import UsersList from './components/UsersList';
-import User from './components/User';
 import { authenticate } from './store/session';
-import HomePage from './components/HomePage/HomePage';
 import RecipesList from './components/RecipesList/RecipesList';
 import NewRecipe from './components/NewRecipe/NewRecipe';
 import IndividualRecipe from './components/IndividualRecipe/IndividualRecipe';
 import { allRecipes } from './store/recipe';
 import BrowseAllRecipes from './components/BrowseAllRecipes/BrowseAllRecipes';
 import SavedRecipes from './components/SavedRecipes/SavedRecipes';
-import { getCollectionRecipes } from './store/collection';
 import CollectionRecipesList from './components/CollectionRecipeList/CollectionRecipeList';
 import SplashPage from './components/SplashPage/SplashPage';
 import ErrorPage from './components/404Page/404Page';
@@ -23,7 +19,6 @@ import ErrorPage from './components/404Page/404Page';
 function App() {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-  const sessionUser = useSelector(state => state.session.user);
   const recipes = Object.values(useSelector(state => state.recipes));
 
 

@@ -31,7 +31,7 @@ def all_recipes():
 def update_recipe(id):
     existing_recipe = Recipe.query.get(id)
     form = EditRecipeForm()
-    print('--------------', form.data)
+    # print('--------------', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
     url = ''
 

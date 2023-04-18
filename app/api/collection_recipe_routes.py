@@ -44,16 +44,16 @@ def create_collection_recipe():
         check = Collection_Recipe.query.filter(
             Collection_Recipe.collection_id == entry.collection_id,
             Collection_Recipe.recipe_id == entry.recipe_id).first()
-        print('>><<<<<<<<<<<<<<<<<<<', check)
+        # print('>><<<<<<<<<<<<<<<<<<<', check)
 
         if check is None:
             form.populate_obj(entry)
             db.session.add(entry)
             db.session.commit()
-            print('>>>>>>success')
+            # print('>>>>>>success')
             return {'message': 'succesful'}
         if check is not None:
-            print('>>>>>>already exists')
+            # print('>>>>>>already exists')
             return {'message': 'unsuccesful'}
 
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
