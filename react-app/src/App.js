@@ -15,7 +15,7 @@ import SavedRecipes from './components/SavedRecipes/SavedRecipes';
 import CollectionRecipesList from './components/CollectionRecipeList/CollectionRecipeList';
 import SplashPage from './components/SplashPage/SplashPage';
 import ErrorPage from './components/404Page/404Page';
-
+import './App.css'
 function App() {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
@@ -48,6 +48,9 @@ function App() {
 
   return (
     <BrowserRouter>
+      <div className='image_div_background'>
+        <img src='https://img.freepik.com/free-photo/fresh-colourful-ingredients-mexican-cuisine_23-2148254294.jpg?w=2000' />
+      </div>
       <NavBar />
       <div className='full_body'>
         <Switch>

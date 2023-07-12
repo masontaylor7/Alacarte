@@ -45,9 +45,9 @@ const LoginForm = () => {
 
   return (
     <div>
-      <div className='image_div_background'>
+      {/* <div className='image_div_background'>
         <img src='https://img.freepik.com/free-photo/fresh-colourful-ingredients-mexican-cuisine_23-2148254294.jpg?w=2000' />
-      </div>
+      </div> */}
       <div className='login_block'>
 
         <form className='form_block' onSubmit={onLogin}>

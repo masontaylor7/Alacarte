@@ -11,9 +11,9 @@ const style = {
 const SplashPage = () => {
     return (
         <div>
-            <div className='image_div_background'>
+            {/* <div className='image_div_background'>
                 <img src='https://img.freepik.com/free-photo/fresh-colourful-ingredients-mexican-cuisine_23-2148254294.jpg?w=2000' />
-            </div>
+            </div> */}
             <div className='intro_block'>
                 <div>Welcome to <span className='ala_text bigger'>Ala</span><span className='carte_text bigger'>Carte</span></div>
                 <div>Your new favorite spot for all the best recipes</div>
